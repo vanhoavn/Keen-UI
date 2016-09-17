@@ -1,0 +1,142 @@
+@import '../../src/styles/imports'
+
+@import '_tables'
+@import '_code'
+@import '_helpers'
+
+*
+    box-sizing border-box
+    font-family inherit
+
+html,
+body,
+#app
+    max-width 100vw
+    margin 0
+    padding 0
+
+body
+    font-family $font-stack
+    @extends $md-text-body
+    font-size 15px
+    line-height 1.85em
+
+#app
+    display flex
+    .page-toolbar
+        z-index $z-index-toolbar
+        height 64px
+        display none
+        background-color white
+
+    @media screen and (max-width: 720px)
+        .page-toolbar
+            display flex
+            position fixed
+            width 100vw
+
+        .desktop
+            display none
+
+        .page,
+        .container
+            width 100vw
+            max-width 100vw
+            margin 0
+
+        .container
+            padding 64px 18px 0 18px
+
+.page
+    flex-grow 1
+    display flex
+    margin-left 272px
+
+.container
+    width 100%
+    max-width 960px
+    padding-left 56px
+    padding-right 56px
+
+.section
+    margin-bottom 40px
+
+.section-heading
+    @extends $md-text-display-1
+    border-bottom 1px solid $md-dark-divider
+    padding-bottom 8px
+
+h3
+    @extends $md-text-headline
+    font-weight normal
+    margin-top 32px
+
+h4
+    font-size 18px
+    font-weight bold
+
+a
+    text-decoration none
+    color $md-blue-700
+
+    &:hover,
+    &:focus
+        text-decoration underline
+
+.table
+    margin-bottom 0
+
+    th
+        min-width 100px
+        padding 8px
+
+    td
+        padding-top 10px
+        padding-bottom 10px
+
+        &.new-prop::after
+            content 'New'
+            display inline-block
+            background-color $md-brand-primary
+            color white
+            font-size 10px
+            padding 2px 4px
+            border-radius 2px
+            margin-left 8px
+
+        &.changed-prop::after
+            content 'Changed'
+            display inline-block
+            background-color $md-pink
+            color white
+            font-size 10px
+            padding 2px 4px
+            border-radius 2px
+            margin-left 8px
+
+    p
+        &:first-child
+            margin-top 0
+
+        &:last-child
+            margin-bottom 0
+
+    li
+        margin-bottom 10px
+
+        &:last-child
+            margin-bottom 0
+
+.view-source-link
+    font-size 0.6em
+    display inline-block
+    margin-left 8px
+
+    .section-heading &
+        font-size 0.45em
+
+a.ui-button
+    text-decoration none
+
+.m-b-0
+    margin-bottom 0
