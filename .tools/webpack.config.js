@@ -52,9 +52,6 @@ const baseConfig = {
             test: /\.woff($|\?)|\.woff2($|\?)|\.ttf($|\?)|\.eot($|\?)|\.svg($|\?)/,
             loader: 'url-loader',
             include: path.src,
-        }, {
-            test: /draggabilly|desandro|get\-size|classie|unidragger|unipointer|eventemitter/,
-            loader: 'imports?define=>false&this=>window'
         }]
     },
     babel: {
