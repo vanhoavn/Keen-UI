@@ -1,9 +1,9 @@
-import webpack from 'webpack'
-import { join } from 'path'
-import AssetsPlugin from 'assets-webpack-plugin'
-import merge from 'webpack-merge'
-import nodeExt from 'webpack-node-externals'
-import config from '../config'
+const webpack = require('webpack')
+const { join, resolve } = require('path')
+const AssetsPlugin = require('assets-webpack-plugin')
+const merge = require('webpack-merge')
+const nodeExt = require('webpack-node-externals')
+const config = require('../config')
 
 const DEBUG = !process.argv.includes('--release')
 const VERBOSE = process.argv.includes('--verbose')
@@ -19,8 +19,8 @@ const baseConfig = {
         publicPath: '/',
         sourcePrefix: '  ',
     },
+
     cache: DEBUG,
-    debug: DEBUG,
 
     stats: {
         colors: true,
@@ -33,42 +33,38 @@ const baseConfig = {
         cached: VERBOSE,
         cachedAssets: VERBOSE,
     },
+
     resolve: {
-        extensions: ['', '.js', '.vue', '.css', '.stylus']
+        modules: ['node_modules'],
+        extensions: ['.js', '.vue', '.css', '.stylus'],
     },
+
     module: {
-        loaders: [{
+        rules: [{
             test: /\.js$/,
-            loaders: ['babel'],
-            include: path.src,
+            use: {
+                loader: 'babel-loader',
+            },
+            exclude: /node_modules|src\/(helpers|lib|mixins)/,
         }, {
             test: /\.vue$/,
-            loaders: ['vue'],
+            use: {
+                loader: 'vue-loader',
+            },
         }, {
             test: /\.(png|jpg|gif|svg)$/,
-            loader: 'url?limit=10000&name=public/img/[hash].[ext]',
+            use: 'url?limit=10000&name=public/img/[hash].[ext]',
             include: path.src,
         }, {
             test: /\.woff($|\?)|\.woff2($|\?)|\.ttf($|\?)|\.eot($|\?)|\.svg($|\?)/,
-            loader: 'url-loader',
+            use: 'url-loader',
             include: path.src,
-        }]
-    },
-    babel: {
-        babelrc: false,
-        presets: [
-            ['es2015', { modules: false }],
-            'stage-2'
-        ],
-        plugins: ['transform-runtime']
-    },
-    vue: {
-        loaders: {},
+        }],
     },
 }
 
 const clientConfig = merge(baseConfig, {
-    entry: ['./src/client/main.js'],
+    entry: ['./src-site/client/main.js'],
     output: {
         path: join(path.dist, '/public'),
         filename: DEBUG ?
@@ -77,30 +73,28 @@ const clientConfig = merge(baseConfig, {
     devtool: DEBUG ?
         'cheap-module-eval-source-map' : false,
     plugins: [
-        new webpack.DefinePlugin({
-            ...GLOBALS,
+        new webpack.DefinePlugin(Object.assign({
             'process.env.BROWSER': true
-        }),
+        }, GLOBALS)),
         new AssetsPlugin({
             path: path.dist,
             filename: 'assets.js',
             processOutput: x => `module.exports = ${JSON.stringify(x)}`
         }),
-        ...(!DEBUG ? [
-            new webpack.optimize.DedupePlugin(),
-            new webpack.optimize.UglifyJsPlugin({
-                compress: {
-                    screw_ie8: true,
-                    warnings: VERBOSE,
-                }
-            }),
-            new webpack.optimize.AggressiveMergingPlugin(),
-        ] : []),
-    ],
+    ].concat(!DEBUG ? [
+        new webpack.optimize.DedupePlugin(),
+        new webpack.optimize.UglifyJsPlugin({
+            compress: {
+                screw_ie8: true,
+                warnings: VERBOSE,
+            }
+        }),
+        new webpack.optimize.AggressiveMergingPlugin(),
+    ] : []),
 })
 
 const serverConfig = merge(baseConfig, {
-    entry: ['./src/server/main.js'],
+    entry: ['./src-site/server/main.js'],
     output: {
         path: path.dist,
         filename: 'server.js',
@@ -117,16 +111,15 @@ const serverConfig = merge(baseConfig, {
     },
     devtool: 'source-map',
     plugins: [
-        new webpack.DefinePlugin({
-            ...GLOBALS,
+        new webpack.DefinePlugin(Object.assign({
             'process.env.BROWSER': false
-        }),
+        }, GLOBALS)),
     ],
     externals: [nodeExt(), /\.\/assets$/]
 })
 
 const serverBundleConfig = merge(baseConfig, {
-    entry: ['./src/client/server-entry.js'],
+    entry: ['./src-site/client/server-entry.js'],
     target: 'node',
     output: {
         path: path.dist,
@@ -135,13 +128,12 @@ const serverBundleConfig = merge(baseConfig, {
     },
     devtool: false,
     plugins: [
-        new webpack.DefinePlugin({
-            ...GLOBALS,
+        new webpack.DefinePlugin(Object.assign({
             'process.env.BROWSER': false,
             'process.env.VUE_ENV': '"server"'
-        })
+        }, GLOBALS))
     ],
     externals: [nodeExt()],
 })
 
-export default [clientConfig, serverConfig, serverBundleConfig]
+module.exports = [clientConfig, serverConfig, serverBundleConfig]

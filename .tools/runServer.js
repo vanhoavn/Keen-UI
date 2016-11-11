@@ -1,6 +1,6 @@
-import path from 'path'
-import cp from 'child_process'
-import webpackConfig from './webpack.config.js'
+const path = require('path')
+const cp = require('child_process')
+const webpackConfig = require('./webpack.config.js')
 
 const RUNNING_REGEXP = /The server is running at http:\/\/(.*?)\//
 
@@ -9,9 +9,6 @@ let server
 const { output } = webpackConfig[1]
 
 const serverPath = path.join(output.path, output.filename)
-
-console.log(serverPath)
-
 
 function runServer(cb) {
 	function onStdOut(data) {
@@ -51,4 +48,4 @@ process.on('exit', () => {
 	}
 })
 
-export default runServer
+module.exports = runServer

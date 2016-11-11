@@ -1,9 +1,12 @@
-import del from 'del'
-import fs from './lib/fs'
+const del = require('del')
+const fs = require('./lib/fs')
 
-async function clean() {
-	await del(['.tmp', 'dist/*', '!dist/.git'], { dot: true })
-	await fs.makeDir('dist/public')
-}
+const clean = () => new Promise((resolve, reject) => {
+    del(['.tmp', 'dist/*', '!dist/.git'], { dot: true })
+    .then(() => {
+        fs.makeDir('dist/public')
+    })
+    .then(() => {resolve()})
+})
 
-export default clean;
+module.exports = clean

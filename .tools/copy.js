@@ -1,34 +1,36 @@
-import path from 'path'
-import gaze from 'gaze'
-import replace from 'replace'
-import Promise from 'bluebird'
+const path = require('path')
+const gaze = require('gaze')
+const replace = require('replace')
+const Promise = require('bluebird')
+const ncp = Promise.promisify(require('ncp'))
 
-async function copy({ watch } = {}) {
-	const ncp = Promise.promisify(require('ncp'))
-
-	await Promise.all([
-        ncp('src/public', 'dist/public'),
-		ncp('src/server/views', 'dist/views'),
+const copy = ({ watch } = {}) => new Promise((resolve, reject) => {
+    Promise.all([
+        ncp('src-site/public', 'dist/public'),
+        ncp('src-site/server/views', 'dist/views'),
         ncp('package.json', 'dist/package.json'),
     ])
+        .then(() => {
+            replace({
+                regex: '"start".*',
+                replacement: '"start": "node server.js"',
+                paths: ['dist/package.json'],
+                recursive: false,
+                silent: false,
+            })
+            if (watch) {
+                const watcher = new Promise((resolve, reject) => {
+                    gaze('src-site/public/**/*.*', (err, val) => err ? reject(err) : resolve(val))
+                })
+                watcher.then((watcher) => {
+                    watcher.on('changed', (file) => new Promise((resolve, reject) => {
+                        const replace = file.substr(path.join(__dirname, '../src-site/public/').length)
+                        ncp(`src-site/public/${relPath}`, `build/public/${relPath}`)
+                    }))
+                })
+            }
+            resolve()
+        })
+})
 
-	replace({
-		regex: '"start-ssr".*',
-		replacement: '"start-ssr": "node server.js"',
-		paths: ['dist/package.json'],
-		recursive: false,
-		silent: false,
-	})
-
-	if(watch) {
-		const watcher = await new Promise((resolve, reject) => {
-			gaze('src/public/**/*.*', (err, val) => err ? reject(err) : resolve(val))
-		})
-		watcher.on('changed', async(file) => {
-			const relPath = file.substr(path.join(__dirname, '../src/public/').length)
-			await ncp(`src/public/${relPath}`, `build/public/${relPath}`);
-		})
-	}
-}
-
-export default copy
+module.exports = copy

@@ -1,11 +1,13 @@
-import { join, resolve } from 'path'
+const path = require ('path')
+
+const { join, resolve } = path
 
 const config = {
 
 	// path
 	path: {
 		root: resolve(__dirname),
-		src: join(__dirname, './src'),
+		src: join(__dirname, './src-site'),
 		dist: join(__dirname, './dist'),
 		static: join(__dirname, './dist/public')
 	},
@@ -23,9 +25,7 @@ const config = {
 	],
 
 	// server
-	port: 5000,
-
-	//mongoose
+	port: 5000
 }
 
-export default config
+module.exports = config
