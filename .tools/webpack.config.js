@@ -36,7 +36,7 @@ const baseConfig = {
 
     resolve: {
         modules: ['node_modules'],
-        extensions: ['.js', '.vue', '.css', '.stylus'],
+        extensions: ['.js', '.vue', '.css'],
     },
 
     module: {
@@ -81,6 +81,11 @@ const clientConfig = merge(baseConfig, {
             filename: 'assets.js',
             processOutput: x => `module.exports = ${JSON.stringify(x)}`
         }),
+        new webpack.LoaderOptionsPlugin({
+            vue: {
+                postcss: [require('autoprefixer')({ browsers: AUTOPREFIXER_BROWSERS })]
+            }
+        })
     ].concat(!DEBUG ? [
         new webpack.optimize.DedupePlugin(),
         new webpack.optimize.UglifyJsPlugin({
