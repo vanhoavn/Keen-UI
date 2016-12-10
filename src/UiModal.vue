@@ -1,7 +1,7 @@
 <template>
     <div
         class="ui-modal ui-modal-mask" v-show="show" :transition="transition" :class="[type]"
-        :role="role" @transitionend="transitionEnd | debounce 100"
+        :role="role" @transitionend="transitionEnd"
     >
         <div class="ui-modal-wrapper" @click="close" v-el:modal-mask>
             <div
@@ -42,6 +42,8 @@ import classlist from './helpers/classlist';
 
 import UiIconButton from './UiIconButton.vue';
 import UiButton from './UiButton.vue';
+
+import _ from 'lodash';
 
 export default {
     name: 'ui-modal',
@@ -177,13 +179,13 @@ export default {
             }
         },
 
-        transitionEnd() {
+        transitionEnd : _.debounce(() => {
             if (this.show) {
                 this.$dispatch('revealed');
             } else {
                 this.$dispatch('hidden');
             }
-        }
+        }, 100)
     },
 
     components: {
