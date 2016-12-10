@@ -44,8 +44,7 @@ export default {
         value: {
             type: Number,
             coerce: Number,
-            required: true,
-            twoWay: true
+            required: true
         },
         total: {
             type: Number,

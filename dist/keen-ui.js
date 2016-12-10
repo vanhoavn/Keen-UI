@@ -5742,8 +5742,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        placeholder: String,
 	        value: {
 	            type: [String, Number],
-	            default: '',
-	            twoWay: true
+	            default: ''
 	        },
 	        icon: String,
 	        iconRight: {
@@ -5813,16 +5812,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	exports.default = {
 	    props: {
-	        valid: {
-	            type: Boolean,
-	            default: true,
-	            twoWay: true
-	        },
-	        dirty: {
-	            type: Boolean,
-	            default: false,
-	            twoWay: true
-	        },
 	        hideValidationErrors: {
 	            type: Boolean,
 	            default: false
@@ -5833,7 +5822,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	    data: function data() {
 	        return {
-	            validationError: ''
+	            validationError: '',
+	            valid: true,
+	            dirty: false
 	        };
 	    },
 	    mounted: function mounted() {
@@ -5872,7 +5863,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            }
 	
 	            var data = {
-	                value: this.value
+	                value: this.currentValue
 	            };
 	
 	            var rules = {
@@ -7776,8 +7767,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        name: String,
 	        model: {
 	            type: [Array, String, Boolean],
-	            required: true,
-	            twoWay: true
+	            required: true
 	        },
 	        value: String,
 	        label: String,
@@ -8148,8 +8138,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    props: {
 	        show: {
 	            type: Boolean,
-	            required: true,
-	            twoWay: true
+	            required: true
 	        },
 	        type: {
 	            type: String,
@@ -25886,8 +25875,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        name: String,
 	        model: {
 	            type: String,
-	            default: '',
-	            twoWay: true
+	            default: ''
 	        },
 	        checked: {
 	            type: Boolean,
@@ -26016,8 +26004,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        },
 	        value: {
 	            type: String,
-	            default: '',
-	            twoWay: true
+	            default: ''
 	        },
 	        options: {
 	            type: Array,
@@ -26184,8 +26171,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        value: {
 	            type: Number,
 	            coerce: Number,
-	            required: true,
-	            twoWay: true
+	            required: true
 	        },
 	        total: {
 	            type: Number,
@@ -26623,8 +26609,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    props: {
 	        value: {
 	            type: [Object, Array, String, Number],
-	            default: null,
-	            twoWay: true
+	            default: null
 	        },
 	        default: {
 	            type: [Object, Array, String, Number],
@@ -26679,6 +26664,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    data: function data() {
 	        return {
 	            query: '',
+	            currentValue: this.value,
 	            selectedIndex: -1,
 	            highlightedIndex: -1,
 	            showDropdown: false,
@@ -26698,15 +26684,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	        displayText: function displayText() {
 	            var _this = this;
 	
-	            if (this.multiple && this.value.length) {
-	                var labels = this.value.map(function (value) {
+	            if (this.multiple && this.currentValue.length) {
+	                var labels = this.currentValue.map(function (value) {
 	                    return value[_this.keys.text] || value;
 	                });
 	
 	                return labels.join(this.multipleDelimiter);
 	            }
 	
-	            return this.value ? this.value[this.keys.text] || this.value : '';
+	            return this.currentValue ? this.currentValue[this.keys.text] || this.currentValue : '';
 	        },
 	        hasDisplayText: function hasDisplayText() {
 	            return this.displayText && Boolean(this.displayText.length);
@@ -26730,7 +26716,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    watch: {
 	        filteredOptions: function filteredOptions() {
 	            this.highlightedIndex = 0;
-	            (0, _elementScroll.resetScroll)(this.$refs.optionsList);
+	            (0, _elementScroll.resetScroll)(this.$refs['options-list']);
 	        },
 	        showDropdown: function showDropdown() {
 	            if (this.showDropdown) {
@@ -26745,6 +26731,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	            if (!this.ignoreQueryChange) {
 	                this.$emit('query-changed', this.query);
 	            }
+	        },
+	        value: function value() {
+	            this.currentValue = this.value;
+	        },
+	        currentValue: function currentValue() {
+	            this.$emit('change', this.currentValue);
 	        }
 	    },
 	
@@ -26758,7 +26750,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        };
 	
 	        if (this.validationRules) {
-	            this.validationMessages = (0, _mergeOptions2.default)(errorMessages, this.validationMessages);
+	            this.localValidationMessages = (0, _mergeOptions2.default)(errorMessages, this.validationMessages);
 	        }
 	    },
 	    ready: function ready() {
@@ -26811,7 +26803,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    },
 	
 	    initValue: function initValue() {
-	        this.value = this.multiple ? [] : null;
+	        this.currentValue = this.multiple ? [] : null;
 	
 	        if (this.default) {
 	            var defaults = Array.isArray(this.default) ? this.default : [this.default];
@@ -26855,10 +26847,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	            if (this.isSelected(option)) {
 	                this.deselect(option);
 	            } else {
-	                this.value.push(option);
+	                this.currentValue.push(option);
 	            }
 	        } else {
-	            this.value = option;
+	            this.currentValue = option;
 	            this.selectedIndex = index;
 	        }
 	
@@ -26873,14 +26865,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	        }
 	    },
 	    deselect: function deselect(option) {
-	        this.value.$remove(option);
+	        this.currentValue.$remove(option);
 	    },
 	    isSelected: function isSelected(option) {
 	        if (this.multiple) {
-	            return this.value.indexOf(option) > -1;
+	            return this.currentValue.indexOf(option) > -1;
 	        }
 	
-	        return this.value === option;
+	        return this.currentValue === option;
 	    },
 	    selectHighlighted: function selectHighlighted(index, e) {
 	        if (this.$refs.options.length) {
@@ -26942,7 +26934,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                _this4.$refs.dropdown.focus();
 	            }
 	
-	            _this4.scrollOptionIntoView(_this4.$refs.optionsList.querySelector('.selected'));
+	            _this4.scrollOptionIntoView(_this4.$refs['options-list'].querySelector('.selected'));
 	        });
 	    },
 	    close: function close(deactivate) {
@@ -26990,7 +26982,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        }
 	    },
 	    scrollOptionIntoView: function scrollOptionIntoView(optionEl) {
-	        (0, _elementScroll.scrollIntoView)(optionEl, this.$refs.optionsList, 80);
+	        (0, _elementScroll.scrollIntoView)(optionEl, this.$refs['options-list'], 80);
 	    }
 	}), (0, _defineProperty3.default)(_name$props$data$comp, 'components', {
 	    UiIcon: _UiIcon2.default,
@@ -27323,13 +27315,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	    },
 	
 	    components: {
-	        UiIcon: _UiIcon2.default
-	    },
+	        UiIcon: _UiIcon2.default,
 	
-	    partials: {
-	        'ui-select-simple': '\n            <li class="ui-select-item-text" v-text="option[keys.text] || option"></li>\n        ',
+	        'ui-select-simple': {
+	            props: ['option', 'keys'],
+	            template: '\n                <li class="ui-select-item-text" v-text="option[keys.text] || option"></li>\n            '
+	        },
 	
-	        'ui-select-image': '\n            <div\n                class="ui-select-item-image"\n                :style="{ \'background-image\': \'url(\' + option[keys.image] + \')\' }"\n            ></div>\n\n            <div class="ui-select-item-text" v-text="option[keys.text]"></div>\n        '
+	        'ui-select-image': {
+	            props: ['option', 'keys'],
+	            template: '\n                <div\n                    class="ui-select-item-image"\n                    :style="{ \'background-image\': \'url(\' + option[keys.image] + \')\' }"\n                ></div>\n\n                <div class="ui-select-item-text" v-text="option[keys.text]"></div>\n            '
+	        }
 	    }
 	};
 
@@ -27337,13 +27333,13 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 175 */
 /***/ function(module, exports) {
 
-	module.exports = "\n<li\n    class=\"ui-select-option\" :class=\"{ highlighted: highlighted, selected: selected }\"\n>\n    <div class=\"ui-select-option-content\" :class=\"[partial]\">\n        <partial :name=\"partial\"></partial>\n    </div>\n\n    <ui-icon\n        class=\"ui-select-option-checkbox\" :icon=\"icon\" v-if=\"showCheckbox\"\n    ></ui-icon>\n</li>\n";
+	module.exports = "\n<li\n    class=\"ui-select-option\" :class=\"{ highlighted: highlighted, selected: selected }\"\n    @click=\"$emit('click',$event)\"\n    @mouseover=\"$emit('mouseover',$event)\"\n>\n    <div class=\"ui-select-option-content\" :class=\"[partial]\">\n        <component :is=\"partial\" :option=\"option\" :keys=\"keys\"></component>\n    </div>\n\n    <ui-icon\n        class=\"ui-select-option-checkbox\" :icon=\"icon\" v-if=\"showCheckbox\"\n    ></ui-icon>\n</li>\n";
 
 /***/ },
 /* 176 */
 /***/ function(module, exports) {
 
-	module.exports = "\n<div\n    class=\"ui-select\" :id=\"id\" :class=\"{\n        'disabled': disabled, 'invalid': !valid, 'dirty': dirty, 'active': active,\n        'has-label': !hideLabel, 'icon-right': iconRight\n    }\"\n>\n    <div class=\"ui-select-icon-wrapper\" v-if=\"showIcon\">\n        <ui-icon :icon=\"icon\" class=\"ui-select-icon\"></ui-icon>\n    </div>\n\n    <div class=\"ui-select-content\">\n        <div\n            class=\"ui-select-label\" :tabindex=\"disabled ? null : '0'\" ref=\"label\"\n            @focus=\"focus\" @keydown.tab=\"blur\" @click=\"toggle\" @keydown.space.prevent=\"open\"\n            @keydown.enter.prevent=\"open\"\n        >\n            <div class=\"ui-select-label-text\" v-text=\"label\" v-if=\"!hideLabel\"></div>\n\n            <div class=\"ui-select-display\">\n                <div\n                    class=\"ui-select-value\" :class=\"{ placeholder: !hasDisplayText }\"\n                    v-text=\"hasDisplayText ? displayText : placeholder\"\n                ></div>\n\n                <ui-icon icon=\"arrow_drop_down\" class=\"ui-select-dropdown-icon\"></ui-icon>\n            </div>\n\n            <div\n                class=\"ui-select-dropdown\" tabindex=\"-1\" v-show=\"showDropdown\" ref=\"dropdown\"\n                @keydown.esc.prevent=\"close()\" @keydown.tab=\"close()\"\n                @keydown.up.prevent=\"highlight(highlightedIndex - 1)\"\n                @keydown.down.prevent=\"highlight(highlightedIndex + 1)\"\n                @keydown.enter.prevent.stop=\"selectHighlighted(highlightedIndex, $event)\"\n            >\n                <div class=\"ui-select-search\" v-if=\"showSearch\" @click.stop @keydown.space.stop>\n                    <input\n                        class=\"ui-select-search-input\" type=\"text\" ref=\"search-input\"\n                        :placeholder=\"searchPlaceholder\" v-model=\"query\" autocomplete=\"off\"\n                    >\n\n                    <ui-progress-circular\n                        class=\"ui-select-search-spinner\" :size=\"24\" :stroke=\"4\" :show=\"loading\"\n                    ></ui-progress-circular>\n                </div>\n\n                <ul class=\"ui-select-options\" ref=\"options-list\">\n                    <ui-select-option\n                        :option=\"option\" :partial=\"partial\" :show-checkbox=\"multiple\" :\n                        :keys=\"keys\" @click.stop.prevent=\"select(option, index)\"\n                        @mouseover.stop=\"highlight(index, true)\"\n\n                        :highlighted=\"highlightedIndex === index\"\n                        :selected=\"isSelected(option)\"\n\n                        v-for=\"(index, option) in filteredOptions\" ref=\"options\"\n                    ></ui-select-option>\n\n                    <li class=\"ui-select-no-results\" v-if=\"nothingFound\">No results found</li>\n                </ul>\n            </div>\n        </div>\n\n        <div class=\"ui-select-feedback\" v-if=\"showFeedback\">\n            <div\n                class=\"ui-select-error-text\" transition=\"ui-select-feedback-toggle\"\n                v-text=\"validationError\" v-show=\"!hideValidationErrors && !valid\"\n            ></div>\n\n            <div\n                class=\"ui-select-help-text\" transition=\"ui-select-feedback-toggle\"\n                v-text=\"helpText\" v-else\n            ></div>\n        </div>\n    </div>\n</div>\n";
+	module.exports = "\n<div\n    class=\"ui-select\" :id=\"id\" :class=\"{\n        'disabled': disabled, 'invalid': !valid, 'dirty': dirty, 'active': active,\n        'has-label': !hideLabel, 'icon-right': iconRight\n    }\"\n>\n    <div class=\"ui-select-icon-wrapper\" v-if=\"showIcon\">\n        <ui-icon :icon=\"icon\" class=\"ui-select-icon\"></ui-icon>\n    </div>\n\n    <div class=\"ui-select-content\">\n        <div\n            class=\"ui-select-label\" :tabindex=\"disabled ? null : '0'\" ref=\"label\"\n            @focus=\"focus\" @keydown.tab=\"blur\" @click=\"toggle\" @keydown.space.prevent=\"open\"\n            @keydown.enter.prevent=\"open\"\n        >\n            <div class=\"ui-select-label-text\" v-text=\"label\" v-if=\"!hideLabel\"></div>\n\n            <div class=\"ui-select-display\">\n                <div\n                    class=\"ui-select-value\" :class=\"{ placeholder: !hasDisplayText }\"\n                    v-text=\"hasDisplayText ? displayText : placeholder\"\n                ></div>\n\n                <ui-icon icon=\"arrow_drop_down\" class=\"ui-select-dropdown-icon\"></ui-icon>\n            </div>\n\n            <div\n                class=\"ui-select-dropdown\" tabindex=\"-1\" v-show=\"showDropdown\" ref=\"dropdown\"\n                @keydown.esc.prevent=\"close()\" @keydown.tab=\"close()\"\n                @keydown.up.prevent=\"highlight(highlightedIndex - 1)\"\n                @keydown.down.prevent=\"highlight(highlightedIndex + 1)\"\n                @keydown.enter.prevent.stop=\"selectHighlighted(highlightedIndex, $event)\"\n            >\n                <div class=\"ui-select-search\" v-if=\"showSearch\" @click.stop @keydown.space.stop>\n                    <input\n                        class=\"ui-select-search-input\" type=\"text\" ref=\"search-input\"\n                        :placeholder=\"searchPlaceholder\" v-model=\"query\" autocomplete=\"off\"\n                    >\n\n                    <ui-progress-circular\n                        class=\"ui-select-search-spinner\" :size=\"24\" :stroke=\"4\" :show=\"loading\"\n                    ></ui-progress-circular>\n                </div>\n\n                <ul class=\"ui-select-options\" ref=\"options-list\">\n                    <ui-select-option\n                        :option=\"option\" :partial=\"partial\" :show-checkbox=\"multiple\"\n                        :keys=\"keys\"\n                        @click.stop.prevent=\"select(option, index)\"\n                        @mouseover.stop=\"highlight(index, true)\"\n\n                        :highlighted=\"highlightedIndex === index\"\n                        :selected=\"isSelected(option)\"\n\n                        v-for=\"(option, index) in filteredOptions\" ref=\"options\"\n                    ></ui-select-option>\n\n                    <li class=\"ui-select-no-results\" v-if=\"nothingFound\">No results found</li>\n                </ul>\n            </div>\n        </div>\n\n        <div class=\"ui-select-feedback\" v-if=\"showFeedback\">\n            <div\n                class=\"ui-select-error-text\" transition=\"ui-select-feedback-toggle\"\n                v-text=\"validationError\" v-show=\"!hideValidationErrors && !valid\"\n            ></div>\n\n            <div\n                class=\"ui-select-help-text\" transition=\"ui-select-feedback-toggle\"\n                v-text=\"helpText\" v-show=\"hideValidationErrors || valid\"\n            ></div>\n        </div>\n    </div>\n</div>\n";
 
 /***/ },
 /* 177 */
@@ -27418,8 +27414,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        name: String,
 	        value: {
 	            type: Number,
-	            required: true,
-	            twoWay: true
+	            required: true
 	        },
 	        step: {
 	            type: Number,
@@ -29896,8 +29891,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        id: String,
 	        show: {
 	            type: Boolean,
-	            default: false,
-	            twoWay: true
+	            default: false
 	        },
 	        message: String,
 	        action: String,
@@ -30217,8 +30211,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        name: String,
 	        value: {
 	            type: Boolean,
-	            required: true,
-	            twoWay: true
+	            required: true
 	        },
 	        label: String,
 	        hideLabel: {
@@ -30882,6 +30875,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	    watch: {
 	        value: function value() {
+	            this.currentValue = this.value;
+	        },
+	        currentValue: function currentValue() {
+	            if (this.currentValue !== this.value) {
+	                this.$emit('input', this.currentValue);
+	            };
+	
 	            if (this.ignoreValueChange) {
 	                return;
 	            }
@@ -30898,7 +30898,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	    data: function data() {
 	        return {
-	            ignoreValueChange: false
+	            ignoreValueChange: false,
+	            currentValue: this.value
 	        };
 	    },
 	
@@ -30975,7 +30976,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            }
 	
 	            this.validationError = '';
-	            this.value = this.initialValue;
+	            this.currentValue = this.initialValue;
 	            this.valid = true;
 	            this.dirty = false;
 	
@@ -31036,7 +31037,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 216 */
 /***/ function(module, exports) {
 
-	module.exports = "\n<div\n    class=\"ui-textbox\"\n    :class=\"{\n        'disabled': disabled, 'invalid': !valid, 'dirty': dirty, 'active': active,\n        'has-label': !hideLabel, 'is-multi-line': multiLine, 'icon-right': iconRight,\n        'has-counter': maxLength\n    }\"\n>\n    <div class=\"ui-textbox-icon-wrapper\" v-if=\"showIcon\">\n        <ui-icon :icon=\"icon\" class=\"ui-textbox-icon\"></ui-icon>\n    </div>\n\n    <div class=\"ui-textbox-content\">\n        <label class=\"ui-textbox-label\">\n            <div class=\"ui-textbox-label-text\" v-text=\"label\" v-if=\"!hideLabel\"></div>\n\n            <input\n                class=\"ui-textbox-input\" :type=\"type\" :placeholder=\"placeholder\" :name=\"name\"\n                :id=\"id\" :number=\"type === 'number' ? true : null\" :min=\"minValue\"\n                :max=\"maxValue\" :step=\"stepValue\"\n                :autocomplete=\"autocomplete ? autocomplete : null\"\n\n                @focus=\"focussed\" @blur=\"blurred\" @change=\"changed\" @keydown=\"keydown\"\n                @keydown.enter=\"keydownEnter\" :debounce=\"debounce\"\n\n                v-model=\"value | trim\" v-disabled=\"disabled\" v-if=\"!multiLine\"\n                v-autofocus=\"autofocus\"\n            >\n\n            <textarea\n                class=\"ui-textbox-textarea\" :placeholder=\"placeholder\" :name=\"name\" :id=\"id\"\n                :rows=\"rows\"\n\n                @focus=\"focussed\" @blur=\"blurred\" @change=\"changed\" @keydown=\"keydown\"\n                @keydown.enter=\"keydownEnter\" :debounce=\"debounce\"\n\n                v-model=\"value | trim\" v-disabled=\"disabled\" v-else\n            ></textarea>\n        </label>\n\n        <div class=\"ui-textbox-feedback\" v-if=\"showFeedback || maxLength\">\n            <div\n                class=\"ui-textbox-error-text\" transition=\"ui-textbox-feedback-toggle\"\n                v-text=\"validationError\" v-show=\"!hideValidationErrors && !valid\"\n            ></div>\n\n            <div\n                class=\"ui-textbox-help-text\" transition=\"ui-textbox-feedback-toggle\"\n                v-text=\"helpText\" v-else\n            ></div>\n\n            <div\n                class=\"ui-textbox-counter\" v-text=\"value.length + '/' + maxLength\"\n                v-if=\"maxLength\"\n            ></div>\n        </div>\n    </div>\n</div>\n";
+	module.exports = "\n<div\n    class=\"ui-textbox\"\n    :class=\"{\n        'disabled': disabled, 'invalid': !valid, 'dirty': dirty, 'active': active,\n        'has-label': !hideLabel, 'is-multi-line': multiLine, 'icon-right': iconRight,\n        'has-counter': maxLength\n    }\"\n>\n    <div class=\"ui-textbox-icon-wrapper\" v-if=\"showIcon\">\n        <ui-icon :icon=\"icon\" class=\"ui-textbox-icon\"></ui-icon>\n    </div>\n\n    <div class=\"ui-textbox-content\">\n        <label class=\"ui-textbox-label\">\n            <div class=\"ui-textbox-label-text\" v-text=\"label\" v-if=\"!hideLabel\"></div>\n\n            <input\n                class=\"ui-textbox-input\" type=\"password\" :placeholder=\"placeholder\" :name=\"name\"\n                :id=\"id\"\n                autocomplete=\"off\"\n\n                @focus=\"focussed\" @blur=\"blurred\" @change=\"changed\" @keydown=\"keydown\"\n                @keydown.enter=\"keydownEnter\" :debounce=\"debounce\"\n\n                v-model=\"currentValue\" v-disabled=\"disabled\" v-if=\"!multiLine && type === 'password'\"\n                v-autofocus=\"autofocus\"\n            >\n\n            <input\n                class=\"ui-textbox-input\" type=\"number\" :placeholder=\"placeholder\" :name=\"name\"\n                :id=\"id\" :number=\"true\"\n                :min=\"minValue\" :max=\"maxValue\" :step=\"stepValue\"\n                :autocomplete=\"autocomplete ? autocomplete : null\"\n\n                @focus=\"focussed\" @blur=\"blurred\" @change=\"changed\" @keydown=\"keydown\"\n                @keydown.enter=\"keydownEnter\" :debounce=\"debounce\"\n\n                v-model=\"currentValue\" v-disabled=\"disabled\" v-if=\"!multiLine && type === 'number'\"\n                v-autofocus=\"autofocus\"\n            >\n\n            <input\n                class=\"ui-textbox-input\" type=\"text\" :placeholder=\"placeholder\" :name=\"name\"\n                :id=\"id\"\n                :autocomplete=\"autocomplete ? autocomplete : null\"\n\n                @focus=\"focussed\" @blur=\"blurred\" @change=\"changed\" @keydown=\"keydown\"\n                @keydown.enter=\"keydownEnter\" :debounce=\"debounce\"\n\n                v-model=\"currentValue\" v-disabled=\"disabled\" v-if=\"!multiLine && type === 'text'\"\n                v-autofocus=\"autofocus\"\n            >\n\n            <textarea\n                class=\"ui-textbox-textarea\" :placeholder=\"placeholder\" :name=\"name\" :id=\"id\"\n                :rows=\"rows\"\n\n                @focus=\"focussed\" @blur=\"blurred\" @change=\"changed\" @keydown=\"keydown\"\n                @keydown.enter=\"keydownEnter\" :debounce=\"debounce\"\n\n                v-model=\"currentValue\" v-disabled=\"disabled\" v-if=\"multiLine\"\n            ></textarea>\n        </label>\n\n        <div class=\"ui-textbox-feedback\" v-if=\"showFeedback || maxLength\">\n            <div\n                class=\"ui-textbox-error-text\" transition=\"ui-textbox-feedback-toggle\"\n                v-text=\"validationError\" v-show=\"!hideValidationErrors && !valid\"\n            ></div>\n\n            <div\n                class=\"ui-textbox-help-text\" transition=\"ui-textbox-feedback-toggle\"\n                v-text=\"helpText\" v-show=\"hideValidationErrors || valid\"\n            ></div>\n\n            <div\n                class=\"ui-textbox-counter\" v-text=\"value.length + '/' + maxLength\"\n                v-if=\"maxLength\"\n            ></div>\n        </div>\n    </div>\n</div>\n";
 
 /***/ },
 /* 217 */

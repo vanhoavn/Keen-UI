@@ -51,8 +51,7 @@ export default {
         name: String,
         value: {
             type: Number,
-            required: true,
-            twoWay: true
+            required: true
         },
         step: {
             type: Number,

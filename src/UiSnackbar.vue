@@ -27,8 +27,7 @@ export default {
         id: String,
         show: {
             type: Boolean,
-            default: false,
-            twoWay: true
+            default: false
         },
         message: String,
         action: String,

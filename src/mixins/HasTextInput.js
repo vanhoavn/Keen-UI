@@ -12,8 +12,7 @@ export default {
         placeholder: String,
         value: {
             type: [String, Number],
-            default: '',
-            twoWay: true
+            default: ''
         },
         icon: String,
         iconRight: {

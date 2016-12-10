@@ -2,16 +2,6 @@ import Validator from 'validatorjs';
 
 export default {
     props: {
-        valid: {
-            type: Boolean,
-            default: true,
-            twoWay: true
-        },
-        dirty: {
-            type: Boolean,
-            default: false,
-            twoWay: true
-        },
         hideValidationErrors: {
             type: Boolean,
             default: false
@@ -22,7 +12,9 @@ export default {
 
     data() {
         return {
-            validationError: ''
+            validationError: '',
+            valid: true,
+            dirty: false,
         };
     },
 
@@ -55,7 +47,7 @@ export default {
             }
 
             let data = {
-                value: this.value
+                value: this.currentValue
             };
 
             let rules = {

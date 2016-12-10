@@ -34,8 +34,7 @@ export default {
         name: String,
         model: {
             type: [Array, String, Boolean],
-            required: true,
-            twoWay: true
+            required: true
         },
         value: String,
         label: String,

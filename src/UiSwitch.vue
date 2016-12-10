@@ -35,8 +35,7 @@ export default {
         name: String,
         value: {
             type: Boolean,
-            required: true,
-            twoWay: true
+            required: true
         },
         label: String,
         hideLabel: {

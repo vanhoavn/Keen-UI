@@ -32,8 +32,7 @@ export default {
         name: String,
         model: {
             type: String,
-            default: '',
-            twoWay: true
+            default: ''
         },
         checked: {
             type: Boolean,

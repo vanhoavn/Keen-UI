@@ -16,15 +16,39 @@
                 <div class="ui-textbox-label-text" v-text="label" v-if="!hideLabel"></div>
 
                 <input
-                    class="ui-textbox-input" :type="type" :placeholder="placeholder" :name="name"
-                    :id="id" :number="type === 'number' ? true : null" :min="minValue"
-                    :max="maxValue" :step="stepValue"
+                    class="ui-textbox-input" type="password" :placeholder="placeholder" :name="name"
+                    :id="id"
+                    autocomplete="off"
+
+                    @focus="focussed" @blur="blurred" @change="changed" @keydown="keydown"
+                    @keydown.enter="keydownEnter" :debounce="debounce"
+
+                    v-model="currentValue" v-disabled="disabled" v-if="!multiLine && type === 'password'"
+                    v-autofocus="autofocus"
+                >
+
+                <input
+                    class="ui-textbox-input" type="number" :placeholder="placeholder" :name="name"
+                    :id="id" :number="true"
+                    :min="minValue" :max="maxValue" :step="stepValue"
                     :autocomplete="autocomplete ? autocomplete : null"
 
                     @focus="focussed" @blur="blurred" @change="changed" @keydown="keydown"
                     @keydown.enter="keydownEnter" :debounce="debounce"
 
-                    v-model="value | trim" v-disabled="disabled" v-if="!multiLine"
+                    v-model="currentValue" v-disabled="disabled" v-if="!multiLine && type === 'number'"
+                    v-autofocus="autofocus"
+                >
+
+                <input
+                    class="ui-textbox-input" type="text" :placeholder="placeholder" :name="name"
+                    :id="id"
+                    :autocomplete="autocomplete ? autocomplete : null"
+
+                    @focus="focussed" @blur="blurred" @change="changed" @keydown="keydown"
+                    @keydown.enter="keydownEnter" :debounce="debounce"
+
+                    v-model="currentValue" v-disabled="disabled" v-if="!multiLine && type === 'text'"
                     v-autofocus="autofocus"
                 >
 
@@ -35,7 +59,7 @@
                     @focus="focussed" @blur="blurred" @change="changed" @keydown="keydown"
                     @keydown.enter="keydownEnter" :debounce="debounce"
 
-                    v-model="value | trim" v-disabled="disabled" v-else
+                    v-model="currentValue" v-disabled="disabled" v-if="multiLine"
                 ></textarea>
             </label>
 
@@ -47,7 +71,7 @@
 
                 <div
                     class="ui-textbox-help-text" transition="ui-textbox-feedback-toggle"
-                    v-text="helpText" v-else
+                    v-text="helpText" v-show="hideValidationErrors || valid"
                 ></div>
 
                 <div
@@ -107,6 +131,13 @@ export default {
 
     watch: {
         value() {
+            this.currentValue = this.value;
+        },
+        currentValue() {
+            if(this.currentValue !== this.value) {
+                this.$emit('input', this.currentValue);
+            };
+
             if (this.ignoreValueChange) {
                 return;
             }
@@ -123,7 +154,8 @@ export default {
 
     data() {
         return {
-            ignoreValueChange: false
+            ignoreValueChange: false,
+            currentValue: this.value,
         };
     },
 
@@ -201,7 +233,7 @@ export default {
 
             // Reset state
             this.validationError = '';
-            this.value = this.initialValue;
+            this.currentValue = this.initialValue;
             this.valid = true;
             this.dirty = false;
 

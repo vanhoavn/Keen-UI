@@ -46,14 +46,15 @@
 
                     <ul class="ui-select-options" ref="options-list">
                         <ui-select-option
-                            :option="option" :partial="partial" :show-checkbox="multiple" :
-                            :keys="keys" @click.stop.prevent="select(option, index)"
+                            :option="option" :partial="partial" :show-checkbox="multiple"
+                            :keys="keys"
+                            @click.stop.prevent="select(option, index)"
                             @mouseover.stop="highlight(index, true)"
 
                             :highlighted="highlightedIndex === index"
                             :selected="isSelected(option)"
 
-                            v-for="(index, option) in filteredOptions" ref="options"
+                            v-for="(option, index) in filteredOptions" ref="options"
                         ></ui-select-option>
 
                         <li class="ui-select-no-results" v-if="nothingFound">No results found</li>
@@ -69,7 +70,7 @@
 
                 <div
                     class="ui-select-help-text" transition="ui-select-feedback-toggle"
-                    v-text="helpText" v-else
+                    v-text="helpText" v-show="hideValidationErrors || valid"
                 ></div>
             </div>
         </div>
@@ -95,8 +96,7 @@ export default {
     props: {
         value: {
             type: [Object, Array, String, Number],
-            default: null,
-            twoWay: true
+            default: null
         },
         default: {
             type: [Object, Array, String, Number],
@@ -151,6 +151,7 @@ export default {
     data() {
         return {
             query: '',
+            currentValue: this.value,
             selectedIndex: -1,
             highlightedIndex: -1,
             showDropdown: false,
@@ -168,13 +169,13 @@ export default {
         },
 
         displayText() {
-            if (this.multiple && this.value.length) {
-                let labels = this.value.map((value) => value[this.keys.text] || value);
+            if (this.multiple && this.currentValue.length) {
+                let labels = this.currentValue.map((value) => value[this.keys.text] || value);
 
                 return labels.join(this.multipleDelimiter);
             }
 
-            return this.value ? (this.value[this.keys.text] || this.value) : '';
+            return this.currentValue ? (this.currentValue[this.keys.text] || this.currentValue) : '';
         },
 
         hasDisplayText() {
@@ -201,7 +202,7 @@ export default {
     watch: {
         filteredOptions() {
             this.highlightedIndex = 0;
-            resetScroll(this.$refs.optionsList);
+            resetScroll(this.$refs['options-list']);
         },
 
         showDropdown() {
@@ -218,7 +219,15 @@ export default {
             if (!this.ignoreQueryChange) {
                 this.$emit('query-changed', this.query);
             }
-        }
+        },
+
+        value() {
+            this.currentValue = this.value;
+        },
+
+        currentValue() {
+            this.$emit('change', this.currentValue);
+        },
     },
 
     created() {
@@ -231,7 +240,7 @@ export default {
         };
 
         if (this.validationRules) {
-            this.validationMessages = merge(errorMessages, this.validationMessages);
+            this.localValidationMessages = merge(errorMessages, this.validationMessages);
         }
     },
 
@@ -285,7 +294,7 @@ export default {
         },
 
         initValue() {
-            this.value = this.multiple ? [] : null;
+            this.currentValue = this.multiple ? [] : null;
 
             if (this.default) {
                 let defaults = Array.isArray(this.default) ? this.default : [this.default];
@@ -328,10 +337,10 @@ export default {
                 if (this.isSelected(option)) {
                     this.deselect(option);
                 } else {
-                    this.value.push(option);
+                    this.currentValue.push(option);
                 }
             } else {
-                this.value = option;
+                this.currentValue = option;
                 this.selectedIndex = index;
             }
 
@@ -347,15 +356,15 @@ export default {
         },
 
         deselect(option) {
-            this.value.$remove(option);
+            this.currentValue.$remove(option);
         },
 
         isSelected(option) {
             if (this.multiple) {
-                return this.value.indexOf(option) > -1;
+                return this.currentValue.indexOf(option) > -1;
             }
 
-            return this.value === option;
+            return this.currentValue === option;
         },
 
         selectHighlighted(index, e) {
@@ -422,7 +431,7 @@ export default {
                     this.$refs.dropdown.focus();
                 }
 
-                this.scrollOptionIntoView(this.$refs.optionsList.querySelector('.selected'));
+                this.scrollOptionIntoView(this.$refs['options-list'].querySelector('.selected'));
             });
         },
 
@@ -475,7 +484,7 @@ export default {
         },
 
         scrollOptionIntoView(optionEl) {
-            scrollIntoView(optionEl, this.$refs.optionsList, 80);
+            scrollIntoView(optionEl, this.$refs['options-list'], 80);
         }
     },
 

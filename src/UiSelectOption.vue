@@ -1,9 +1,11 @@
 <template>
     <li
         class="ui-select-option" :class="{ highlighted: highlighted, selected: selected }"
+        @click="$emit('click',$event)"
+        @mouseover="$emit('mouseover',$event)"
     >
         <div class="ui-select-option-content" :class="[partial]">
-            <partial :name="partial"></partial>
+            <component :is="partial" :option="option" :keys="keys"></component>
         </div>
 
         <ui-icon
@@ -58,22 +60,26 @@ export default {
     },
 
     components: {
-        UiIcon
-    },
+        UiIcon,
 
-    partials: {
-        'ui-select-simple': `
-            <li class="ui-select-item-text" v-text="option[keys.text] || option"></li>
-        `,
+        'ui-select-simple': {
+            props: ['option', 'keys'],
+            template: `
+                <li class="ui-select-item-text" v-text="option[keys.text] || option"></li>
+            `
+        },
 
-        'ui-select-image': `
-            <div
-                class="ui-select-item-image"
-                :style="{ 'background-image': 'url(' + option[keys.image] + ')' }"
-            ></div>
+        'ui-select-image': {
+            props: ['option', 'keys'],
+            template: `
+                <div
+                    class="ui-select-item-image"
+                    :style="{ 'background-image': 'url(' + option[keys.image] + ')' }"
+                ></div>
 
-            <div class="ui-select-item-text" v-text="option[keys.text]"></div>
-        `
+                <div class="ui-select-item-text" v-text="option[keys.text]"></div>
+            `
+        },
     }
 };
 </script>

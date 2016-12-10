@@ -39,8 +39,7 @@ export default {
         },
         value: {
             type: String,
-            default: '',
-            twoWay: true
+            default: ''
         },
         options: {
             type: Array,
