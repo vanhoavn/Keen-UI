@@ -178,13 +178,15 @@ export default {
             }
         },
 
-        transitionEnd : _.debounce(() => {
-            if (this.show) {
-                this.$emit('revealed');
-            } else {
-                this.$emit('hidden');
-            }
-        }, 100)
+        transitionEnd() {
+            return  _.debounce(() => {
+                if (this.show) {
+                    this.$emit('revealed');
+                } else {
+                    this.$emit('hidden');
+                }
+            }, 100);
+        }
     },
 
     components: {

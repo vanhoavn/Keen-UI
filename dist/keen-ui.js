@@ -8382,15 +8382,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	                this.lastFocussedElement.focus();
 	            }
 	        },
+	        transitionEnd: function transitionEnd() {
+	            var _this2 = this;
 	
-	
-	        transitionEnd: _lodash2.default.debounce(function () {
-	            if (undefined.show) {
-	                undefined.$emit('revealed');
-	            } else {
-	                undefined.$emit('hidden');
-	            }
-	        }, 100)
+	            return _lodash2.default.debounce(function () {
+	                if (_this2.show) {
+	                    _this2.$emit('revealed');
+	                } else {
+	                    _this2.$emit('hidden');
+	                }
+	            }, 100);
+	        }
 	    },
 	
 	    components: {
