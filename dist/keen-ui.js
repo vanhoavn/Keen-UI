@@ -2062,8 +2062,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	                openOn: this.openOn
 	            });
 	
-	            console.log(this.drop);
-	
 	            if (this.dropdownPosition !== 'bottom left') {
 	                this.drop.open();
 	                this.drop.close();

@@ -102,8 +102,6 @@ export default {
                 openOn: this.openOn
             });
 
-            console.log(this.drop);
-
             // TO FIX: Hacky workaround for Tether not positioning
             // correctly for positions other than 'bottom left'
             if (this.dropdownPosition !== 'bottom left') {
