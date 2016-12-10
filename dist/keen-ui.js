@@ -71,23 +71,23 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _UiAutocomplete2 = _interopRequireDefault(_UiAutocomplete);
 	
-	var _UiButton = __webpack_require__(109);
+	var _UiButton = __webpack_require__(112);
 	
 	var _UiButton2 = _interopRequireDefault(_UiButton);
 	
-	var _UiCheckbox = __webpack_require__(113);
+	var _UiCheckbox = __webpack_require__(116);
 	
 	var _UiCheckbox2 = _interopRequireDefault(_UiCheckbox);
 	
-	var _UiCollapsible = __webpack_require__(117);
+	var _UiCollapsible = __webpack_require__(120);
 	
 	var _UiCollapsible2 = _interopRequireDefault(_UiCollapsible);
 	
-	var _UiConfirm = __webpack_require__(121);
+	var _UiConfirm = __webpack_require__(124);
 	
 	var _UiConfirm2 = _interopRequireDefault(_UiConfirm);
 	
-	var _UiFab = __webpack_require__(131);
+	var _UiFab = __webpack_require__(134);
 	
 	var _UiFab2 = _interopRequireDefault(_UiFab);
 	
@@ -107,7 +107,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _UiMenuOption2 = _interopRequireDefault(_UiMenuOption);
 	
-	var _UiModal = __webpack_require__(124);
+	var _UiModal = __webpack_require__(127);
 	
 	var _UiModal2 = _interopRequireDefault(_UiModal);
 	
@@ -115,7 +115,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _UiPopover2 = _interopRequireDefault(_UiPopover);
 	
-	var _UiPreloader = __webpack_require__(135);
+	var _UiPreloader = __webpack_require__(138);
 	
 	var _UiPreloader2 = _interopRequireDefault(_UiPreloader);
 	
@@ -123,27 +123,27 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _UiProgressCircular2 = _interopRequireDefault(_UiProgressCircular);
 	
-	var _UiProgressLinear = __webpack_require__(139);
+	var _UiProgressLinear = __webpack_require__(142);
 	
 	var _UiProgressLinear2 = _interopRequireDefault(_UiProgressLinear);
 	
-	var _UiRadio = __webpack_require__(143);
+	var _UiRadio = __webpack_require__(146);
 	
 	var _UiRadio2 = _interopRequireDefault(_UiRadio);
 	
-	var _UiRadioGroup = __webpack_require__(147);
+	var _UiRadioGroup = __webpack_require__(150);
 	
 	var _UiRadioGroup2 = _interopRequireDefault(_UiRadioGroup);
 	
-	var _UiRating = __webpack_require__(151);
+	var _UiRating = __webpack_require__(154);
 	
 	var _UiRating2 = _interopRequireDefault(_UiRating);
 	
-	var _UiRatingIcon = __webpack_require__(154);
+	var _UiRatingIcon = __webpack_require__(157);
 	
 	var _UiRatingIcon2 = _interopRequireDefault(_UiRatingIcon);
 	
-	var _UiRatingPreview = __webpack_require__(159);
+	var _UiRatingPreview = __webpack_require__(162);
 	
 	var _UiRatingPreview2 = _interopRequireDefault(_UiRatingPreview);
 	
@@ -151,39 +151,39 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _UiRippleInk2 = _interopRequireDefault(_UiRippleInk);
 	
-	var _UiSelect = __webpack_require__(163);
+	var _UiSelect = __webpack_require__(166);
 	
 	var _UiSelect2 = _interopRequireDefault(_UiSelect);
 	
-	var _UiSlider = __webpack_require__(174);
+	var _UiSlider = __webpack_require__(177);
 	
 	var _UiSlider2 = _interopRequireDefault(_UiSlider);
 	
-	var _UiSnackbar = __webpack_require__(186);
+	var _UiSnackbar = __webpack_require__(189);
 	
 	var _UiSnackbar2 = _interopRequireDefault(_UiSnackbar);
 	
-	var _UiSnackbarContainer = __webpack_require__(190);
+	var _UiSnackbarContainer = __webpack_require__(193);
 	
 	var _UiSnackbarContainer2 = _interopRequireDefault(_UiSnackbarContainer);
 	
-	var _UiSwitch = __webpack_require__(194);
+	var _UiSwitch = __webpack_require__(197);
 	
 	var _UiSwitch2 = _interopRequireDefault(_UiSwitch);
 	
-	var _UiTab = __webpack_require__(198);
+	var _UiTab = __webpack_require__(201);
 	
 	var _UiTab2 = _interopRequireDefault(_UiTab);
 	
-	var _UiTabs = __webpack_require__(202);
+	var _UiTabs = __webpack_require__(205);
 	
 	var _UiTabs2 = _interopRequireDefault(_UiTabs);
 	
-	var _UiTextbox = __webpack_require__(210);
+	var _UiTextbox = __webpack_require__(213);
 	
 	var _UiTextbox2 = _interopRequireDefault(_UiTextbox);
 	
-	var _UiToolbar = __webpack_require__(214);
+	var _UiToolbar = __webpack_require__(217);
 	
 	var _UiToolbar2 = _interopRequireDefault(_UiToolbar);
 	
@@ -456,7 +456,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    methods: {
 	        close: function close() {
 	            this.show = false;
-	            this.$dispatch('dismissed');
+	            this.$emit('dismissed');
 	        }
 	    },
 	
@@ -787,13 +787,35 @@ return /******/ (function(modules) { // webpackBootstrap
 	        }
 	    },
 	
-	    events: {
+	    mounted: function mounted() {
+	        var _this = this;
+	
+	        this.$nextTick(function () {
+	            var _arr = ['opened', 'closed'];
+	
+	            for (var _i = 0; _i < _arr.length; _i++) {
+	                var event = _arr[_i];
+	                _this.$on('dropdown-' + event, _this['dropdown-' + event]);
+	            }
+	        });
+	    },
+	    beforeDestroy: function beforeDestroy() {
+	        var _arr2 = ['opened', 'closed'];
+	
+	        for (var _i2 = 0; _i2 < _arr2.length; _i2++) {
+	            var event = _arr2[_i2];
+	            this.$off('dropdown-' + event, this['dropdown-' + event]);
+	        }
+	    },
+	
+	
+	    methods: {
 	        'dropdown-opened': function dropdownOpened() {
 	            if (this.containFocus) {
 	                document.addEventListener('focus', this.restrictFocus, true);
 	            }
 	
-	            this.$dispatch('opened');
+	            this.$emit('opened');
 	
 	            return true;
 	        },
@@ -803,16 +825,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	                document.removeEventListener('focus', this.restrictFocus, true);
 	            }
 	
-	            this.$dispatch('closed');
+	            this.$emit('closed');
 	
 	            return true;
-	        }
-	    },
+	        },
 	
-	    methods: {
 	        optionSelect: function optionSelect(option) {
 	            if (!(option.disabled || option.type === 'divider')) {
-	                this.$dispatch('option-selected', option);
+	                this.$emit('option-selected', option);
 	
 	                if (this.closeOnSelect) {
 	                    this.closeDropdown();
@@ -1933,20 +1953,35 @@ return /******/ (function(modules) { // webpackBootstrap
 	            lastFocussedElement: null
 	        };
 	    },
-	    ready: function ready() {
-	        if (this.trigger) {
-	            this.initializeDropdown();
-	        }
+	    mounted: function mounted() {
+	        var _this = this;
+	
+	        this.$nextTick(function () {
+	            var _arr = ['open', 'close', 'toggle'];
+	
+	            for (var _i = 0; _i < _arr.length; _i++) {
+	                var event = _arr[_i];
+	                _this.$on('ui-dropdown::' + event, _this['ui-dropdown::' + event]);
+	            }
+	            if (_this.trigger) {
+	                _this.initializeDropdown();
+	            };
+	        });
 	    },
 	    beforeDestroy: function beforeDestroy() {
 	        if (this.drop) {
 	            this.drop.remove();
 	            this.drop.destroy();
 	        }
+	        var _arr2 = ['open', 'close', 'toggle'];
+	        for (var _i2 = 0; _i2 < _arr2.length; _i2++) {
+	            var event = _arr2[_i2];
+	            this.$off('ui-dropdown::' + event, this['ui-dropdown::' + event]);
+	        }
 	    },
 	
 	
-	    events: {
+	    methods: {
 	        'ui-dropdown::open': function uiDropdownOpen(id) {
 	            if (!this.eventTargetsComponent(id)) {
 	                return;
@@ -1954,7 +1989,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	            this.openDropdown();
 	        },
-	
 	        'ui-dropdown::close': function uiDropdownClose(id) {
 	            if (!this.eventTargetsComponent(id)) {
 	                return;
@@ -1962,17 +1996,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	            this.closeDropdown();
 	        },
-	
 	        'ui-dropdown::toggle': function uiDropdownToggle(id) {
 	            if (!this.eventTargetsComponent(id)) {
 	                return;
 	            }
 	
 	            this.toggleDropdown();
-	        }
-	    },
-	
-	    methods: {
+	        },
 	        initializeDropdown: function initializeDropdown() {
 	            this.drop = new _tetherDrop2.default({
 	                target: this.trigger,
@@ -2031,7 +2061,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            this.lastFocussedElement = document.activeElement;
 	            this.$refs.dropdown.focus();
 	
-	            this.$dispatch('dropdown-opened');
+	            this.$emit('dropdown-opened');
 	        },
 	        dropdownClosed: function dropdownClosed() {
 	            _classlist2.default.remove(this.trigger, 'dropdown-open');
@@ -2040,7 +2070,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                this.lastFocussedElement.focus();
 	            }
 	
-	            this.$dispatch('dropdown-closed');
+	            this.$emit('dropdown-closed');
 	        }
 	    },
 	
@@ -4522,13 +4552,41 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = {
 	    name: 'ui-popover',
 	
-	    events: {
+	    mounted: function mounted() {
+	        var _this = this;
+	
+	        this.$nextTick(function () {
+	            var _arr = ['opened', 'closed'];
+	
+	            for (var _i = 0; _i < _arr.length; _i++) {
+	                var event = _arr[_i];
+	                _this.$on('dropdown-' + event, _this['dropdown-' + event]);
+	            }
+	            if (_this.trigger) {
+	                _this.initializeDropdown();
+	            };
+	        });
+	    },
+	    beforeDestroy: function beforeDestroy() {
+	        if (this.drop) {
+	            this.drop.remove();
+	            this.drop.destroy();
+	        }
+	        var _arr2 = ['opened', 'closed'];
+	        for (var _i2 = 0; _i2 < _arr2.length; _i2++) {
+	            var event = _arr2[_i2];
+	            this.$off('dropdown-' + event, this['dropdown-' + event]);
+	        }
+	    },
+	
+	
+	    methods: {
 	        'dropdown-opened': function dropdownOpened() {
 	            if (this.containFocus) {
 	                document.addEventListener('focus', this.restrictFocus, true);
 	            }
 	
-	            this.$dispatch('opened');
+	            this.$emit('opened');
 	
 	            return true;
 	        },
@@ -4538,13 +4596,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	                document.removeEventListener('focus', this.restrictFocus, true);
 	            }
 	
-	            this.$dispatch('closed');
+	            this.$emit('closed');
 	
 	            return true;
-	        }
-	    },
+	        },
 	
-	    methods: {
 	        restrictFocus: function restrictFocus(e) {
 	            if (!this.$refs.dropdown.contains(e.target)) {
 	                e.stopPropagation();
@@ -4751,7 +4807,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	    methods: {
 	        menuOptionSelect: function menuOptionSelect(option) {
-	            this.$dispatch('menu-option-selected', option);
+	            this.$emit('menu-option-selected', option);
 	        }
 	    }
 	};
@@ -5076,7 +5132,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    __vue_script__.__esModule &&
 	    Object.keys(__vue_script__).length > 1) {
 	  console.warn("[vue-loader] src/UiAutocomplete.vue: named exports in *.vue files are ignored.")}
-	__vue_template__ = __webpack_require__(108)
+	__vue_template__ = __webpack_require__(111)
 	module.exports = __vue_script__ || {}
 	if (module.exports.__esModule) module.exports = module.exports.default
 	var __vue_options__ = typeof module.exports === "function" ? (module.exports.options || (module.exports.options = {})) : module.exports
@@ -5116,7 +5172,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	    value: true
 	});
 	
-	var _fuzzysearch = __webpack_require__(84);
+	var _defineProperty2 = __webpack_require__(84);
+	
+	var _defineProperty3 = _interopRequireDefault(_defineProperty2);
+	
+	var _name$props$data$comp;
+	
+	var _fuzzysearch = __webpack_require__(87);
 	
 	var _fuzzysearch2 = _interopRequireDefault(_fuzzysearch);
 	
@@ -5124,25 +5186,25 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _UiIcon2 = _interopRequireDefault(_UiIcon);
 	
-	var _UiAutocompleteSuggestion = __webpack_require__(85);
+	var _UiAutocompleteSuggestion = __webpack_require__(88);
 	
 	var _UiAutocompleteSuggestion2 = _interopRequireDefault(_UiAutocompleteSuggestion);
 	
-	var _autofocus = __webpack_require__(90);
+	var _autofocus = __webpack_require__(93);
 	
 	var _autofocus2 = _interopRequireDefault(_autofocus);
 	
-	var _HasTextInput = __webpack_require__(91);
+	var _HasTextInput = __webpack_require__(94);
 	
 	var _HasTextInput2 = _interopRequireDefault(_HasTextInput);
 	
-	var _ValidatesInput = __webpack_require__(92);
+	var _ValidatesInput = __webpack_require__(95);
 	
 	var _ValidatesInput2 = _interopRequireDefault(_ValidatesInput);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	exports.default = {
+	exports.default = (_name$props$data$comp = {
 	    name: 'ui-autocomplete',
 	
 	    props: {
@@ -5211,21 +5273,27 @@ return /******/ (function(modules) { // webpackBootstrap
 	        }
 	    },
 	
-	    events: {
-	        'ui-input::reset': function uiInputReset(id) {
-	            if (!this.eventTargetsComponent(id)) {
-	                return;
-	            }
+	    mounted: function mounted() {
+	        var _this = this;
 	
-	            if (document.activeElement === this.$refs.input) {
-	                document.activeElement.blur();
-	            }
+	        this.$nextTick(function () {
+	            var _arr = ['reset'];
 	
-	            this.value = this.initialValue;
-	            this.dirty = false;
-	            this.valid = true;
+	            for (var _i = 0; _i < _arr.length; _i++) {
+	                var event = _arr[_i];
+	                _this.$on('ui-input::' + event, _this['ui-input::' + event]);
+	            }
+	        });
+	    },
+	    beforeDestroy: function beforeDestroy() {
+	        var _arr2 = ['reset'];
+	
+	        for (var _i2 = 0; _i2 < _arr2.length; _i2++) {
+	            var event = _arr2[_i2];
+	            this.$off('ui-input::' + event, this['ui-input::' + event]);
 	        }
 	    },
+	
 	
 	    watch: {
 	        value: function value() {
@@ -5239,124 +5307,172 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	    ready: function ready() {
 	        document.addEventListener('click', this.closeOnExternalClick);
+	    }
+	}, (0, _defineProperty3.default)(_name$props$data$comp, 'beforeDestroy', function beforeDestroy() {
+	    document.removeEventListener('click', this.closeOnExternalClick);
+	}), (0, _defineProperty3.default)(_name$props$data$comp, 'methods', {
+	    'ui-input::reset': function uiInputReset(id) {
+	        if (!this.eventTargetsComponent(id)) {
+	            return;
+	        }
+	
+	        if (document.activeElement === this.$refs.input) {
+	            document.activeElement.blur();
+	        }
+	
+	        this.value = this.initialValue;
+	        this.dirty = false;
+	        this.valid = true;
 	    },
-	    beforeDestroy: function beforeDestroy() {
-	        document.removeEventListener('click', this.closeOnExternalClick);
+	
+	    search: function search(item) {
+	        if (this.filter) {
+	            return this.filter(item, this.value);
+	        }
+	
+	        var text = item[this.keys.text] || item;
+	        var query = this.value;
+	
+	        if (typeof query === 'string') {
+	            query = query.toLowerCase();
+	        }
+	
+	        return (0, _fuzzysearch2.default)(query, text.toLowerCase());
 	    },
+	    select: function select(item) {
+	        var _this2 = this;
 	
+	        if (this.append) {
+	            this.value += this.appendDelimiter + (item[this.keys.value] || item);
+	        } else {
+	            this.value = item[this.keys.value] || item;
+	        }
 	
-	    methods: {
-	        search: function search(item) {
-	            if (this.filter) {
-	                return this.filter(item, this.value);
-	            }
+	        this.$emit('selected', item);
 	
-	            var text = item[this.keys.text] || item;
-	            var query = this.value;
+	        this.validate();
 	
-	            if (typeof query === 'string') {
-	                query = query.toLowerCase();
-	            }
+	        this.$nextTick(function () {
+	            _this2.close();
+	            _this2.$refs.input.focus();
+	        });
+	    },
+	    highlight: function highlight(index) {
+	        var firstIndex = 0;
+	        var lastIndex = this.$refs.items.length - 1;
 	
-	            return (0, _fuzzysearch2.default)(query, text.toLowerCase());
-	        },
-	        select: function select(item) {
-	            var _this = this;
+	        if (index === -2) {
+	            index = lastIndex;
+	        } else if (index < firstIndex) {
+	            index = this.cycleHighlight ? lastIndex : index;
+	        } else if (index > lastIndex) {
+	            index = this.cycleHighlight ? firstIndex : -1;
+	        }
 	
-	            if (this.append) {
-	                this.value += this.appendDelimiter + (item[this.keys.value] || item);
-	            } else {
-	                this.value = item[this.keys.value] || item;
-	            }
+	        this.highlightedItem = index;
 	
-	            this.$dispatch('selected', item);
+	        if (this.showOnUpDown) {
+	            this.open();
+	        }
 	
-	            this.validate();
-	
-	            this.$nextTick(function () {
-	                _this.close();
-	                _this.$refs.input.focus();
-	            });
-	        },
-	        highlight: function highlight(index) {
-	            var firstIndex = 0;
-	            var lastIndex = this.$refs.items.length - 1;
-	
-	            if (index === -2) {
-	                index = lastIndex;
-	            } else if (index < firstIndex) {
-	                index = this.cycleHighlight ? lastIndex : index;
-	            } else if (index > lastIndex) {
-	                index = this.cycleHighlight ? firstIndex : -1;
-	            }
-	
-	            this.highlightedItem = index;
-	
-	            if (this.showOnUpDown) {
-	                this.open();
-	            }
-	
-	            if (index < firstIndex || index > lastIndex) {
-	                this.$dispatch('highlight-overflow', index);
-	            } else {
-	                this.$dispatch('highlighted', this.$refs.items[index].item, index);
-	            }
-	        },
-	        selectHighlighted: function selectHighlighted(index, e) {
-	            if (this.showDropdown && this.$refs.items.length) {
-	                e.preventDefault();
-	                this.select(this.$refs.items[index].item);
-	            }
-	        },
-	        clearSearch: function clearSearch() {
-	            this.value = '';
-	        },
-	        open: function open() {
-	            if (!this.showDropdown) {
-	                this.showDropdown = true;
-	                this.$dispatch('opened');
-	            }
-	        },
-	        close: function close() {
-	            if (this.showDropdown) {
-	                this.showDropdown = false;
-	                this.highlightedItem = -1;
-	
-	                this.$dispatch('closed');
-	                this.validate();
-	            }
-	        },
-	        closeOnExternalClick: function closeOnExternalClick(e) {
-	            if (!this.$refs.autocomplete.contains(e.target) && this.showDropdown) {
-	                this.close();
-	            }
-	        },
-	        focus: function focus() {
-	            this.active = true;
-	        },
-	        blur: function blur() {
-	            this.active = false;
-	
-	            if (!this.dirty) {
-	                this.dirty = true;
-	            }
+	        if (index < firstIndex || index > lastIndex) {
+	            this.$emit('highlight-overflow', index);
+	        } else {
+	            this.$emit('highlighted', this.$refs.items[index].item, index);
 	        }
 	    },
-	
-	    components: {
-	        UiIcon: _UiIcon2.default,
-	        UiAutocompleteSuggestion: _UiAutocompleteSuggestion2.default
+	    selectHighlighted: function selectHighlighted(index, e) {
+	        if (this.showDropdown && this.$refs.items.length) {
+	            e.preventDefault();
+	            this.select(this.$refs.items[index].item);
+	        }
 	    },
-	
-	    directives: {
-	        autofocus: _autofocus2.default
+	    clearSearch: function clearSearch() {
+	        this.value = '';
 	    },
+	    open: function open() {
+	        if (!this.showDropdown) {
+	            this.showDropdown = true;
+	            this.$emit('opened');
+	        }
+	    },
+	    close: function close() {
+	        if (this.showDropdown) {
+	            this.showDropdown = false;
+	            this.highlightedItem = -1;
 	
-	    mixins: [_HasTextInput2.default, _ValidatesInput2.default]
-	};
+	            this.$emit('closed');
+	            this.validate();
+	        }
+	    },
+	    closeOnExternalClick: function closeOnExternalClick(e) {
+	        if (!this.$refs.autocomplete.contains(e.target) && this.showDropdown) {
+	            this.close();
+	        }
+	    },
+	    focus: function focus() {
+	        this.active = true;
+	    },
+	    blur: function blur() {
+	        this.active = false;
+	
+	        if (!this.dirty) {
+	            this.dirty = true;
+	        }
+	    }
+	}), (0, _defineProperty3.default)(_name$props$data$comp, 'components', {
+	    UiIcon: _UiIcon2.default,
+	    UiAutocompleteSuggestion: _UiAutocompleteSuggestion2.default
+	}), (0, _defineProperty3.default)(_name$props$data$comp, 'directives', {
+	    autofocus: _autofocus2.default
+	}), (0, _defineProperty3.default)(_name$props$data$comp, 'mixins', [_HasTextInput2.default, _ValidatesInput2.default]), _name$props$data$comp);
 
 /***/ },
 /* 84 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	exports.__esModule = true;
+	
+	var _defineProperty = __webpack_require__(85);
+	
+	var _defineProperty2 = _interopRequireDefault(_defineProperty);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	exports.default = function (obj, key, value) {
+	  if (key in obj) {
+	    (0, _defineProperty2.default)(obj, key, {
+	      value: value,
+	      enumerable: true,
+	      configurable: true,
+	      writable: true
+	    });
+	  } else {
+	    obj[key] = value;
+	  }
+	
+	  return obj;
+	};
+
+/***/ },
+/* 85 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = { "default": __webpack_require__(86), __esModule: true };
+
+/***/ },
+/* 86 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var $ = __webpack_require__(28);
+	module.exports = function defineProperty(it, key, desc){
+	  return $.setDesc(it, key, desc);
+	};
+
+/***/ },
+/* 87 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -5386,18 +5502,18 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 85 */
+/* 88 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __vue_script__, __vue_template__
 	var __vue_styles__ = {}
-	__webpack_require__(86)
-	__vue_script__ = __webpack_require__(87)
+	__webpack_require__(89)
+	__vue_script__ = __webpack_require__(90)
 	if (__vue_script__ &&
 	    __vue_script__.__esModule &&
 	    Object.keys(__vue_script__).length > 1) {
 	  console.warn("[vue-loader] src/UiAutocompleteSuggestion.vue: named exports in *.vue files are ignored.")}
-	__vue_template__ = __webpack_require__(89)
+	__vue_template__ = __webpack_require__(92)
 	module.exports = __vue_script__ || {}
 	if (module.exports.__esModule) module.exports = module.exports.default
 	var __vue_options__ = typeof module.exports === "function" ? (module.exports.options || (module.exports.options = {})) : module.exports
@@ -5422,13 +5538,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	})()}
 
 /***/ },
-/* 86 */
+/* 89 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 
 /***/ },
-/* 87 */
+/* 90 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -5437,7 +5553,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    value: true
 	});
 	
-	var _uuid = __webpack_require__(88);
+	var _uuid = __webpack_require__(91);
 	
 	var _uuid2 = _interopRequireDefault(_uuid);
 	
@@ -5484,7 +5600,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 88 */
+/* 91 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -5528,13 +5644,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 89 */
+/* 92 */
 /***/ function(module, exports) {
 
 	module.exports = "\n<li\n    class=\"ui-autocomplete-suggestion\" :class=\"[partial, { 'highlighted': highlighted }]\"\n    :id=\"id\"\n>\n    <partial :name=\"partial\"></partial>\n</li>\n";
 
 /***/ },
-/* 90 */
+/* 93 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -5550,7 +5666,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 91 */
+/* 94 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -5633,7 +5749,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 92 */
+/* 95 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -5642,7 +5758,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    value: true
 	});
 	
-	var _validatorjs = __webpack_require__(93);
+	var _validatorjs = __webpack_require__(96);
 	
 	var _validatorjs2 = _interopRequireDefault(_validatorjs);
 	
@@ -5673,19 +5789,36 @@ return /******/ (function(modules) { // webpackBootstrap
 	            validationError: ''
 	        };
 	    },
+	    mounted: function mounted() {
+	        var _this = this;
+	
+	        this.$nextTick(function () {
+	            var _arr = ['set-validity'];
+	
+	            for (var _i = 0; _i < _arr.length; _i++) {
+	                var event = _arr[_i];
+	                _this.$on('ui-input::' + event, _this['ui-input::' + event]);
+	            }
+	        });
+	    },
+	    beforeDestroy: function beforeDestroy() {
+	        var _arr2 = ['set-validity'];
+	
+	        for (var _i2 = 0; _i2 < _arr2.length; _i2++) {
+	            var event = _arr2[_i2];
+	            this.$off('ui-input::' + event, this['ui-input::' + event]);
+	        }
+	    },
 	
 	
-	    events: {
+	    methods: {
 	        'ui-input::set-validity': function uiInputSetValidity(valid, error, id) {
 	            if (!this.eventTargetsComponent(id)) {
 	                return;
 	            }
 	
 	            this.setValidity(valid, error);
-	        }
-	    },
-	
-	    methods: {
+	        },
 	        validate: function validate() {
 	            if (!this.validationRules || !this.dirty) {
 	                return;
@@ -5716,14 +5849,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 93 */
+/* 96 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var Rules = __webpack_require__(94);
-	var Lang = __webpack_require__(95);
-	var Errors = __webpack_require__(106);
-	var Attributes = __webpack_require__(97);
-	var AsyncResolvers = __webpack_require__(107);
+	var Rules = __webpack_require__(97);
+	var Lang = __webpack_require__(98);
+	var Errors = __webpack_require__(109);
+	var Attributes = __webpack_require__(100);
+	var AsyncResolvers = __webpack_require__(110);
 	
 	var Validator = function(input, rules, customMessages) {
 	  var lang = Validator.getDefaultLang();
@@ -6158,7 +6291,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 94 */
+/* 97 */
 /***/ function(module, exports) {
 
 	var rules = {
@@ -6580,12 +6713,12 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 95 */
+/* 98 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var Messages = __webpack_require__(96);
+	var Messages = __webpack_require__(99);
 	
-	__webpack_require__(98);
+	__webpack_require__(101);
 	
 	var container = {
 	
@@ -6627,7 +6760,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	   */
 	  _load: function(lang) {
 	    if (!this.messages[lang]) {
-	      var rawMessages = __webpack_require__(99)("./" + lang);
+	      var rawMessages = __webpack_require__(102)("./" + lang);
 	      this._set(lang, rawMessages);
 	    }
 	  },
@@ -6660,10 +6793,10 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 96 */
+/* 99 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var Attributes = __webpack_require__(97);
+	var Attributes = __webpack_require__(100);
 	
 	var Messages = function(lang, messages) {
 	  this.lang = lang;
@@ -6818,7 +6951,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 97 */
+/* 100 */
 /***/ function(module, exports) {
 
 	var replacements = {
@@ -6865,7 +6998,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 98 */
+/* 101 */
 /***/ function(module, exports) {
 
 	module.exports = {
@@ -6906,24 +7039,24 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 99 */
+/* 102 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var map = {
-		"./en": 98,
-		"./en.js": 98,
-		"./es": 100,
-		"./es.js": 100,
-		"./fr": 101,
-		"./fr.js": 101,
-		"./it": 102,
-		"./it.js": 102,
-		"./ja": 103,
-		"./ja.js": 103,
-		"./pl": 104,
-		"./pl.js": 104,
-		"./ru": 105,
-		"./ru.js": 105
+		"./en": 101,
+		"./en.js": 101,
+		"./es": 103,
+		"./es.js": 103,
+		"./fr": 104,
+		"./fr.js": 104,
+		"./it": 105,
+		"./it.js": 105,
+		"./ja": 106,
+		"./ja.js": 106,
+		"./pl": 107,
+		"./pl.js": 107,
+		"./ru": 108,
+		"./ru.js": 108
 	};
 	function webpackContext(req) {
 		return __webpack_require__(webpackContextResolve(req));
@@ -6936,11 +7069,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 	webpackContext.resolve = webpackContextResolve;
 	module.exports = webpackContext;
-	webpackContext.id = 99;
+	webpackContext.id = 102;
 
 
 /***/ },
-/* 100 */
+/* 103 */
 /***/ function(module, exports) {
 
 	module.exports = {
@@ -6979,7 +7112,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 101 */
+/* 104 */
 /***/ function(module, exports) {
 
 	module.exports = {
@@ -7019,7 +7152,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 102 */
+/* 105 */
 /***/ function(module, exports) {
 
 	module.exports = {
@@ -7060,7 +7193,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 103 */
+/* 106 */
 /***/ function(module, exports) {
 
 	module.exports = {
@@ -7100,7 +7233,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 104 */
+/* 107 */
 /***/ function(module, exports) {
 
 	module.exports = {
@@ -7141,7 +7274,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 105 */
+/* 108 */
 /***/ function(module, exports) {
 
 	module.exports = {
@@ -7181,7 +7314,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 106 */
+/* 109 */
 /***/ function(module, exports) {
 
 	var Errors = function() {
@@ -7264,7 +7397,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 107 */
+/* 110 */
 /***/ function(module, exports) {
 
 	function AsyncResolvers(onFailedOne, onResolvedAll) {
@@ -7351,24 +7484,24 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 108 */
+/* 111 */
 /***/ function(module, exports) {
 
 	module.exports = "\n<div\n    class=\"ui-autocomplete\" ref=\"autocomplete\"\n    :class=\"{\n        'disabled': disabled, 'invalid': !valid, 'dirty': dirty, 'active': active,\n        'has-label': !hideLabel, 'icon-right': iconRight\n    }\"\n>\n    <div class=\"ui-autocomplete-icon-wrapper\" v-if=\"showIcon\">\n        <ui-icon :icon=\"icon\" class=\"ui-autocomplete-icon\"></ui-icon>\n    </div>\n\n    <div class=\"ui-autocomplete-content\">\n        <label class=\"ui-autocomplete-label\">\n            <div class=\"ui-autocomplete-label-text\" v-text=\"label\" v-if=\"!hideLabel\"></div>\n\n            <ui-icon\n                class=\"ui-autocomplete-clear-button\" icon=\"&#xE5CD\" title=\"Clear\"\n                @click=\"clearSearch\" v-show=\"!disabled && value.length\"\n            ></ui-icon>\n\n            <input\n                class=\"ui-autocomplete-input\" :placeholder=\"placeholder\" :name=\"name\"\n                :id=\"id\" autocomplete=\"off\" v-autofocus=\"autofocus\" :debounce=\"debounce\"\n\n                @focus=\"focus\" @blur=\"blur\" @keydown.up.prevent=\"highlight(highlightedItem - 1)\"\n                @keydown.down.prevent=\"highlight(highlightedItem + 1)\" @keydown.tab=\"close\"\n                @keydown.enter=\"selectHighlighted(highlightedItem, $event)\"\n\n                v-model=\"value\" v-disabled=\"disabled\" ref=\"input\"\n            >\n\n            <ul class=\"ui-autocomplete-suggestions\" v-show=\"showDropdown\">\n                <ui-autocomplete-suggestion\n                    :highlighted=\"highlightedItem === index\" :item=\"item\" :partial=\"partial\"\n                    :keys=\"keys\"\n\n                    v-for=\"(index, item) in suggestions | filterBy search | limitBy limit\"\n                    v-ref:items @click=\"select(item)\"\n                ></ui-autocomplete-suggestion>\n            </ul>\n        </label>\n\n        <div class=\"ui-autocomplete-feedback\" v-if=\"showFeedback\">\n            <div\n                class=\"ui-autocomplete-error-text\" v-text=\"validationError\"\n                transition=\"ui-autocomplete-feedback-toggle\"\n                v-show=\"!hideValidationErrors && !valid\"\n            ></div>\n\n            <div\n                class=\"ui-autocomplete-help-text\" transition=\"ui-autocomplete-feedback-toggle\"\n                v-text=\"helpText\" v-else\n            ></div>\n        </div>\n    </div>\n</div>\n";
 
 /***/ },
-/* 109 */
+/* 112 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __vue_script__, __vue_template__
 	var __vue_styles__ = {}
-	__webpack_require__(110)
-	__vue_script__ = __webpack_require__(111)
+	__webpack_require__(113)
+	__vue_script__ = __webpack_require__(114)
 	if (__vue_script__ &&
 	    __vue_script__.__esModule &&
 	    Object.keys(__vue_script__).length > 1) {
 	  console.warn("[vue-loader] src/UiButton.vue: named exports in *.vue files are ignored.")}
-	__vue_template__ = __webpack_require__(112)
+	__vue_template__ = __webpack_require__(115)
 	module.exports = __vue_script__ || {}
 	if (module.exports.__esModule) module.exports = module.exports.default
 	var __vue_options__ = typeof module.exports === "function" ? (module.exports.options || (module.exports.options = {})) : module.exports
@@ -7393,13 +7526,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	})()}
 
 /***/ },
-/* 110 */
+/* 113 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 
 /***/ },
-/* 111 */
+/* 114 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -7522,24 +7655,24 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 112 */
+/* 115 */
 /***/ function(module, exports) {
 
 	module.exports = "\n<button\n    class=\"ui-button\" :class=\"styleClasses\" :type=\"buttonType\" v-disabled=\"disabled || loading\"\n    ref=\"button\"\"\n>\n    <div class=\"ui-button-content\" :class=\"{ 'invisible': loading }\">\n        <ui-icon\n            class=\"ui-button-icon\" :class=\"{ 'position-right': iconRight }\" :icon=\"icon\"\n            v-if=\"showIcon\"\n        ></ui-icon>\n\n        <div class=\"ui-button-text\">\n            <slot>\n                <span v-text=\"text\"></span>\n            </slot>\n        </div>\n\n        <ui-icon\n            class=\"ui-button-dropdown-icon\" icon=\"&#xE5C5;\"\n            v-if=\"!iconRight && showDropdownIcon && (hasDropdownMenu || hasPopover)\"\n        ></ui-icon>\n    </div>\n\n    <ui-progress-circular\n        class=\"ui-button-spinner\" :color=\"spinnerColor\" :size=\"18\" :stroke=\"4.5\"\n        disable-transition v-show=\"loading\"\n    ></ui-progress-circular>\n\n    <ui-ripple-ink v-if=\"!hideRippleInk && !disabled\" :trigger=\"$refs.button\"></ui-ripple-ink>\n\n    <ui-menu\n        class=\"ui-button-dropdown-menu\" :trigger=\"$refs.button\" :options=\"menuOptions\"\n        :show-icons=\"showMenuIcons\" :show-secondary-text=\"showMenuSecondaryText\"\n        :open-on=\"openDropdownOn\" @option-selected=\"menuOptionSelect\"\n        :dropdown-position=\"dropdownPosition\" v-if=\"hasDropdownMenu\"\n    ></ui-menu>\n\n    <ui-popover\n        :trigger=\"$refs.button\" :open-on=\"openDropdownOn\" :dropdown-position=\"dropdownPosition\"\n        v-if=\"hasPopover\"\n    >\n        <slot name=\"popover\"></slot>\n    </ui-popover>\n</button>\n";
 
 /***/ },
-/* 113 */
+/* 116 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __vue_script__, __vue_template__
 	var __vue_styles__ = {}
-	__webpack_require__(114)
-	__vue_script__ = __webpack_require__(115)
+	__webpack_require__(117)
+	__vue_script__ = __webpack_require__(118)
 	if (__vue_script__ &&
 	    __vue_script__.__esModule &&
 	    Object.keys(__vue_script__).length > 1) {
 	  console.warn("[vue-loader] src/UiCheckbox.vue: named exports in *.vue files are ignored.")}
-	__vue_template__ = __webpack_require__(116)
+	__vue_template__ = __webpack_require__(119)
 	module.exports = __vue_script__ || {}
 	if (module.exports.__esModule) module.exports = module.exports.default
 	var __vue_options__ = typeof module.exports === "function" ? (module.exports.options || (module.exports.options = {})) : module.exports
@@ -7564,13 +7697,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	})()}
 
 /***/ },
-/* 114 */
+/* 117 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 
 /***/ },
-/* 115 */
+/* 118 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -7636,19 +7769,37 @@ return /******/ (function(modules) { // webpackBootstrap
 	    created: function created() {
 	        this.initialValue = this.model;
 	    },
+	    mounted: function mounted() {
+	        var _this = this;
+	
+	        this.$nextTick(function () {
+	            var _arr = ['reset'];
+	
+	            for (var _i = 0; _i < _arr.length; _i++) {
+	                var event = _arr[_i];
+	                _this.$on('ui-input::' + event, _this['ui-input::' + event]);
+	            }
+	        });
+	    },
+	    beforeDestroy: function beforeDestroy() {
+	        var _arr2 = ['reset'];
+	
+	        for (var _i2 = 0; _i2 < _arr2.length; _i2++) {
+	            var event = _arr2[_i2];
+	            this.$off('ui-input::' + event, this['ui-input::' + event]);
+	        }
+	    },
 	
 	
-	    events: {
+	    methods: {
 	        'ui-input::reset': function uiInputReset(id) {
 	            if (!this.eventTargetsComponent(id)) {
 	                return;
 	            }
 	
 	            this.model = this.initialValue;
-	        }
-	    },
+	        },
 	
-	    methods: {
 	        focus: function focus() {
 	            this.active = true;
 	        },
@@ -7665,24 +7816,24 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 116 */
+/* 119 */
 /***/ function(module, exports) {
 
 	module.exports = "\n<label\n    class=\"ui-checkbox\"\n    :class=\"{\n        'disabled': disabled, 'checked': isChecked, 'active': active, 'label-left': labelLeft\n    }\"\n>\n    <input\n        class=\"ui-checkbox-input\" type=\"checkbox\" :name=\"name\" @focus=\"focus\" @blur=\"blur\"\n        :value=\"value ? value : null\" v-model=\"model\" v-disabled=\"disabled\"\n    >\n\n    <div class=\"ui-checkbox-checkmark\">\n        <div class=\"ui-checkbox-focus-ring\"></div>\n    </div>\n\n    <div class=\"ui-checkbox-label-text\" v-if=\"!hideLabel\">\n        <slot>\n            <span v-text=\"label\"></span>\n        </slot>\n    </div>\n</label>\n";
 
 /***/ },
-/* 117 */
+/* 120 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __vue_script__, __vue_template__
 	var __vue_styles__ = {}
-	__webpack_require__(118)
-	__vue_script__ = __webpack_require__(119)
+	__webpack_require__(121)
+	__vue_script__ = __webpack_require__(122)
 	if (__vue_script__ &&
 	    __vue_script__.__esModule &&
 	    Object.keys(__vue_script__).length > 1) {
 	  console.warn("[vue-loader] src/UiCollapsible.vue: named exports in *.vue files are ignored.")}
-	__vue_template__ = __webpack_require__(120)
+	__vue_template__ = __webpack_require__(123)
 	module.exports = __vue_script__ || {}
 	if (module.exports.__esModule) module.exports = module.exports.default
 	var __vue_options__ = typeof module.exports === "function" ? (module.exports.options || (module.exports.options = {})) : module.exports
@@ -7707,13 +7858,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	})()}
 
 /***/ },
-/* 118 */
+/* 121 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 
 /***/ },
-/* 119 */
+/* 122 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -7726,7 +7877,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _UiIcon2 = _interopRequireDefault(_UiIcon);
 	
-	var _uuid = __webpack_require__(88);
+	var _uuid = __webpack_require__(91);
 	
 	var _uuid2 = _interopRequireDefault(_uuid);
 	
@@ -7796,19 +7947,37 @@ return /******/ (function(modules) { // webpackBootstrap
 	        this.isReady = true;
 	        this.setHeight();
 	    },
+	    mounted: function mounted() {
+	        var _this = this;
+	
+	        this.$nextTick(function () {
+	            var _arr = ['reset'];
+	
+	            for (var _i = 0; _i < _arr.length; _i++) {
+	                var event = _arr[_i];
+	                _this.$on('ui-input::' + event, _this['ui-input::' + event]);
+	            }
+	        });
+	    },
+	    beforeDestroy: function beforeDestroy() {
+	        var _arr2 = ['reset'];
+	
+	        for (var _i2 = 0; _i2 < _arr2.length; _i2++) {
+	            var event = _arr2[_i2];
+	            this.$off('ui-input::' + event, this['ui-input::' + event]);
+	        }
+	    },
 	
 	
-	    events: {
+	    methods: {
 	        'ui-collapsible::refresh-height': function uiCollapsibleRefreshHeight(id) {
 	            if (!this.eventTargetsComponent(id)) {
 	                return;
 	            }
 	
 	            this.$nextTick(this.setHeight);
-	        }
-	    },
+	        },
 	
-	    methods: {
 	        toggleMenu: function toggleMenu() {
 	            if (this.disabled) {
 	                return;
@@ -7841,35 +8010,35 @@ return /******/ (function(modules) { // webpackBootstrap
 	    transitions: {
 	        'ui-collapsible-toggle': {
 	            afterEnter: function afterEnter() {
-	                this.$dispatch('opened');
+	                this.$emit('opened');
 	                this.setHeight();
 	            },
 	            afterLeave: function afterLeave() {
-	                this.$dispatch('closed');
+	                this.$emit('closed');
 	            }
 	        }
 	    }
 	};
 
 /***/ },
-/* 120 */
+/* 123 */
 /***/ function(module, exports) {
 
 	module.exports = "\n<div class=\"ui-collapsible\">\n    <button\n        class=\"ui-collapsible-header\" :class=\"{ 'disabled': disabled }\" :aria-controls=\"id\"\n        :aria-expanded=\"open ? 'true' : 'false'\" @click=\"toggleMenu\" v-disabled=\"disabled\"\n        ref=\"button\"\n    >\n        <div class=\"ui-collapsible-header-content\">\n            <slot name=\"header\">\n                <div v-text=\"header\"></div>\n            </slot>\n        </div>\n\n        <ui-icon class=\"ui-collapsible-header-icon\" :icon=\"icon\" v-if=\"!hideIcon\"></ui-icon>\n\n        <ui-ripple-ink\n            v-if=\"!hideRippleInk && !disabled && isReady\" :trigger=\"$refs.button\"\n        ></ui-ripple-ink>\n    </button>\n\n    <div\n        class=\"ui-collapsible-body-wrapper\" :transition=\"transition\"\n        :style=\"{ 'height': calculatedHeight }\" v-show=\"open\"ref=\"body\"\n    >\n        <div class=\"ui-collapsible-body\" :id=\"id\" :aria-hidden=\"open ? null : 'true'\">\n            <slot></slot>\n        </div>\n    </div>\n</div>\n";
 
 /***/ },
-/* 121 */
+/* 124 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __vue_script__, __vue_template__
 	var __vue_styles__ = {}
-	__webpack_require__(122)
-	__vue_script__ = __webpack_require__(123)
+	__webpack_require__(125)
+	__vue_script__ = __webpack_require__(126)
 	if (__vue_script__ &&
 	    __vue_script__.__esModule &&
 	    Object.keys(__vue_script__).length > 1) {
 	  console.warn("[vue-loader] src/UiConfirm.vue: named exports in *.vue files are ignored.")}
-	__vue_template__ = __webpack_require__(130)
+	__vue_template__ = __webpack_require__(133)
 	module.exports = __vue_script__ || {}
 	if (module.exports.__esModule) module.exports = module.exports.default
 	var __vue_options__ = typeof module.exports === "function" ? (module.exports.options || (module.exports.options = {})) : module.exports
@@ -7894,13 +8063,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	})()}
 
 /***/ },
-/* 122 */
+/* 125 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 
 /***/ },
-/* 123 */
+/* 126 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -7913,11 +8082,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _classlist2 = _interopRequireDefault(_classlist);
 	
-	var _UiModal = __webpack_require__(124);
+	var _UiModal = __webpack_require__(127);
 	
 	var _UiModal2 = _interopRequireDefault(_UiModal);
 	
-	var _UiButton = __webpack_require__(109);
+	var _UiButton = __webpack_require__(112);
 	
 	var _UiButton2 = _interopRequireDefault(_UiButton);
 	
@@ -8020,18 +8189,18 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 124 */
+/* 127 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __vue_script__, __vue_template__
 	var __vue_styles__ = {}
-	__webpack_require__(125)
-	__vue_script__ = __webpack_require__(126)
+	__webpack_require__(128)
+	__vue_script__ = __webpack_require__(129)
 	if (__vue_script__ &&
 	    __vue_script__.__esModule &&
 	    Object.keys(__vue_script__).length > 1) {
 	  console.warn("[vue-loader] src/UiModal.vue: named exports in *.vue files are ignored.")}
-	__vue_template__ = __webpack_require__(129)
+	__vue_template__ = __webpack_require__(132)
 	module.exports = __vue_script__ || {}
 	if (module.exports.__esModule) module.exports = module.exports.default
 	var __vue_options__ = typeof module.exports === "function" ? (module.exports.options || (module.exports.options = {})) : module.exports
@@ -8056,13 +8225,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	})()}
 
 /***/ },
-/* 125 */
+/* 128 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 
 /***/ },
-/* 126 */
+/* 129 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -8079,11 +8248,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _UiIconButton2 = _interopRequireDefault(_UiIconButton);
 	
-	var _UiButton = __webpack_require__(109);
+	var _UiButton = __webpack_require__(112);
 	
 	var _UiButton2 = _interopRequireDefault(_UiButton);
 	
-	var _lodash = __webpack_require__(127);
+	var _lodash = __webpack_require__(130);
 	
 	var _lodash2 = _interopRequireDefault(_lodash);
 	
@@ -8095,8 +8264,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    props: {
 	        show: {
 	            type: Boolean,
-	            required: true,
-	            twoWay: true
+	            required: true
 	        },
 	        type: {
 	            type: String,
@@ -8188,11 +8356,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	            document.addEventListener('focus', this.restrictFocus, true);
 	
-	            this.$dispatch('opened');
+	            this.$emit('opened');
 	        },
 	        closed: function closed() {
 	            this.tearDown();
-	            this.$dispatch('closed');
+	            this.$emit('closed');
 	        },
 	        redirectFocus: function redirectFocus(e) {
 	            e.stopPropagation();
@@ -8218,9 +8386,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	        transitionEnd: _lodash2.default.debounce(function () {
 	            if (undefined.show) {
-	                undefined.$dispatch('revealed');
+	                undefined.$emit('revealed');
 	            } else {
-	                undefined.$dispatch('hidden');
+	                undefined.$emit('hidden');
 	            }
 	        }, 100)
 	    },
@@ -8232,7 +8400,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 127 */
+/* 130 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(global, module) {/**
@@ -25301,10 +25469,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }
 	}.call(this));
 	
-	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }()), __webpack_require__(128)(module)))
+	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }()), __webpack_require__(131)(module)))
 
 /***/ },
-/* 128 */
+/* 131 */
 /***/ function(module, exports) {
 
 	module.exports = function(module) {
@@ -25320,30 +25488,30 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 129 */
+/* 132 */
 /***/ function(module, exports) {
 
 	module.exports = "\n<div\n    class=\"ui-modal ui-modal-mask\" v-show=\"show\" :transition=\"transition\" :class=\"[type]\"\n    :role=\"role\" @transitionend=\"transitionEnd\"\n>\n    <div class=\"ui-modal-wrapper\" @click=\"close\" ref=\"modal-mask\">\n        <div\n            class=\"ui-modal-container\" tabindex=\"-1\" @keydown.esc=\"close\"\n            ref=\"modal-container\"\n        >\n            <div class=\"ui-modal-header\">\n                <slot name=\"header\">\n                    <h1 v-text=\"header\" class=\"ui-modal-header-text\"></h1>\n                </slot>\n\n                <ui-icon-button\n                    type=\"clear\" icon=\"&#xE5CD\" class=\"ui-modal-close-button\" @click=\"close\"\n                    :disabled=\"!dismissible\" v-if=\"showCloseButton\" ref=\"close-button\"\n                ></ui-icon-button>\n            </div>\n\n            <div class=\"ui-modal-body\">\n                <slot>\n                    <div v-text=\"body\"></div>\n                </slot>\n            </div>\n\n            <div class=\"ui-modal-footer\" v-if=\"!hideFooter\">\n                <slot name=\"footer\">\n                    <ui-button @click=\"close\" v-if=\"dismissible\">Close</ui-button>\n                </slot>\n            </div>\n\n            <div class=\"focus-redirector\" @focus=\"redirectFocus\" tabindex=\"0\"></div>\n        </div>\n    </div>\n</div>\n";
 
 /***/ },
-/* 130 */
+/* 133 */
 /***/ function(module, exports) {
 
 	module.exports = "\n<div class=\"ui-confirm\">\n    <ui-modal\n        :show.sync=\"show\" role=\"alertdialog\" :header=\"header\" @opened=\"opened\" show-close-button\n        :dismissible=\"!loading\" :backdrop-dismissible=\"backdropDismissible\"\n    >\n        <div class=\"ui-confirm-message\">\n            <slot></slot>\n        </div>\n\n        <div slot=\"footer\">\n            <ui-button\n                :color=\"type\" :text=\"confirmButtonText\" :icon=\"confirmButtonIcon\"\n                @click=\"confirm\" :loading=\"loading\" ref=\"confirm-button\"\n            ></ui-button>\n\n            <ui-button\n                :text=\"denyButtonText\" :icon=\"denyButtonIcon\" @click=\"deny\"\n                :disabled=\"loading\" ref=\"deny-button\"\n            ></ui-button>\n        </div>\n    </ui-modal>\n</div>\n";
 
 /***/ },
-/* 131 */
+/* 134 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __vue_script__, __vue_template__
 	var __vue_styles__ = {}
-	__webpack_require__(132)
-	__vue_script__ = __webpack_require__(133)
+	__webpack_require__(135)
+	__vue_script__ = __webpack_require__(136)
 	if (__vue_script__ &&
 	    __vue_script__.__esModule &&
 	    Object.keys(__vue_script__).length > 1) {
 	  console.warn("[vue-loader] src/UiFab.vue: named exports in *.vue files are ignored.")}
-	__vue_template__ = __webpack_require__(134)
+	__vue_template__ = __webpack_require__(137)
 	module.exports = __vue_script__ || {}
 	if (module.exports.__esModule) module.exports = module.exports.default
 	var __vue_options__ = typeof module.exports === "function" ? (module.exports.options || (module.exports.options = {})) : module.exports
@@ -25368,13 +25536,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	})()}
 
 /***/ },
-/* 132 */
+/* 135 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 
 /***/ },
-/* 133 */
+/* 136 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -25441,24 +25609,24 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 134 */
+/* 137 */
 /***/ function(module, exports) {
 
 	module.exports = "\n<button\n    class=\"ui-fab\" :class=\"[this.type, this.color]\" :aria-label=\"ariaLabel || tooltip\"\n    v-disabled=\"disabled\" ref=\"button\"\n>\n    <ui-icon class=\"ui-fab-icon\" :icon=\"icon\"></ui-icon>\n\n    <ui-ripple-ink :trigger=\"$refs.button\" v-if=\"!hideRippleInk && !disabled\"></ui-ripple-ink>\n\n    <ui-tooltip\n        :trigger=\"$refs.button\" :content=\"tooltip\" :position=\"tooltipPosition\" v-if=\"tooltip\"\n        :open-on=\"openTooltipOn\"\n    ></ui-tooltip>\n</button>\n";
 
 /***/ },
-/* 135 */
+/* 138 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __vue_script__, __vue_template__
 	var __vue_styles__ = {}
-	__webpack_require__(136)
-	__vue_script__ = __webpack_require__(137)
+	__webpack_require__(139)
+	__vue_script__ = __webpack_require__(140)
 	if (__vue_script__ &&
 	    __vue_script__.__esModule &&
 	    Object.keys(__vue_script__).length > 1) {
 	  console.warn("[vue-loader] src/UiPreloader.vue: named exports in *.vue files are ignored.")}
-	__vue_template__ = __webpack_require__(138)
+	__vue_template__ = __webpack_require__(141)
 	module.exports = __vue_script__ || {}
 	if (module.exports.__esModule) module.exports = module.exports.default
 	var __vue_options__ = typeof module.exports === "function" ? (module.exports.options || (module.exports.options = {})) : module.exports
@@ -25483,13 +25651,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	})()}
 
 /***/ },
-/* 136 */
+/* 139 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 
 /***/ },
-/* 137 */
+/* 140 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -25509,24 +25677,24 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 138 */
+/* 141 */
 /***/ function(module, exports) {
 
 	module.exports = "\n<div class=\"ui-preloader\">\n    <div\n        class=\"ui-preloader-progressbar\" :class=\"{ 'loading' : show }\"\n        :aria-busy=\"show ? 'true' : false\" role=\"progressbar\"\n    ></div>\n</div>\n";
 
 /***/ },
-/* 139 */
+/* 142 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __vue_script__, __vue_template__
 	var __vue_styles__ = {}
-	__webpack_require__(140)
-	__vue_script__ = __webpack_require__(141)
+	__webpack_require__(143)
+	__vue_script__ = __webpack_require__(144)
 	if (__vue_script__ &&
 	    __vue_script__.__esModule &&
 	    Object.keys(__vue_script__).length > 1) {
 	  console.warn("[vue-loader] src/UiProgressLinear.vue: named exports in *.vue files are ignored.")}
-	__vue_template__ = __webpack_require__(142)
+	__vue_template__ = __webpack_require__(145)
 	module.exports = __vue_script__ || {}
 	if (module.exports.__esModule) module.exports = module.exports.default
 	var __vue_options__ = typeof module.exports === "function" ? (module.exports.options || (module.exports.options = {})) : module.exports
@@ -25551,13 +25719,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	})()}
 
 /***/ },
-/* 140 */
+/* 143 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 
 /***/ },
-/* 141 */
+/* 144 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -25605,24 +25773,24 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 142 */
+/* 145 */
 /***/ function(module, exports) {
 
 	module.exports = "\n<div\n    class=\"ui-progress-linear\" :class=\"[color]\" v-show=\"show\"\n    transition=\"ui-progress-linear-toggle\"\n>\n    <div\n        class=\"ui-progress-linear-determinate\" :style=\"{ 'width': progress + '%' }\"\n        role=\"progressbar\" :aria-valuemin=\"0\" :aria-valuemax=\"100\" :aria-valuenow=\"value\"\n        v-if=\"type === 'determinate'\"\n    ></div>\n\n    <div\n        class=\"ui-progress-linear-indeterminate\" role=\"progressbar\" :aria-valuemin=\"0\"\n        :aria-valuemax=\"100\" v-else\n    ></div>\n</div>\n";
 
 /***/ },
-/* 143 */
+/* 146 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __vue_script__, __vue_template__
 	var __vue_styles__ = {}
-	__webpack_require__(144)
-	__vue_script__ = __webpack_require__(145)
+	__webpack_require__(147)
+	__vue_script__ = __webpack_require__(148)
 	if (__vue_script__ &&
 	    __vue_script__.__esModule &&
 	    Object.keys(__vue_script__).length > 1) {
 	  console.warn("[vue-loader] src/UiRadio.vue: named exports in *.vue files are ignored.")}
-	__vue_template__ = __webpack_require__(146)
+	__vue_template__ = __webpack_require__(149)
 	module.exports = __vue_script__ || {}
 	if (module.exports.__esModule) module.exports = module.exports.default
 	var __vue_options__ = typeof module.exports === "function" ? (module.exports.options || (module.exports.options = {})) : module.exports
@@ -25647,13 +25815,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	})()}
 
 /***/ },
-/* 144 */
+/* 147 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 
 /***/ },
-/* 145 */
+/* 148 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -25710,12 +25878,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	        focus: function focus() {
 	            this.active = true;
 	
-	            this.$dispatch('focussed');
+	            this.$emit('focussed');
 	        },
 	        blur: function blur() {
 	            this.active = false;
 	
-	            this.$dispatch('blurred');
+	            this.$emit('blurred');
 	        }
 	    },
 	
@@ -25725,24 +25893,24 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 146 */
+/* 149 */
 /***/ function(module, exports) {
 
 	module.exports = "\n<label\n    class=\"ui-radio\"\n    :class=\"{ 'disabled': disabled, 'checked': active, 'label-left': labelLeft }\"\n>\n    <div class=\"ui-radio-input-wrapper\">\n        <input\n            class=\"ui-radio-input\" type=\"radio\" :id=\"id\" :name=\"name\" :value=\"value\"\n            :checked=\"checked\" @focus=\"focus\" @blur=\"blur\" v-model=\"model\" v-disabled=\"disabled\"\n        >\n\n        <span class=\"ui-radio-border\"></span>\n        <span class=\"ui-radio-inner-dot\"></span>\n    </div>\n\n    <div class=\"ui-radio-label-text\" v-if=\"!hideLabel\">\n        <slot>\n            <span v-text=\"label\"></span>\n        </slot>\n    </div>\n</label>\n";
 
 /***/ },
-/* 147 */
+/* 150 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __vue_script__, __vue_template__
 	var __vue_styles__ = {}
-	__webpack_require__(148)
-	__vue_script__ = __webpack_require__(149)
+	__webpack_require__(151)
+	__vue_script__ = __webpack_require__(152)
 	if (__vue_script__ &&
 	    __vue_script__.__esModule &&
 	    Object.keys(__vue_script__).length > 1) {
 	  console.warn("[vue-loader] src/UiRadioGroup.vue: named exports in *.vue files are ignored.")}
-	__vue_template__ = __webpack_require__(150)
+	__vue_template__ = __webpack_require__(153)
 	module.exports = __vue_script__ || {}
 	if (module.exports.__esModule) module.exports = module.exports.default
 	var __vue_options__ = typeof module.exports === "function" ? (module.exports.options || (module.exports.options = {})) : module.exports
@@ -25767,13 +25935,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	})()}
 
 /***/ },
-/* 148 */
+/* 151 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 
 /***/ },
-/* 149 */
+/* 152 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -25786,7 +25954,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _disabled2 = _interopRequireDefault(_disabled);
 	
-	var _UiRadio = __webpack_require__(143);
+	var _UiRadio = __webpack_require__(146);
 	
 	var _UiRadio2 = _interopRequireDefault(_UiRadio);
 	
@@ -25846,17 +26014,37 @@ return /******/ (function(modules) { // webpackBootstrap
 	        }
 	    },
 	
-	    events: {
+	    mounted: function mounted() {
+	        var _this = this;
+	
+	        this.$nextTick(function () {
+	            var _arr = ['reset'];
+	
+	            for (var _i = 0; _i < _arr.length; _i++) {
+	                var event = _arr[_i];
+	                _this.$on('ui-input::' + event, _this['ui-input::' + event]);
+	            }
+	        });
+	    },
+	    beforeDestroy: function beforeDestroy() {
+	        var _arr2 = ['reset'];
+	
+	        for (var _i2 = 0; _i2 < _arr2.length; _i2++) {
+	            var event = _arr2[_i2];
+	            this.$off('ui-input::' + event, this['ui-input::' + event]);
+	        }
+	    },
+	
+	
+	    methods: {
 	        'ui-input::reset': function uiInputReset(id) {
 	            if (!this.eventTargetsComponent(id)) {
 	                return;
 	            }
 	
 	            this.value = this.initialValue;
-	        }
-	    },
+	        },
 	
-	    methods: {
 	        focus: function focus() {
 	            this.active = true;
 	        },
@@ -25877,24 +26065,24 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 150 */
+/* 153 */
 /***/ function(module, exports) {
 
 	module.exports = "\n<div\n    class=\"ui-radio-group\" :id=\"id\"\n    :class=\"{ 'disabled': disabled, 'active': active, 'vertical': vertical }\"\n>\n    <div class=\"ui-radio-group-label\" v-text=\"label\" v-if=\"!hideLabel\"></div>\n\n    <div class=\"ui-radio-group-options-wrapper\">\n        <ui-radio\n            class=\"ui-radio-group-radio\" v-for=\"option in options\" :model.sync=\"value\"\n            :name=\"name\" :label=\"option.text || option\" :value=\"option.value || option\"\n            :disabled=\"disabled || option.disabled\" @focussed=\"focus\" @blurred=\"blur\"\n        ></ui-radio>\n    </div>\n\n    <div\n        class=\"ui-radio-group-feedback\" v-if=\"showFeedback\"\n        transition=\"ui-radio-group-feedback-toggle\"\n    >\n        <div class=\"ui-radio-group-help-text\" v-text=\"helpText\"></div>\n    </div>\n</div>\n";
 
 /***/ },
-/* 151 */
+/* 154 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __vue_script__, __vue_template__
 	var __vue_styles__ = {}
-	__webpack_require__(152)
-	__vue_script__ = __webpack_require__(153)
+	__webpack_require__(155)
+	__vue_script__ = __webpack_require__(156)
 	if (__vue_script__ &&
 	    __vue_script__.__esModule &&
 	    Object.keys(__vue_script__).length > 1) {
 	  console.warn("[vue-loader] src/UiRating.vue: named exports in *.vue files are ignored.")}
-	__vue_template__ = __webpack_require__(158)
+	__vue_template__ = __webpack_require__(161)
 	module.exports = __vue_script__ || {}
 	if (module.exports.__esModule) module.exports = module.exports.default
 	var __vue_options__ = typeof module.exports === "function" ? (module.exports.options || (module.exports.options = {})) : module.exports
@@ -25919,13 +26107,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	})()}
 
 /***/ },
-/* 152 */
+/* 155 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 
 /***/ },
-/* 153 */
+/* 156 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -25934,7 +26122,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    value: true
 	});
 	
-	var _UiRatingIcon = __webpack_require__(154);
+	var _UiRatingIcon = __webpack_require__(157);
 	
 	var _UiRatingIcon2 = _interopRequireDefault(_UiRatingIcon);
 	
@@ -25995,7 +26183,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            this.previewValue = this.value;
 	        },
 	        previewValue: function previewValue() {
-	            this.$dispatch('preview-value-changed', this.previewValue);
+	            this.$emit('preview-value-changed', this.previewValue);
 	        }
 	    },
 	
@@ -26004,19 +26192,37 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	        this.previewValue = this.value;
 	    },
+	    mounted: function mounted() {
+	        var _this = this;
+	
+	        this.$nextTick(function () {
+	            var _arr = ['reset'];
+	
+	            for (var _i = 0; _i < _arr.length; _i++) {
+	                var event = _arr[_i];
+	                _this.$on('ui-input::' + event, _this['ui-input::' + event]);
+	            }
+	        });
+	    },
+	    beforeDestroy: function beforeDestroy() {
+	        var _arr2 = ['reset'];
+	
+	        for (var _i2 = 0; _i2 < _arr2.length; _i2++) {
+	            var event = _arr2[_i2];
+	            this.$off('ui-input::' + event, this['ui-input::' + event]);
+	        }
+	    },
 	
 	
-	    events: {
+	    methods: {
 	        'ui-input::reset': function uiInputReset(id) {
 	            if (!this.eventTargetsComponent(id)) {
 	                return;
 	            }
 	
 	            this.value = this.initialValue;
-	        }
-	    },
+	        },
 	
-	    methods: {
 	        startPreview: function startPreview() {
 	            if (this.disabled) {
 	                return;
@@ -26090,18 +26296,18 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 154 */
+/* 157 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __vue_script__, __vue_template__
 	var __vue_styles__ = {}
-	__webpack_require__(155)
-	__vue_script__ = __webpack_require__(156)
+	__webpack_require__(158)
+	__vue_script__ = __webpack_require__(159)
 	if (__vue_script__ &&
 	    __vue_script__.__esModule &&
 	    Object.keys(__vue_script__).length > 1) {
 	  console.warn("[vue-loader] src/UiRatingIcon.vue: named exports in *.vue files are ignored.")}
-	__vue_template__ = __webpack_require__(157)
+	__vue_template__ = __webpack_require__(160)
 	module.exports = __vue_script__ || {}
 	if (module.exports.__esModule) module.exports = module.exports.default
 	var __vue_options__ = typeof module.exports === "function" ? (module.exports.options || (module.exports.options = {})) : module.exports
@@ -26126,13 +26332,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	})()}
 
 /***/ },
-/* 155 */
+/* 158 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 
 /***/ },
-/* 156 */
+/* 159 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -26180,30 +26386,30 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 157 */
+/* 160 */
 /***/ function(module, exports) {
 
 	module.exports = "\n<div class=\"ui-rating-icon\">\n    <ui-icon\n        class=\"ui-rating-icon-icon\" :icon=\"icon\"\n        :class=\"{ 'selected': selected, 'filled' : filled }\"\n    ></ui-icon>\n</div>\n";
 
 /***/ },
-/* 158 */
+/* 161 */
 /***/ function(module, exports) {
 
 	module.exports = "\n<div\n    class=\"ui-rating\" :class=\"{ 'disabled': disabled, 'preview': previewing, 'active': active }\"\n\n    :tabindex=\"disabled ? null : 0\" role=\"slider\" :aria-valuemin=\"0\" :aria-valuemax=\"total\"\n    :aria-valuenow=\"previewValue\"\n\n    @keydown.up.prevent=\"incrementPreviewValue\" @keydown.down.prevent=\"decrementPreviewValue\"\n    @keydown.right.prevent=\"incrementPreviewValue\" @keydown.left.prevent=\"decrementPreviewValue\"\n    @keydown.enter.prevent=\"commitValue(previewValue)\" @focus=\"focus\" @blur=\"blur\"\n>\n    <div class=\"ui-rating-label\" v-text=\"label\" v-if=\"!hideLabel\"></div>\n\n    <div\n        class=\"ui-rating-icons-wrapper\" @mouseenter=\"startPreview\" @mouseleave=\"endPreview\"\n    >\n        <ui-rating-icon\n            :type=\"type\" v-for=\"n in total\" :selected=\"(n + 1) <= value\" @mouseover=\"preview(n)\"\n            :filled=\"(n + 1) <= previewValue\" @click=\"commitValue(n + 1)\"\n        ></ui-rating-icon>\n    </div>\n\n    <div\n        class=\"ui-rating-feedback\" v-if=\"showFeedback\" transition=\"ui-rating-feedback-toggle\"\n    >\n        <div class=\"ui-rating-help-text\" v-text=\"helpText\"></div>\n    </div>\n</div>\n";
 
 /***/ },
-/* 159 */
+/* 162 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __vue_script__, __vue_template__
 	var __vue_styles__ = {}
-	__webpack_require__(160)
-	__vue_script__ = __webpack_require__(161)
+	__webpack_require__(163)
+	__vue_script__ = __webpack_require__(164)
 	if (__vue_script__ &&
 	    __vue_script__.__esModule &&
 	    Object.keys(__vue_script__).length > 1) {
 	  console.warn("[vue-loader] src/UiRatingPreview.vue: named exports in *.vue files are ignored.")}
-	__vue_template__ = __webpack_require__(162)
+	__vue_template__ = __webpack_require__(165)
 	module.exports = __vue_script__ || {}
 	if (module.exports.__esModule) module.exports = module.exports.default
 	var __vue_options__ = typeof module.exports === "function" ? (module.exports.options || (module.exports.options = {})) : module.exports
@@ -26228,13 +26434,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	})()}
 
 /***/ },
-/* 160 */
+/* 163 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 
 /***/ },
-/* 161 */
+/* 164 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -26243,7 +26449,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    value: true
 	});
 	
-	var _UiRatingIcon = __webpack_require__(154);
+	var _UiRatingIcon = __webpack_require__(157);
 	
 	var _UiRatingIcon2 = _interopRequireDefault(_UiRatingIcon);
 	
@@ -26274,24 +26480,24 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 162 */
+/* 165 */
 /***/ function(module, exports) {
 
 	module.exports = "\n<div\n    class=\"ui-rating-preview\" role=\"slider\" :aria-valuemin=\"0\" :aria-valuemax=\"total\"\n    :aria-valuenow=\"value\"\n>\n    <ui-rating-icon\n        :type=\"type\" v-for=\"n in total\" :selected=\"(n + 1) <= value\"\n    ></ui-rating-icon>\n</div>\n";
 
 /***/ },
-/* 163 */
+/* 166 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __vue_script__, __vue_template__
 	var __vue_styles__ = {}
-	__webpack_require__(164)
-	__vue_script__ = __webpack_require__(165)
+	__webpack_require__(167)
+	__vue_script__ = __webpack_require__(168)
 	if (__vue_script__ &&
 	    __vue_script__.__esModule &&
 	    Object.keys(__vue_script__).length > 1) {
 	  console.warn("[vue-loader] src/UiSelect.vue: named exports in *.vue files are ignored.")}
-	__vue_template__ = __webpack_require__(173)
+	__vue_template__ = __webpack_require__(176)
 	module.exports = __vue_script__ || {}
 	if (module.exports.__esModule) module.exports = module.exports.default
 	var __vue_options__ = typeof module.exports === "function" ? (module.exports.options || (module.exports.options = {})) : module.exports
@@ -26316,13 +26522,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	})()}
 
 /***/ },
-/* 164 */
+/* 167 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 
 /***/ },
-/* 165 */
+/* 168 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -26331,21 +26537,27 @@ return /******/ (function(modules) { // webpackBootstrap
 	    value: true
 	});
 	
-	var _mergeOptions = __webpack_require__(166);
+	var _defineProperty2 = __webpack_require__(84);
+	
+	var _defineProperty3 = _interopRequireDefault(_defineProperty2);
+	
+	var _name$props$data$comp;
+	
+	var _mergeOptions = __webpack_require__(169);
 	
 	var _mergeOptions2 = _interopRequireDefault(_mergeOptions);
 	
-	var _fuzzysearch = __webpack_require__(84);
+	var _fuzzysearch = __webpack_require__(87);
 	
 	var _fuzzysearch2 = _interopRequireDefault(_fuzzysearch);
 	
-	var _elementScroll = __webpack_require__(168);
+	var _elementScroll = __webpack_require__(171);
 	
 	var _UiIcon = __webpack_require__(6);
 	
 	var _UiIcon2 = _interopRequireDefault(_UiIcon);
 	
-	var _UiSelectOption = __webpack_require__(169);
+	var _UiSelectOption = __webpack_require__(172);
 	
 	var _UiSelectOption2 = _interopRequireDefault(_UiSelectOption);
 	
@@ -26353,17 +26565,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _UiProgressCircular2 = _interopRequireDefault(_UiProgressCircular);
 	
-	var _HasTextInput = __webpack_require__(91);
+	var _HasTextInput = __webpack_require__(94);
 	
 	var _HasTextInput2 = _interopRequireDefault(_HasTextInput);
 	
-	var _ValidatesInput = __webpack_require__(92);
+	var _ValidatesInput = __webpack_require__(95);
 	
 	var _ValidatesInput2 = _interopRequireDefault(_ValidatesInput);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	exports.default = {
+	exports.default = (_name$props$data$comp = {
 	    name: 'ui-select',
 	
 	    props: {
@@ -26481,15 +26693,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	        showDropdown: function showDropdown() {
 	            if (this.showDropdown) {
 	                this.opened();
-	                this.$dispatch('opened');
+	                this.$emit('opened');
 	            } else {
 	                this.closed();
-	                this.$dispatch('closed');
+	                this.$emit('closed');
 	            }
 	        },
 	        query: function query() {
 	            if (!this.ignoreQueryChange) {
-	                this.$dispatch('query-changed', this.query);
+	                this.$emit('query-changed', this.query);
 	            }
 	        }
 	    },
@@ -26513,233 +26725,243 @@ return /******/ (function(modules) { // webpackBootstrap
 	    beforeDestroy: function beforeDestroy() {
 	        document.removeEventListener('click', this.closeOnExternalClick);
 	    },
+	    mounted: function mounted() {
+	        var _this2 = this;
 	
+	        this.$nextTick(function () {
+	            var _arr = ['reset', 'set-selected'];
 	
-	    events: {
-	        'ui-select::set-selected': function uiSelectSetSelected(value, id) {
-	            if (!this.eventTargetsComponent(id)) {
-	                return;
+	            for (var _i = 0; _i < _arr.length; _i++) {
+	                var event = _arr[_i];
+	                _this2.$on('ui-select::' + event, _this2['ui-select::' + event]);
 	            }
+	        });
+	    }
+	}, (0, _defineProperty3.default)(_name$props$data$comp, 'beforeDestroy', function beforeDestroy() {
+	    var _arr2 = ['reset', 'set-selected'];
 	
-	            this.default = value;
-	            this.initValue();
-	        },
-	
-	        'ui-input::reset': function uiInputReset(id) {
-	            if (!this.eventTargetsComponent(id)) {
-	                return;
-	            }
-	
-	            this.initValue();
-	            this.dirty = false;
-	            this.valid = true;
-	
-	            this.clearQuery();
-	            this.selectedIndex = -1;
-	            this.highlightedIndex = -1;
+	    for (var _i2 = 0; _i2 < _arr2.length; _i2++) {
+	        var event = _arr2[_i2];
+	        this.$off('ui-select::' + event, this['ui-select::' + event]);
+	    }
+	}), (0, _defineProperty3.default)(_name$props$data$comp, 'methods', {
+	    'ui-select::set-selected': function uiSelectSetSelected(value, id) {
+	        if (!this.eventTargetsComponent(id)) {
+	            return;
 	        }
+	
+	        this.default = value;
+	        this.initValue();
 	    },
 	
-	    methods: {
-	        initValue: function initValue() {
-	            this.value = this.multiple ? [] : null;
+	    'ui-input::reset': function uiInputReset(id) {
+	        if (!this.eventTargetsComponent(id)) {
+	            return;
+	        }
 	
-	            if (this.default) {
-	                var defaults = Array.isArray(this.default) ? this.default : [this.default];
+	        this.initValue();
+	        this.dirty = false;
+	        this.valid = true;
 	
-	                if (defaults.length) {
-	                    this.setDefaultValue(defaults);
-	                }
+	        this.clearQuery();
+	        this.selectedIndex = -1;
+	        this.highlightedIndex = -1;
+	    },
+	
+	    initValue: function initValue() {
+	        this.value = this.multiple ? [] : null;
+	
+	        if (this.default) {
+	            var defaults = Array.isArray(this.default) ? this.default : [this.default];
+	
+	            if (defaults.length) {
+	                this.setDefaultValue(defaults);
 	            }
-	        },
-	        search: function search(option) {
-	            if (this.filter) {
-	                return this.filter(option, this.query);
-	            }
+	        }
+	    },
+	    search: function search(option) {
+	        if (this.filter) {
+	            return this.filter(option, this.query);
+	        }
 	
-	            var query = this.query.toLowerCase();
-	            var text = option[this.keys.text] || option;
+	        var query = this.query.toLowerCase();
+	        var text = option[this.keys.text] || option;
 	
-	            if (typeof text === 'string') {
-	                text = text.toLowerCase();
-	            }
+	        if (typeof text === 'string') {
+	            text = text.toLowerCase();
+	        }
 	
-	            return (0, _fuzzysearch2.default)(query, text);
-	        },
-	        clearQuery: function clearQuery() {
-	            var _this2 = this;
+	        return (0, _fuzzysearch2.default)(query, text);
+	    },
+	    clearQuery: function clearQuery() {
+	        var _this3 = this;
 	
-	            this.ignoreQueryChange = true;
+	        this.ignoreQueryChange = true;
 	
-	            this.$nextTick(function () {
-	                _this2.query = '';
+	        this.$nextTick(function () {
+	            _this3.query = '';
 	
-	                _this2.$nextTick(function () {
-	                    _this2.ignoreQueryChange = false;
-	                });
+	            _this3.$nextTick(function () {
+	                _this3.ignoreQueryChange = false;
 	            });
-	        },
-	        select: function select(option, index) {
-	            var close = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : true;
+	        });
+	    },
+	    select: function select(option, index) {
+	        var close = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : true;
 	
-	            if (this.multiple) {
-	                if (this.isSelected(option)) {
-	                    this.deselect(option);
-	                } else {
-	                    this.value.push(option);
-	                }
+	        if (this.multiple) {
+	            if (this.isSelected(option)) {
+	                this.deselect(option);
 	            } else {
-	                this.value = option;
-	                this.selectedIndex = index;
+	                this.value.push(option);
+	            }
+	        } else {
+	            this.value = option;
+	            this.selectedIndex = index;
+	        }
+	
+	        this.$emit('selected', option);
+	
+	        this.highlightedIndex = index;
+	        this.clearQuery();
+	        this.validate();
+	
+	        if (!this.multiple && close) {
+	            this.close();
+	        }
+	    },
+	    deselect: function deselect(option) {
+	        this.value.$remove(option);
+	    },
+	    isSelected: function isSelected(option) {
+	        if (this.multiple) {
+	            return this.value.indexOf(option) > -1;
+	        }
+	
+	        return this.value === option;
+	    },
+	    selectHighlighted: function selectHighlighted(index, e) {
+	        if (this.$refs.options.length) {
+	            e.preventDefault();
+	            this.select(this.$refs.options[index].option, index);
+	        }
+	    },
+	    highlight: function highlight(index, preventScroll) {
+	        if (this.highlightedIndex === index || this.$refs.options.length === 0) {
+	            return;
+	        }
+	
+	        var firstIndex = 0;
+	        var lastIndex = this.$refs.options.length - 1;
+	
+	        if (index < firstIndex) {
+	            index = lastIndex;
+	        } else if (index > lastIndex) {
+	            index = firstIndex;
+	        }
+	
+	        this.highlightedIndex = index;
+	
+	        if (!preventScroll) {
+	            this.scrollOptionIntoView(this.$refs.options[index].$el);
+	        }
+	    },
+	    focus: function focus() {
+	        this.active = true;
+	    },
+	    blur: function blur() {
+	        this.active = false;
+	
+	        if (this.showDropdown) {
+	            this.close();
+	        }
+	    },
+	    toggle: function toggle() {
+	        if (this.showDropdown) {
+	            this.close();
+	        } else {
+	            this.open();
+	        }
+	    },
+	    open: function open() {
+	        if (this.disabled) {
+	            return;
+	        }
+	
+	        this.showDropdown = true;
+	    },
+	    opened: function opened() {
+	        var _this4 = this;
+	
+	        this.$nextTick(function () {
+	            if (_this4.showSearch) {
+	                _this4.$refs.searchInput.focus();
+	            } else {
+	                _this4.$refs.dropdown.focus();
 	            }
 	
-	            this.$dispatch('selected', option);
+	            _this4.scrollOptionIntoView(_this4.$refs.optionsList.querySelector('.selected'));
+	        });
+	    },
+	    close: function close(deactivate) {
+	        this.showDropdown = false;
 	
-	            this.highlightedIndex = index;
-	            this.clearQuery();
-	            this.validate();
+	        if (!this.dirty) {
+	            this.dirty = true;
+	        }
 	
-	            if (!this.multiple && close) {
-	                this.close();
-	            }
-	        },
-	        deselect: function deselect(option) {
-	            this.value.$remove(option);
-	        },
-	        isSelected: function isSelected(option) {
-	            if (this.multiple) {
-	                return this.value.indexOf(option) > -1;
-	            }
-	
-	            return this.value === option;
-	        },
-	        selectHighlighted: function selectHighlighted(index, e) {
-	            if (this.$refs.options.length) {
-	                e.preventDefault();
-	                this.select(this.$refs.options[index].option, index);
-	            }
-	        },
-	        highlight: function highlight(index, preventScroll) {
-	            if (this.highlightedIndex === index || this.$refs.options.length === 0) {
-	                return;
-	            }
-	
-	            var firstIndex = 0;
-	            var lastIndex = this.$refs.options.length - 1;
-	
-	            if (index < firstIndex) {
-	                index = lastIndex;
-	            } else if (index > lastIndex) {
-	                index = firstIndex;
-	            }
-	
-	            this.highlightedIndex = index;
-	
-	            if (!preventScroll) {
-	                this.scrollOptionIntoView(this.$refs.options[index].$el);
-	            }
-	        },
-	        focus: function focus() {
-	            this.active = true;
-	        },
-	        blur: function blur() {
+	        if (deactivate) {
 	            this.active = false;
-	
-	            if (this.showDropdown) {
-	                this.close();
-	            }
-	        },
-	        toggle: function toggle() {
-	            if (this.showDropdown) {
-	                this.close();
-	            } else {
-	                this.open();
-	            }
-	        },
-	        open: function open() {
-	            if (this.disabled) {
-	                return;
-	            }
-	
-	            this.showDropdown = true;
-	        },
-	        opened: function opened() {
-	            var _this3 = this;
-	
-	            this.$nextTick(function () {
-	                if (_this3.showSearch) {
-	                    _this3.$refs.searchInput.focus();
-	                } else {
-	                    _this3.$refs.dropdown.focus();
-	                }
-	
-	                _this3.scrollOptionIntoView(_this3.$refs.optionsList.querySelector('.selected'));
-	            });
-	        },
-	        close: function close(deactivate) {
-	            this.showDropdown = false;
-	
-	            if (!this.dirty) {
-	                this.dirty = true;
-	            }
-	
-	            if (deactivate) {
-	                this.active = false;
-	            } else {
-	                this.$refs.label.focus();
-	            }
-	        },
-	        closeOnExternalClick: function closeOnExternalClick(e) {
-	            if (!this.$el.contains(e.target) && (this.showDropdown || this.active)) {
-	                this.close(true);
-	            }
-	        },
-	        closed: function closed() {
-	            this.validate();
-	
-	            if (this.multiple) {
-	                this.highlightedIndex = -1;
-	            } else {
-	                this.highlightedIndex = this.selectedIndex;
-	            }
-	        },
-	        setDefaultValue: function setDefaultValue(defaults) {
-	            var optionValue = void 0;
-	            var defaultOptionValue = void 0;
-	
-	            for (var i = 0; i < defaults.length; i++) {
-	                defaultOptionValue = defaults[i][this.keys.value] || defaults[i];
-	
-	                for (var j = 0; j < this.options.length; j++) {
-	                    optionValue = this.options[j][this.keys.value] || this.options[j];
-	
-	                    if (optionValue === defaultOptionValue) {
-	                        this.select(this.options[j], j, false);
-	                        break;
-	                    }
-	                }
-	            }
-	        },
-	        scrollOptionIntoView: function scrollOptionIntoView(optionEl) {
-	            (0, _elementScroll.scrollIntoView)(optionEl, this.$refs.optionsList, 80);
+	        } else {
+	            this.$refs.label.focus();
 	        }
 	    },
-	
-	    components: {
-	        UiIcon: _UiIcon2.default,
-	        UiSelectOption: _UiSelectOption2.default,
-	        UiProgressCircular: _UiProgressCircular2.default
+	    closeOnExternalClick: function closeOnExternalClick(e) {
+	        if (!this.$el.contains(e.target) && (this.showDropdown || this.active)) {
+	            this.close(true);
+	        }
 	    },
+	    closed: function closed() {
+	        this.validate();
 	
-	    mixins: [_HasTextInput2.default, _ValidatesInput2.default]
-	};
+	        if (this.multiple) {
+	            this.highlightedIndex = -1;
+	        } else {
+	            this.highlightedIndex = this.selectedIndex;
+	        }
+	    },
+	    setDefaultValue: function setDefaultValue(defaults) {
+	        var optionValue = void 0;
+	        var defaultOptionValue = void 0;
+	
+	        for (var i = 0; i < defaults.length; i++) {
+	            defaultOptionValue = defaults[i][this.keys.value] || defaults[i];
+	
+	            for (var j = 0; j < this.options.length; j++) {
+	                optionValue = this.options[j][this.keys.value] || this.options[j];
+	
+	                if (optionValue === defaultOptionValue) {
+	                    this.select(this.options[j], j, false);
+	                    break;
+	                }
+	            }
+	        }
+	    },
+	    scrollOptionIntoView: function scrollOptionIntoView(optionEl) {
+	        (0, _elementScroll.scrollIntoView)(optionEl, this.$refs.optionsList, 80);
+	    }
+	}), (0, _defineProperty3.default)(_name$props$data$comp, 'components', {
+	    UiIcon: _UiIcon2.default,
+	    UiSelectOption: _UiSelectOption2.default,
+	    UiProgressCircular: _UiProgressCircular2.default
+	}), (0, _defineProperty3.default)(_name$props$data$comp, 'mixins', [_HasTextInput2.default, _ValidatesInput2.default]), _name$props$data$comp);
 
 /***/ },
-/* 166 */
+/* 169 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-	var isOptionObject = __webpack_require__(167);
+	var isOptionObject = __webpack_require__(170);
 	var hasOwnProperty = Object.prototype.hasOwnProperty;
 	var propIsEnumerable = Object.propertyIsEnumerable;
 	var globalThis = this;
@@ -26894,7 +27116,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 167 */
+/* 170 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -26907,7 +27129,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 168 */
+/* 171 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -26960,18 +27182,18 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 169 */
+/* 172 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __vue_script__, __vue_template__
 	var __vue_styles__ = {}
-	__webpack_require__(170)
-	__vue_script__ = __webpack_require__(171)
+	__webpack_require__(173)
+	__vue_script__ = __webpack_require__(174)
 	if (__vue_script__ &&
 	    __vue_script__.__esModule &&
 	    Object.keys(__vue_script__).length > 1) {
 	  console.warn("[vue-loader] src/UiSelectOption.vue: named exports in *.vue files are ignored.")}
-	__vue_template__ = __webpack_require__(172)
+	__vue_template__ = __webpack_require__(175)
 	module.exports = __vue_script__ || {}
 	if (module.exports.__esModule) module.exports = module.exports.default
 	var __vue_options__ = typeof module.exports === "function" ? (module.exports.options || (module.exports.options = {})) : module.exports
@@ -26996,13 +27218,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	})()}
 
 /***/ },
-/* 170 */
+/* 173 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 
 /***/ },
-/* 171 */
+/* 174 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -27070,30 +27292,30 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 172 */
+/* 175 */
 /***/ function(module, exports) {
 
 	module.exports = "\n<li\n    class=\"ui-select-option\" :class=\"{ highlighted: highlighted, selected: selected }\"\n>\n    <div class=\"ui-select-option-content\" :class=\"[partial]\">\n        <partial :name=\"partial\"></partial>\n    </div>\n\n    <ui-icon\n        class=\"ui-select-option-checkbox\" :icon=\"icon\" v-if=\"showCheckbox\"\n    ></ui-icon>\n</li>\n";
 
 /***/ },
-/* 173 */
+/* 176 */
 /***/ function(module, exports) {
 
 	module.exports = "\n<div\n    class=\"ui-select\" :id=\"id\" :class=\"{\n        'disabled': disabled, 'invalid': !valid, 'dirty': dirty, 'active': active,\n        'has-label': !hideLabel, 'icon-right': iconRight\n    }\"\n>\n    <div class=\"ui-select-icon-wrapper\" v-if=\"showIcon\">\n        <ui-icon :icon=\"icon\" class=\"ui-select-icon\"></ui-icon>\n    </div>\n\n    <div class=\"ui-select-content\">\n        <div\n            class=\"ui-select-label\" :tabindex=\"disabled ? null : '0'\" ref=\"label\"\n            @focus=\"focus\" @keydown.tab=\"blur\" @click=\"toggle\" @keydown.space.prevent=\"open\"\n            @keydown.enter.prevent=\"open\"\n        >\n            <div class=\"ui-select-label-text\" v-text=\"label\" v-if=\"!hideLabel\"></div>\n\n            <div class=\"ui-select-display\">\n                <div\n                    class=\"ui-select-value\" :class=\"{ placeholder: !hasDisplayText }\"\n                    v-text=\"hasDisplayText ? displayText : placeholder\"\n                ></div>\n\n                <ui-icon icon=\"arrow_drop_down\" class=\"ui-select-dropdown-icon\"></ui-icon>\n            </div>\n\n            <div\n                class=\"ui-select-dropdown\" tabindex=\"-1\" v-show=\"showDropdown\" ref=\"dropdown\"\n                @keydown.esc.prevent=\"close()\" @keydown.tab=\"close()\"\n                @keydown.up.prevent=\"highlight(highlightedIndex - 1)\"\n                @keydown.down.prevent=\"highlight(highlightedIndex + 1)\"\n                @keydown.enter.prevent.stop=\"selectHighlighted(highlightedIndex, $event)\"\n            >\n                <div class=\"ui-select-search\" v-if=\"showSearch\" @click.stop @keydown.space.stop>\n                    <input\n                        class=\"ui-select-search-input\" type=\"text\" ref=\"search-input\"\n                        :placeholder=\"searchPlaceholder\" v-model=\"query\" autocomplete=\"off\"\n                    >\n\n                    <ui-progress-circular\n                        class=\"ui-select-search-spinner\" :size=\"24\" :stroke=\"4\" :show=\"loading\"\n                    ></ui-progress-circular>\n                </div>\n\n                <ul class=\"ui-select-options\" ref=\"options-list\">\n                    <ui-select-option\n                        :option=\"option\" :partial=\"partial\" :show-checkbox=\"multiple\" :\n                        :keys=\"keys\" @click.stop.prevent=\"select(option, index)\"\n                        @mouseover.stop=\"highlight(index, true)\"\n\n                        :highlighted=\"highlightedIndex === index\"\n                        :selected=\"isSelected(option)\"\n\n                        v-for=\"(index, option) in filteredOptions\" ref=\"options\"\n                    ></ui-select-option>\n\n                    <li class=\"ui-select-no-results\" v-if=\"nothingFound\">No results found</li>\n                </ul>\n            </div>\n        </div>\n\n        <div class=\"ui-select-feedback\" v-if=\"showFeedback\">\n            <div\n                class=\"ui-select-error-text\" transition=\"ui-select-feedback-toggle\"\n                v-text=\"validationError\" v-show=\"!hideValidationErrors && !valid\"\n            ></div>\n\n            <div\n                class=\"ui-select-help-text\" transition=\"ui-select-feedback-toggle\"\n                v-text=\"helpText\" v-else\n            ></div>\n        </div>\n    </div>\n</div>\n";
 
 /***/ },
-/* 174 */
+/* 177 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __vue_script__, __vue_template__
 	var __vue_styles__ = {}
-	__webpack_require__(175)
-	__vue_script__ = __webpack_require__(176)
+	__webpack_require__(178)
+	__vue_script__ = __webpack_require__(179)
 	if (__vue_script__ &&
 	    __vue_script__.__esModule &&
 	    Object.keys(__vue_script__).length > 1) {
 	  console.warn("[vue-loader] src/UiSlider.vue: named exports in *.vue files are ignored.")}
-	__vue_template__ = __webpack_require__(185)
+	__vue_template__ = __webpack_require__(188)
 	module.exports = __vue_script__ || {}
 	if (module.exports.__esModule) module.exports = module.exports.default
 	var __vue_options__ = typeof module.exports === "function" ? (module.exports.options || (module.exports.options = {})) : module.exports
@@ -27118,13 +27340,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	})()}
 
 /***/ },
-/* 175 */
+/* 178 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 
 /***/ },
-/* 176 */
+/* 179 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -27133,7 +27355,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    value: true
 	});
 	
-	var _draggabilly = __webpack_require__(177);
+	var _draggabilly = __webpack_require__(180);
 	
 	var _draggabilly2 = _interopRequireDefault(_draggabilly);
 	
@@ -27211,16 +27433,29 @@ return /******/ (function(modules) { // webpackBootstrap
 	        }
 	    },
 	
-	    events: {
-	        'ui-input::reset': function uiInputReset(id) {
-	            if (!this.eventTargetsComponent(id)) {
-	                return;
-	            }
+	    mounted: function mounted() {
+	        var _this = this;
 	
-	            this.value = this.initialValue;
+	        this.$nextTick(function () {
+	            var _arr = ['reset'];
+	
+	            for (var _i = 0; _i < _arr.length; _i++) {
+	                var event = _arr[_i];
+	                _this.$on('ui-input::' + event, _this['ui-input::' + event]);
+	            }
+	        });
+	    },
+	    beforeDestroy: function beforeDestroy() {
+	        var _arr2 = ['reset'];
+	
+	        for (var _i2 = 0; _i2 < _arr2.length; _i2++) {
+	            var event = _arr2[_i2];
+	            this.$off('ui-input::' + event, this['ui-input::' + event]);
+	        }
+	        if (this.draggable) {
+	            this.draggable.destroy();
 	        }
 	    },
-	
 	    ready: function ready() {
 	        this.initialValue = this.value;
 	
@@ -27239,14 +27474,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	            this.draggable.disable();
 	        }
 	    },
-	    beforeDestroy: function beforeDestroy() {
-	        if (this.draggable) {
-	            this.draggable.destroy();
-	        }
-	    },
-	
 	
 	    methods: {
+	        'ui-input::reset': function uiInputReset(id) {
+	            if (!this.eventTargetsComponent(id)) {
+	                return;
+	            }
+	
+	            this.value = this.initialValue;
+	        },
+	
 	        focus: function focus() {
 	            this.active = true;
 	        },
@@ -27324,7 +27561,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 177 */
+/* 180 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*** IMPORTS FROM imports-loader ***/
@@ -27356,10 +27593,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	    // CommonJS
 	    module.exports = factory(
 	      window,
-	      __webpack_require__(178),
-	      __webpack_require__(179),
-	      __webpack_require__(180),
-	      __webpack_require__(181)
+	      __webpack_require__(181),
+	      __webpack_require__(182),
+	      __webpack_require__(183),
+	      __webpack_require__(184)
 	    );
 	  } else {
 	    // browser global
@@ -27849,7 +28086,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}.call(window));
 
 /***/ },
-/* 178 */
+/* 181 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*** IMPORTS FROM imports-loader ***/
@@ -27945,7 +28182,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}.call(window));
 
 /***/ },
-/* 179 */
+/* 182 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*** IMPORTS FROM imports-loader ***/
@@ -28011,7 +28248,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}.call(window));
 
 /***/ },
-/* 180 */
+/* 183 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*** IMPORTS FROM imports-loader ***/
@@ -28261,7 +28498,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  define( [ 'get-style-property/get-style-property' ], defineGetSize );
 	} else if ( true ) {
 	  // CommonJS for Component
-	  module.exports = defineGetSize( __webpack_require__(179) );
+	  module.exports = defineGetSize( __webpack_require__(182) );
 	} else {
 	  // browser global
 	  window.getSize = defineGetSize( window.getStyleProperty );
@@ -28272,7 +28509,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}.call(window));
 
 /***/ },
-/* 181 */
+/* 184 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*** IMPORTS FROM imports-loader ***/
@@ -28304,8 +28541,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    // CommonJS
 	    module.exports = factory(
 	      window,
-	      __webpack_require__(182),
-	      __webpack_require__(183)
+	      __webpack_require__(185),
+	      __webpack_require__(186)
 	    );
 	  } else {
 	    // browser global
@@ -28649,7 +28886,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}.call(window));
 
 /***/ },
-/* 182 */
+/* 185 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -28737,7 +28974,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 183 */
+/* 186 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*** IMPORTS FROM imports-loader ***/
@@ -28769,8 +29006,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    // CommonJS
 	    module.exports = factory(
 	      window,
-	      __webpack_require__(184),
-	      __webpack_require__(182)
+	      __webpack_require__(187),
+	      __webpack_require__(185)
 	    );
 	  } else {
 	    // browser global
@@ -29064,7 +29301,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}.call(window));
 
 /***/ },
-/* 184 */
+/* 187 */
 /***/ function(module, exports) {
 
 	/*** IMPORTS FROM imports-loader ***/
@@ -29547,24 +29784,24 @@ return /******/ (function(modules) { // webpackBootstrap
 	}.call(window));
 
 /***/ },
-/* 185 */
+/* 188 */
 /***/ function(module, exports) {
 
 	module.exports = "\n<div\n    class=\"ui-slider\" :id=\"id\"\n    :class=\"{\n        min: value === 0, max: value === 100, dragging: dragging, disabled: disabled,\n        active: active, 'has-label': hasLabel\n    }\"\n\n    :tabindex=\"disabled ? null : 0\" role=\"slider\" :aria-valuemin=\"0\" :aria-valuemax=\"100\"\n    :aria-valuenow=\"value\"\n\n    @keydown.left.prevent=\"decrement\" @keydown.right.prevent=\"increment\"\n    @keydown.down.prevent=\"decrement\" @keydown.up.prevent=\"increment\"\n    @focus=\"focus\" @blur=\"blur\"\n>\n    <input type=\"hidden\" :value=\"value\" :name=\"name\">\n\n    <div class=\"ui-slider-icon-wrapper\" v-if=\"showIcon\">\n        <ui-icon :icon=\"icon\" class=\"ui-slider-icon\"></ui-icon>\n    </div>\n\n    <div class=\"ui-slider-content\">\n        <div class=\"ui-slider-label\" v-text=\"label\" v-if=\"!hideLabel\"></div>\n\n        <div class=\"ui-slider-wrapper\" ref=\"slider\" @mousedown=\"sliderClick\">\n            <div class=\"ui-slider-containment\" ref=\"containment\"></div>\n\n            <div class=\"ui-slider-track\">\n                <div class=\"ui-slider-track-fill\" :style=\"{ width: value + '%'}\"></div>\n            </div>\n\n            <div class=\"ui-slider-thumb-container\" ref=\"thumb\">\n                <div class=\"ui-slider-focus-ring\"></div>\n                <div class=\"ui-slider-thumb\"></div>\n            </div>\n        </div>\n    </div>\n</div>\n";
 
 /***/ },
-/* 186 */
+/* 189 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __vue_script__, __vue_template__
 	var __vue_styles__ = {}
-	__webpack_require__(187)
-	__vue_script__ = __webpack_require__(188)
+	__webpack_require__(190)
+	__vue_script__ = __webpack_require__(191)
 	if (__vue_script__ &&
 	    __vue_script__.__esModule &&
 	    Object.keys(__vue_script__).length > 1) {
 	  console.warn("[vue-loader] src/UiSnackbar.vue: named exports in *.vue files are ignored.")}
-	__vue_template__ = __webpack_require__(189)
+	__vue_template__ = __webpack_require__(192)
 	module.exports = __vue_script__ || {}
 	if (module.exports.__esModule) module.exports = module.exports.default
 	var __vue_options__ = typeof module.exports === "function" ? (module.exports.options || (module.exports.options = {})) : module.exports
@@ -29589,13 +29826,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	})()}
 
 /***/ },
-/* 187 */
+/* 190 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 
 /***/ },
-/* 188 */
+/* 191 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -29604,7 +29841,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    value: true
 	});
 	
-	var _UiButton = __webpack_require__(109);
+	var _UiButton = __webpack_require__(112);
 	
 	var _UiButton2 = _interopRequireDefault(_UiButton);
 	
@@ -29654,11 +29891,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	    methods: {
 	        click: function click() {
-	            this.$dispatch('clicked');
+	            this.$emit('clicked');
 	            this.hide();
 	        },
 	        actionClick: function actionClick() {
-	            this.$dispatch('action-clicked');
+	            this.$emit('action-clicked');
 	            this.hide();
 	        },
 	        hide: function hide() {
@@ -29675,14 +29912,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	    transitions: {
 	        'ui-snackbar-toggle': {
 	            afterEnter: function afterEnter() {
-	                this.$dispatch('shown');
+	                this.$emit('shown');
 	
 	                if (this.autoHide) {
 	                    this.timeout = setTimeout(this.hide, this.duration);
 	                }
 	            },
 	            afterLeave: function afterLeave() {
-	                this.$dispatch('hidden');
+	                this.$emit('hidden');
 	
 	                if (this.timeout) {
 	                    clearTimeout(this.timeout);
@@ -29694,24 +29931,24 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 189 */
+/* 192 */
 /***/ function(module, exports) {
 
 	module.exports = "\n<div\n    class=\"ui-snackbar\" :id=\"id\" transition=\"ui-snackbar-toggle\" @click=\"click\" v-show=\"show\"\n>\n    <div class=\"ui-snackbar-text\">\n        <slot>\n            <span v-text=\"message\"></span>\n        </slot>\n    </div>\n\n    <div class=\"ui-snackbar-action\">\n        <ui-button\n            class=\"ui-snackbar-action-button\" type=\"flat\" :color=\"actionColor\"\n            :text=\"action\" @click.stop=\"actionClick\" v-if=\"action\"\n        ></ui-button>\n    </div>\n</div>\n";
 
 /***/ },
-/* 190 */
+/* 193 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __vue_script__, __vue_template__
 	var __vue_styles__ = {}
-	__webpack_require__(191)
-	__vue_script__ = __webpack_require__(192)
+	__webpack_require__(194)
+	__vue_script__ = __webpack_require__(195)
 	if (__vue_script__ &&
 	    __vue_script__.__esModule &&
 	    Object.keys(__vue_script__).length > 1) {
 	  console.warn("[vue-loader] src/UiSnackbarContainer.vue: named exports in *.vue files are ignored.")}
-	__vue_template__ = __webpack_require__(193)
+	__vue_template__ = __webpack_require__(196)
 	module.exports = __vue_script__ || {}
 	if (module.exports.__esModule) module.exports = module.exports.default
 	var __vue_options__ = typeof module.exports === "function" ? (module.exports.options || (module.exports.options = {})) : module.exports
@@ -29736,13 +29973,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	})()}
 
 /***/ },
-/* 191 */
+/* 194 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 
 /***/ },
-/* 192 */
+/* 195 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -29751,11 +29988,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	    value: true
 	});
 	
-	var _uuid = __webpack_require__(88);
+	var _uuid = __webpack_require__(91);
 	
 	var _uuid2 = _interopRequireDefault(_uuid);
 	
-	var _UiSnackbar = __webpack_require__(186);
+	var _UiSnackbar = __webpack_require__(189);
 	
 	var _UiSnackbar2 = _interopRequireDefault(_UiSnackbar);
 	
@@ -29781,7 +30018,36 @@ return /******/ (function(modules) { // webpackBootstrap
 	        }
 	    },
 	
-	    events: {
+	    data: function data() {
+	        return {
+	            queue: [] };
+	    },
+	    mounted: function mounted() {
+	        var _this = this;
+	
+	        this.$nextTick(function () {
+	            var _arr = ['create'];
+	
+	            for (var _i = 0; _i < _arr.length; _i++) {
+	                var event = _arr[_i];
+	                _this.$on('ui-snackbar::' + event, _this['ui-snackbar::' + event]);
+	            }
+	        });
+	    },
+	    beforeDestroy: function beforeDestroy() {
+	        var _arr2 = ['create'];
+	
+	        for (var _i2 = 0; _i2 < _arr2.length; _i2++) {
+	            var event = _arr2[_i2];
+	            this.$off('ui-snackbar::' + event, this['ui-snackbar::' + event]);
+	        }
+	        if (this.draggable) {
+	            this.draggable.destroy();
+	        }
+	    },
+	
+	
+	    methods: {
 	        'ui-snackbar::create': function uiSnackbarCreate(snackbar) {
 	            snackbar.show = false;
 	            snackbar.id = snackbar.id || _uuid2.default.short('ui-snackbar-');
@@ -29796,16 +30062,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	                    this.queue[0].show = false;
 	                }
 	            }
-	        }
-	    },
+	        },
 	
-	    data: function data() {
-	        return {
-	            queue: [] };
-	    },
-	
-	
-	    methods: {
 	        showNext: function showNext() {
 	            if (!this.queue.length) {
 	                return;
@@ -29814,11 +30072,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	            this.queue[0].show = true;
 	        },
 	        shown: function shown(snackbar) {
-	            this.$dispatch('snackbar-shown', snackbar);
+	            this.$emit('snackbar-shown', snackbar);
 	            this.callHook('onShow', snackbar);
 	        },
 	        hidden: function hidden(snackbar) {
-	            this.$dispatch('snackbar-hidden', snackbar);
+	            this.$emit('snackbar-hidden', snackbar);
 	            this.callHook('onHide', snackbar);
 	
 	            this.queue.$remove(snackbar);
@@ -29843,24 +30101,24 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 193 */
+/* 196 */
 /***/ function(module, exports) {
 
 	module.exports = "\n<div class=\"ui-snackbar-container\" :class=\"[position]\">\n    <ui-snackbar\n        :duration=\"s.duration\" :show.sync=\"s.show\" :action=\"s.action\"\n        :action-color=\"s.actionColor\" :persistent=\"s.persistent\" :id=\"s.id\" auto-hide\n\n        @shown=\"shown(s)\" @hidden=\"hidden(s)\" @clicked=\"clicked(s)\"\n        @action-clicked=\"actionClicked(s)\"\n\n        v-for=\"s in queue\"\n    >\n        <div v-html=\"s.message\" v-if=\"s.allowHtml\"></div>\n        <span v-text=\"s.message\" v-else></span>\n    </ui-snackbar>\n</div>\n";
 
 /***/ },
-/* 194 */
+/* 197 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __vue_script__, __vue_template__
 	var __vue_styles__ = {}
-	__webpack_require__(195)
-	__vue_script__ = __webpack_require__(196)
+	__webpack_require__(198)
+	__vue_script__ = __webpack_require__(199)
 	if (__vue_script__ &&
 	    __vue_script__.__esModule &&
 	    Object.keys(__vue_script__).length > 1) {
 	  console.warn("[vue-loader] src/UiSwitch.vue: named exports in *.vue files are ignored.")}
-	__vue_template__ = __webpack_require__(197)
+	__vue_template__ = __webpack_require__(200)
 	module.exports = __vue_script__ || {}
 	if (module.exports.__esModule) module.exports = module.exports.default
 	var __vue_options__ = typeof module.exports === "function" ? (module.exports.options || (module.exports.options = {})) : module.exports
@@ -29885,13 +30143,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	})()}
 
 /***/ },
-/* 195 */
+/* 198 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 
 /***/ },
-/* 196 */
+/* 199 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -29943,9 +30201,29 @@ return /******/ (function(modules) { // webpackBootstrap
 	    created: function created() {
 	        this.initialValue = this.value;
 	    },
+	    mounted: function mounted() {
+	        var _this = this;
+	
+	        this.$nextTick(function () {
+	            var _arr = ['reset'];
+	
+	            for (var _i = 0; _i < _arr.length; _i++) {
+	                var event = _arr[_i];
+	                _this.$on('ui-input::' + event, _this['ui-input::' + event]);
+	            }
+	        });
+	    },
+	    beforeDestroy: function beforeDestroy() {
+	        var _arr2 = ['reset'];
+	
+	        for (var _i2 = 0; _i2 < _arr2.length; _i2++) {
+	            var event = _arr2[_i2];
+	            this.$off('ui-input::' + event, this['ui-input::' + event]);
+	        }
+	    },
 	
 	
-	    events: {
+	    methods: {
 	        'ui-input::reset': function uiInputReset(id) {
 	            if (!this.eventTargetsComponent(id)) {
 	                return;
@@ -29963,24 +30241,24 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 197 */
+/* 200 */
 /***/ function(module, exports) {
 
 	module.exports = "\n<label\n    class=\"ui-switch\"\n    :class=\"{ 'checked': value, 'disabled': disabled, 'label-left': labelLeft }\"\n>\n    <div class=\"ui-switch-container\">\n        <input\n            class=\"ui-switch-input\" type=\"checkbox\" :name=\"name\" :id=\"id\" v-model=\"value\"\n            v-disabled=\"disabled\"\n        >\n\n        <div class=\"ui-switch-track\"></div>\n        <div class=\"ui-switch-thumb\"></div>\n\n        <div class=\"ui-switch-focus-ring\"></div>\n    </div>\n\n    <div class=\"ui-switch-label-text\" v-if=\"!hideLabel\">\n        <slot>\n            <span v-text=\"label\"></span>\n        </slot>\n    </div>\n</label>\n";
 
 /***/ },
-/* 198 */
+/* 201 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __vue_script__, __vue_template__
 	var __vue_styles__ = {}
-	__webpack_require__(199)
-	__vue_script__ = __webpack_require__(200)
+	__webpack_require__(202)
+	__vue_script__ = __webpack_require__(203)
 	if (__vue_script__ &&
 	    __vue_script__.__esModule &&
 	    Object.keys(__vue_script__).length > 1) {
 	  console.warn("[vue-loader] src/UiTab.vue: named exports in *.vue files are ignored.")}
-	__vue_template__ = __webpack_require__(201)
+	__vue_template__ = __webpack_require__(204)
 	module.exports = __vue_script__ || {}
 	if (module.exports.__esModule) module.exports = module.exports.default
 	var __vue_options__ = typeof module.exports === "function" ? (module.exports.options || (module.exports.options = {})) : module.exports
@@ -30005,13 +30283,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	})()}
 
 /***/ },
-/* 199 */
+/* 202 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 
 /***/ },
-/* 200 */
+/* 203 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -30041,33 +30319,33 @@ return /******/ (function(modules) { // webpackBootstrap
 	    watch: {
 	        active: function active() {
 	            if (this.active) {
-	                this.$dispatch('selected', this.id);
+	                this.$emit('selected', this.id);
 	            } else {
-	                this.$dispatch('deselected', this.id);
+	                this.$emit('deselected', this.id);
 	            }
 	        }
 	    }
 	};
 
 /***/ },
-/* 201 */
+/* 204 */
 /***/ function(module, exports) {
 
 	module.exports = "\n<div\n    class=\"ui-tab\" :id=\"id\" role=\"tabpanel\" :tabindex=\"active ? '0' : null\"\n    :aria-hidden=\"!active ? 'true' : null\" v-show=\"active\"\n>\n    <slot></slot>\n</div>\n";
 
 /***/ },
-/* 202 */
+/* 205 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __vue_script__, __vue_template__
 	var __vue_styles__ = {}
-	__webpack_require__(203)
-	__vue_script__ = __webpack_require__(204)
+	__webpack_require__(206)
+	__vue_script__ = __webpack_require__(207)
 	if (__vue_script__ &&
 	    __vue_script__.__esModule &&
 	    Object.keys(__vue_script__).length > 1) {
 	  console.warn("[vue-loader] src/UiTabs.vue: named exports in *.vue files are ignored.")}
-	__vue_template__ = __webpack_require__(209)
+	__vue_template__ = __webpack_require__(212)
 	module.exports = __vue_script__ || {}
 	if (module.exports.__esModule) module.exports = module.exports.default
 	var __vue_options__ = typeof module.exports === "function" ? (module.exports.options || (module.exports.options = {})) : module.exports
@@ -30092,13 +30370,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	})()}
 
 /***/ },
-/* 203 */
+/* 206 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 
 /***/ },
-/* 204 */
+/* 207 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -30107,11 +30385,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	    value: true
 	});
 	
-	var _uuid = __webpack_require__(88);
+	var _uuid = __webpack_require__(91);
 	
 	var _uuid2 = _interopRequireDefault(_uuid);
 	
-	var _UiTabHeaderItem = __webpack_require__(205);
+	var _UiTabHeaderItem = __webpack_require__(208);
 	
 	var _UiTabHeaderItem2 = _interopRequireDefault(_UiTabHeaderItem);
 	
@@ -30225,9 +30503,29 @@ return /******/ (function(modules) { // webpackBootstrap
 	            }
 	        });
 	    },
+	    mounted: function mounted() {
+	        var _this2 = this;
+	
+	        this.$nextTick(function () {
+	            var _arr = ['select'];
+	
+	            for (var _i = 0; _i < _arr.length; _i++) {
+	                var event = _arr[_i];
+	                _this2.$on('ui-tabs::' + event, _this2['ui-tabs::' + event]);
+	            }
+	        });
+	    },
+	    beforeDestroy: function beforeDestroy() {
+	        var _arr2 = ['select'];
+	
+	        for (var _i2 = 0; _i2 < _arr2.length; _i2++) {
+	            var event = _arr2[_i2];
+	            this.$off('ui-tabs::' + event, this['ui-tabs::' + event]);
+	        }
+	    },
 	
 	
-	    events: {
+	    methods: {
 	        'ui-tabs::select': function uiTabsSelect(tabId, id) {
 	            if (!this.eventTargetsComponent(id)) {
 	                return;
@@ -30238,10 +30536,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	            if (tab) {
 	                this.select(tab.$el, tab);
 	            }
-	        }
-	    },
+	        },
 	
-	    methods: {
 	        select: function select(e, tab) {
 	            var newTabElement = e.currentTarget ? e.currentTarget : e;
 	
@@ -30252,7 +30548,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            this.activeTabElement = newTabElement;
 	            this.activeTab = tab.id;
 	
-	            this.$dispatch('active-tab-changed', tab.id);
+	            this.$emit('active-tab-changed', tab.id);
 	        },
 	        selectPrev: function selectPrev(currentTabIndex) {
 	            if (currentTabIndex === 0) {
@@ -30285,9 +30581,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	                    }
 	                }
 	            } else {
-	                for (var _i = currentTabIndex - 1; _i >= 0; _i--) {
-	                    if (!this.$refs.tabElements[_i].disabled) {
-	                        tab = this.$refs.tabElements[_i];
+	                for (var _i3 = currentTabIndex - 1; _i3 >= 0; _i3--) {
+	                    if (!this.$refs.tabElements[_i3].disabled) {
+	                        tab = this.$refs.tabElements[_i3];
 	                        break;
 	                    }
 	                }
@@ -30325,18 +30621,18 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 205 */
+/* 208 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __vue_script__, __vue_template__
 	var __vue_styles__ = {}
-	__webpack_require__(206)
-	__vue_script__ = __webpack_require__(207)
+	__webpack_require__(209)
+	__vue_script__ = __webpack_require__(210)
 	if (__vue_script__ &&
 	    __vue_script__.__esModule &&
 	    Object.keys(__vue_script__).length > 1) {
 	  console.warn("[vue-loader] src/UiTabHeaderItem.vue: named exports in *.vue files are ignored.")}
-	__vue_template__ = __webpack_require__(208)
+	__vue_template__ = __webpack_require__(211)
 	module.exports = __vue_script__ || {}
 	if (module.exports.__esModule) module.exports = module.exports.default
 	var __vue_options__ = typeof module.exports === "function" ? (module.exports.options || (module.exports.options = {})) : module.exports
@@ -30361,13 +30657,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	})()}
 
 /***/ },
-/* 206 */
+/* 209 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 
 /***/ },
-/* 207 */
+/* 210 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -30422,30 +30718,30 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 208 */
+/* 211 */
 /***/ function(module, exports) {
 
 	module.exports = "\n<li\n    class=\"ui-tab-header-item\" role=\"tab\"\n    :class=\"['type-' + type, { 'active': active, 'disabled': disabled }]\"\n\n    :tabindex=\"active ? 0 : -1\" :aria-controls=\"id\" :aria-selected=\"active ? 'true' : null\"\n    v-disabled=\"disabled\" ref=\"item\"\n>\n    <div\n        class=\"ui-tab-header-item-icon\" v-if=\"type === 'icon' || type === 'icon-and-text'\"\n    >\n        <ui-icon :icon=\"icon\"></ui-icon>\n    </div>\n\n    <div\n        class=\"ui-tab-header-item-text\" v-text=\"text\"\n        v-if=\"type === 'text' || type === 'icon-and-text'\"\n    ></div>\n\n    <ui-ripple-ink :trigger=\"$refs.item\" v-if=\"!hideRippleInk && !disabled\"></ui-ripple-ink>\n</li>\n";
 
 /***/ },
-/* 209 */
+/* 212 */
 /***/ function(module, exports) {
 
 	module.exports = "\n<div class=\"ui-tabs\" :class=\"styleClasses\">\n    <div class=\"ui-tabs-header\" :class=\"[backgroundColor]\">\n        <ul\n            class=\"ui-tabs-header-items\" :class=\"[textColor, textColorActive]\" role=\"tablist\"\n            ref=\"tabs-container\"\n        >\n            <ui-tab-header-item\n                :type=\"type\" :id=\"tab.id\" :icon=\"tab.icon\" :text=\"tab.header\"\n                :active=\"activeTab === tab.id\" :disabled=\"tab.disabled\"\n                :hide-ripple-ink=\"hideRippleInk\"\n\n                @click=\"select($event, tab)\" @keydown.left=\"selectPrev(index)\"\n                @keydown.right=\"selectNext($index)\"\n\n                v-for=\"(index, tab) in $children\" v-ref:tab-elements\n            ></ui-tab-header-item>\n        </ul>\n\n        <div\n            class=\"ui-tabs-active-tab-indicator\" :class=\"[indicatorColor]\"\n            :style=\"{ 'left': indicatorLeft, 'right': indicatorRight }\"\n        ></div>\n    </div>\n\n    <div class=\"ui-tabs-body\">\n        <slot></slot>\n    </div>\n</div>\n";
 
 /***/ },
-/* 210 */
+/* 213 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __vue_script__, __vue_template__
 	var __vue_styles__ = {}
-	__webpack_require__(211)
-	__vue_script__ = __webpack_require__(212)
+	__webpack_require__(214)
+	__vue_script__ = __webpack_require__(215)
 	if (__vue_script__ &&
 	    __vue_script__.__esModule &&
 	    Object.keys(__vue_script__).length > 1) {
 	  console.warn("[vue-loader] src/UiTextbox.vue: named exports in *.vue files are ignored.")}
-	__vue_template__ = __webpack_require__(213)
+	__vue_template__ = __webpack_require__(216)
 	module.exports = __vue_script__ || {}
 	if (module.exports.__esModule) module.exports = module.exports.default
 	var __vue_options__ = typeof module.exports === "function" ? (module.exports.options || (module.exports.options = {})) : module.exports
@@ -30470,13 +30766,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	})()}
 
 /***/ },
-/* 211 */
+/* 214 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 
 /***/ },
-/* 212 */
+/* 215 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -30489,15 +30785,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _UiIcon2 = _interopRequireDefault(_UiIcon);
 	
-	var _autofocus = __webpack_require__(90);
+	var _autofocus = __webpack_require__(93);
 	
 	var _autofocus2 = _interopRequireDefault(_autofocus);
 	
-	var _HasTextInput = __webpack_require__(91);
+	var _HasTextInput = __webpack_require__(94);
 	
 	var _HasTextInput2 = _interopRequireDefault(_HasTextInput);
 	
-	var _ValidatesInput = __webpack_require__(92);
+	var _ValidatesInput = __webpack_require__(95);
 	
 	var _ValidatesInput2 = _interopRequireDefault(_ValidatesInput);
 	
@@ -30600,9 +30896,31 @@ return /******/ (function(modules) { // webpackBootstrap
 	        }
 	    },
 	
-	    events: {
+	    mounted: function mounted() {
+	        var _this = this;
+	
+	        this.$nextTick(function () {
+	            var _arr = ['reset'];
+	
+	            for (var _i = 0; _i < _arr.length; _i++) {
+	                var event = _arr[_i];
+	                _this.$on('ui-input::' + event, _this['ui-input::' + event]);
+	            }
+	        });
+	    },
+	    beforeDestroy: function beforeDestroy() {
+	        var _arr2 = ['reset'];
+	
+	        for (var _i2 = 0; _i2 < _arr2.length; _i2++) {
+	            var event = _arr2[_i2];
+	            this.$off('ui-input::' + event, this['ui-input::' + event]);
+	        }
+	    },
+	
+	
+	    methods: {
 	        'ui-input::reset': function uiInputReset(id) {
-	            var _this = this;
+	            var _this2 = this;
 	
 	            if (!this.eventTargetsComponent(id)) {
 	                return;
@@ -30620,15 +30938,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	            this.dirty = false;
 	
 	            this.$nextTick(function () {
-	                _this.ignoreValueChange = false;
+	                _this2.ignoreValueChange = false;
 	            });
-	        }
-	    },
+	        },
 	
-	    methods: {
 	        focussed: function focussed() {
 	            this.active = true;
-	            this.$dispatch('focussed');
+	            this.$emit('focussed');
 	        },
 	        blurred: function blurred() {
 	            this.active = false;
@@ -30637,17 +30953,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	                this.dirty = true;
 	            }
 	
-	            this.$dispatch('blurred');
+	            this.$emit('blurred');
 	            this.validate();
 	        },
 	        changed: function changed() {
-	            this.$dispatch('changed');
+	            this.$emit('changed');
 	        },
 	        keydown: function keydown(e) {
-	            this.$dispatch('keydown', e);
+	            this.$emit('keydown', e);
 	        },
 	        keydownEnter: function keydownEnter(e) {
-	            this.$dispatch('keydown-enter', e);
+	            this.$emit('keydown-enter', e);
 	        }
 	    },
 	
@@ -30675,24 +30991,24 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 213 */
+/* 216 */
 /***/ function(module, exports) {
 
 	module.exports = "\n<div\n    class=\"ui-textbox\"\n    :class=\"{\n        'disabled': disabled, 'invalid': !valid, 'dirty': dirty, 'active': active,\n        'has-label': !hideLabel, 'is-multi-line': multiLine, 'icon-right': iconRight,\n        'has-counter': maxLength\n    }\"\n>\n    <div class=\"ui-textbox-icon-wrapper\" v-if=\"showIcon\">\n        <ui-icon :icon=\"icon\" class=\"ui-textbox-icon\"></ui-icon>\n    </div>\n\n    <div class=\"ui-textbox-content\">\n        <label class=\"ui-textbox-label\">\n            <div class=\"ui-textbox-label-text\" v-text=\"label\" v-if=\"!hideLabel\"></div>\n\n            <input\n                class=\"ui-textbox-input\" :type=\"type\" :placeholder=\"placeholder\" :name=\"name\"\n                :id=\"id\" :number=\"type === 'number' ? true : null\" :min=\"minValue\"\n                :max=\"maxValue\" :step=\"stepValue\"\n                :autocomplete=\"autocomplete ? autocomplete : null\"\n\n                @focus=\"focussed\" @blur=\"blurred\" @change=\"changed\" @keydown=\"keydown\"\n                @keydown.enter=\"keydownEnter\" :debounce=\"debounce\"\n\n                v-model=\"value | trim\" v-disabled=\"disabled\" v-if=\"!multiLine\"\n                v-autofocus=\"autofocus\"\n            >\n\n            <textarea\n                class=\"ui-textbox-textarea\" :placeholder=\"placeholder\" :name=\"name\" :id=\"id\"\n                :rows=\"rows\"\n\n                @focus=\"focussed\" @blur=\"blurred\" @change=\"changed\" @keydown=\"keydown\"\n                @keydown.enter=\"keydownEnter\" :debounce=\"debounce\"\n\n                v-model=\"value | trim\" v-disabled=\"disabled\" v-else\n            ></textarea>\n        </label>\n\n        <div class=\"ui-textbox-feedback\" v-if=\"showFeedback || maxLength\">\n            <div\n                class=\"ui-textbox-error-text\" transition=\"ui-textbox-feedback-toggle\"\n                v-text=\"validationError\" v-show=\"!hideValidationErrors && !valid\"\n            ></div>\n\n            <div\n                class=\"ui-textbox-help-text\" transition=\"ui-textbox-feedback-toggle\"\n                v-text=\"helpText\" v-else\n            ></div>\n\n            <div\n                class=\"ui-textbox-counter\" v-text=\"value.length + '/' + maxLength\"\n                v-if=\"maxLength\"\n            ></div>\n        </div>\n    </div>\n</div>\n";
 
 /***/ },
-/* 214 */
+/* 217 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __vue_script__, __vue_template__
 	var __vue_styles__ = {}
-	__webpack_require__(215)
-	__vue_script__ = __webpack_require__(216)
+	__webpack_require__(218)
+	__vue_script__ = __webpack_require__(219)
 	if (__vue_script__ &&
 	    __vue_script__.__esModule &&
 	    Object.keys(__vue_script__).length > 1) {
 	  console.warn("[vue-loader] src/UiToolbar.vue: named exports in *.vue files are ignored.")}
-	__vue_template__ = __webpack_require__(217)
+	__vue_template__ = __webpack_require__(220)
 	module.exports = __vue_script__ || {}
 	if (module.exports.__esModule) module.exports = module.exports.default
 	var __vue_options__ = typeof module.exports === "function" ? (module.exports.options || (module.exports.options = {})) : module.exports
@@ -30717,13 +31033,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	})()}
 
 /***/ },
-/* 215 */
+/* 218 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 
 /***/ },
-/* 216 */
+/* 219 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -30732,7 +31048,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    value: true
 	});
 	
-	var _UiProgressLinear = __webpack_require__(139);
+	var _UiProgressLinear = __webpack_require__(142);
 	
 	var _UiProgressLinear2 = _interopRequireDefault(_UiProgressLinear);
 	
@@ -30829,7 +31145,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	    methods: {
 	        navIconClick: function navIconClick() {
-	            this.$dispatch('nav-icon-clicked');
+	            this.$emit('nav-icon-clicked');
 	        }
 	    },
 	
@@ -30840,7 +31156,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 217 */
+/* 220 */
 /***/ function(module, exports) {
 
 	module.exports = "\n<div class=\"ui-toolbar\" :class=\"styleClasses\">\n    <div class=\"ui-toolbar-left\">\n        <ui-icon-button\n            class=\"ui-toolbar-nav-icon\" type=\"clear\" :color=\"iconColor\" :icon=\"navIcon\"\n            @click=\"navIconClick\" v-if=\"!hideNavIcon\"\n        ></ui-icon-button>\n\n        <div class=\"ui-toolbar-brand\" v-if=\"showBrand\">\n            <slot name=\"brand\">\n                <div class=\"ui-toolbar-brand-text\" v-text=\"brand\"></div>\n            </slot>\n        </div>\n    </div>\n\n    <div class=\"ui-toolbar-center\">\n        <div class=\"ui-toolbar-divider\" v-if=\"brandDividerVisible\"></div>\n\n        <slot>\n            <div class=\"ui-toolbar-title\" v-text=\"title\"></div>\n        </slot>\n    </div>\n\n    <div class=\"ui-toolbar-right\">\n        <slot name=\"actions\"></slot>\n    </div>\n\n    <ui-progress-linear\n        :show=\"loading\" class=\"ui-toolbar-preloader\" :class=\"{ 'position-top' : preloaderTop }\"\n        :color=\"preloaderColor\"\n    ></ui-progress-linear>\n</div>\n";

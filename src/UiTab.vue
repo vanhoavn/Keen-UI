@@ -30,9 +30,9 @@ export default {
     watch: {
         active() {
             if (this.active) {
-                this.$dispatch('selected', this.id);
+                this.$emit('selected', this.id);
             } else {
-                this.$dispatch('deselected', this.id);
+                this.$emit('deselected', this.id);
             }
         }
     }

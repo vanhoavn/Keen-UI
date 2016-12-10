@@ -67,7 +67,7 @@ export default {
     methods: {
         close() {
             this.show = false;
-            this.$dispatch('dismissed');
+            this.$emit('dismissed');
         }
     },
 

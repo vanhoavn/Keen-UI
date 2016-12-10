@@ -207,16 +207,16 @@ export default {
         showDropdown() {
             if (this.showDropdown) {
                 this.opened();
-                this.$dispatch('opened');
+                this.$emit('opened');
             } else {
                 this.closed();
-                this.$dispatch('closed');
+                this.$emit('closed');
             }
         },
 
         query() {
             if (!this.ignoreQueryChange) {
-                this.$dispatch('query-changed', this.query);
+                this.$emit('query-changed', this.query);
             }
         }
     },
@@ -243,7 +243,21 @@ export default {
         document.removeEventListener('click', this.closeOnExternalClick);
     },
 
-    events: {
+    mounted() {
+        this.$nextTick(() => {
+            for(let event of ['reset','set-selected']){
+                this.$on('ui-select::'+event, this['ui-select::'+event]);
+            }
+        });
+    },
+
+    beforeDestroy() {
+        for(let event of ['reset','set-selected']){
+            this.$off('ui-select::'+event, this['ui-select::'+event]);
+        }
+    },
+
+    methods: {
         'ui-select::set-selected': function(value, id) {
             // Abort if event isn't meant for this component
             if (!this.eventTargetsComponent(id)) {
@@ -268,10 +282,8 @@ export default {
             this.clearQuery();
             this.selectedIndex = -1;
             this.highlightedIndex = -1;
-        }
-    },
+        },
 
-    methods: {
         initValue() {
             this.value = this.multiple ? [] : null;
 
@@ -323,7 +335,7 @@ export default {
                 this.selectedIndex = index;
             }
 
-            this.$dispatch('selected', option);
+            this.$emit('selected', option);
 
             this.highlightedIndex = index;
             this.clearQuery();

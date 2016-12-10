@@ -28,7 +28,7 @@ export default {
 
     methods: {
         menuOptionSelect(option) {
-            this.$dispatch('menu-option-selected', option);
+            this.$emit('menu-option-selected', option);
         }
     }
 };

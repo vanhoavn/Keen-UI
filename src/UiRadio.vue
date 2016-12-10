@@ -65,13 +65,13 @@ export default {
         focus() {
             this.active = true;
 
-            this.$dispatch('focussed');
+            this.$emit('focussed');
         },
 
         blur() {
             this.active = false;
 
-            this.$dispatch('blurred');
+            this.$emit('blurred');
         }
     },
 

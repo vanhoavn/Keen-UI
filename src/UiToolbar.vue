@@ -128,7 +128,7 @@ export default {
 
     methods: {
         navIconClick() {
-            this.$dispatch('nav-icon-clicked');
+            this.$emit('nav-icon-clicked');
         }
     },
 

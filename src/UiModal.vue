@@ -51,8 +51,7 @@ export default {
     props: {
         show: {
             type: Boolean,
-            required: true,
-            twoWay: true
+            required: true
         },
         type: {
             type: String,
@@ -148,12 +147,12 @@ export default {
 
             document.addEventListener('focus', this.restrictFocus, true);
 
-            this.$dispatch('opened');
+            this.$emit('opened');
         },
 
         closed() {
             this.tearDown();
-            this.$dispatch('closed');
+            this.$emit('closed');
         },
 
         redirectFocus(e) {
@@ -181,9 +180,9 @@ export default {
 
         transitionEnd : _.debounce(() => {
             if (this.show) {
-                this.$dispatch('revealed');
+                this.$emit('revealed');
             } else {
-                this.$dispatch('hidden');
+                this.$emit('hidden');
             }
         }, 100)
     },

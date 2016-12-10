@@ -135,23 +135,17 @@ export default {
         }
     },
 
-    events: {
-        'ui-input::reset': function(id) {
-            // Abort if reset event isn't meant for this component
-            if (!this.eventTargetsComponent(id)) {
-                return;
+    mounted() {
+        this.$nextTick(() => {
+            for(let event of ['reset']){
+                this.$on('ui-input::'+event, this['ui-input::'+event]);
             }
+        });
+    },
 
-            // Blur input before resetting to avoid "required" errors
-            // when input is blurred after reset
-            if (document.activeElement === this.$refs.input) {
-                document.activeElement.blur();
-            }
-
-            // Reset state
-            this.value = this.initialValue;
-            this.dirty = false;
-            this.valid = true;
+    beforeDestroy() {
+        for(let event of ['reset']){
+            this.$off('ui-input::'+event, this['ui-input::'+event]);
         }
     },
 
@@ -174,6 +168,24 @@ export default {
     },
 
     methods: {
+        'ui-input::reset': function(id) {
+            // Abort if reset event isn't meant for this component
+            if (!this.eventTargetsComponent(id)) {
+                return;
+            }
+
+            // Blur input before resetting to avoid "required" errors
+            // when input is blurred after reset
+            if (document.activeElement === this.$refs.input) {
+                document.activeElement.blur();
+            }
+
+            // Reset state
+            this.value = this.initialValue;
+            this.dirty = false;
+            this.valid = true;
+        },
+
         search(item) {
             if (this.filter) {
                 return this.filter(item, this.value);
@@ -196,7 +208,7 @@ export default {
                 this.value = item[this.keys.value] || item;
             }
 
-            this.$dispatch('selected', item);
+            this.$emit('selected', item);
 
             this.validate();
 
@@ -225,9 +237,9 @@ export default {
             }
 
             if (index < firstIndex || index > lastIndex) {
-                this.$dispatch('highlight-overflow', index);
+                this.$emit('highlight-overflow', index);
             } else {
-                this.$dispatch('highlighted', this.$refs.items[index].item, index);
+                this.$emit('highlighted', this.$refs.items[index].item, index);
             }
         },
 
@@ -245,7 +257,7 @@ export default {
         open() {
             if (!this.showDropdown) {
                 this.showDropdown = true;
-                this.$dispatch('opened');
+                this.$emit('opened');
             }
         },
 
@@ -254,7 +266,7 @@ export default {
                 this.showDropdown = false;
                 this.highlightedItem = -1;
 
-                this.$dispatch('closed');
+                this.$emit('closed');
                 this.validate();
             }
         },

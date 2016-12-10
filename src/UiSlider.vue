@@ -109,14 +109,20 @@ export default {
         }
     },
 
-    events: {
-        'ui-input::reset': function(id) {
-            // Abort if reset event isn't meant for this component
-            if (!this.eventTargetsComponent(id)) {
-                return;
+    mounted() {
+        this.$nextTick(() => {
+            for(let event of ['reset']){
+                this.$on('ui-input::'+event, this['ui-input::'+event]);
             }
+        });
+    },
 
-            this.value = this.initialValue;
+    beforeDestroy() {
+        for(let event of ['reset']){
+            this.$off('ui-input::'+event, this['ui-input::'+event]);
+        }
+        if (this.draggable) {
+            this.draggable.destroy();
         }
     },
 
@@ -142,14 +148,16 @@ export default {
             this.draggable.disable();
         }
     },
-
-    beforeDestroy() {
-        if (this.draggable) {
-            this.draggable.destroy();
-        }
-    },
-
     methods: {
+        'ui-input::reset': function(id) {
+            // Abort if reset event isn't meant for this component
+            if (!this.eventTargetsComponent(id)) {
+                return;
+            }
+
+            this.value = this.initialValue;
+        },
+
         focus() {
             this.active = true;
         },

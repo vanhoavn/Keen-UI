@@ -145,7 +145,21 @@ export default {
         });
     },
 
-    events: {
+    mounted() {
+        this.$nextTick(() => {
+            for(let event of ['select']){
+                this.$on('ui-tabs::'+event, this['ui-tabs::'+event]);
+            }
+        });
+    },
+
+    beforeDestroy() {
+        for(let event of ['select']){
+            this.$off('ui-tabs::'+event, this['ui-tabs::'+event]);
+        }
+    },
+
+    methods: {
         'ui-tabs::select': function(tabId, id) {
             // Abort if event isn't meant for this component
             if (!this.eventTargetsComponent(id)) {
@@ -157,10 +171,8 @@ export default {
             if (tab) {
                 this.select(tab.$el, tab);
             }
-        }
-    },
+        },
 
-    methods: {
         select(e, tab) {
             // e can be Element (if called by selectPrev or selectNext) or Event
             // (if called by click listener)
@@ -173,7 +185,7 @@ export default {
             this.activeTabElement = newTabElement;
             this.activeTab = tab.id;
 
-            this.$dispatch('active-tab-changed', tab.id);
+            this.$emit('active-tab-changed', tab.id);
         },
 
         selectPrev(currentTabIndex) {

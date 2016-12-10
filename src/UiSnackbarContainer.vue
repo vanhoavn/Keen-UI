@@ -40,7 +40,31 @@ export default {
         }
     },
 
-    events: {
+
+    data() {
+        return {
+            queue: [] // List of options for snackbars to show
+        };
+    },
+
+    mounted() {
+        this.$nextTick(() => {
+            for(let event of ['create']){
+                this.$on('ui-snackbar::'+event, this['ui-snackbar::'+event]);
+            }
+        });
+    },
+
+    beforeDestroy() {
+        for(let event of ['create']){
+            this.$off('ui-snackbar::'+event, this['ui-snackbar::'+event]);
+        }
+        if (this.draggable) {
+            this.draggable.destroy();
+        }
+    },
+
+    methods: {
         'ui-snackbar::create': function(snackbar) {
             snackbar.show = false;
             snackbar.id = snackbar.id || UUID.short('ui-snackbar-');
@@ -55,16 +79,8 @@ export default {
                     this.queue[0].show = false;
                 }
             }
-        }
-    },
+        },
 
-    data() {
-        return {
-            queue: [] // List of options for snackbars to show
-        };
-    },
-
-    methods: {
         showNext() {
             if (!this.queue.length) {
                 return;
@@ -75,12 +91,12 @@ export default {
         },
 
         shown(snackbar) {
-            this.$dispatch('snackbar-shown', snackbar);
+            this.$emit('snackbar-shown', snackbar);
             this.callHook('onShow', snackbar);
         },
 
         hidden(snackbar) {
-            this.$dispatch('snackbar-hidden', snackbar);
+            this.$emit('snackbar-hidden', snackbar);
             this.callHook('onHide', snackbar);
 
             this.queue.$remove(snackbar);

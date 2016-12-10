@@ -58,13 +58,27 @@ export default {
         }
     },
 
-    events: {
+    mounted() {
+        this.$nextTick(() => {
+            for(let event of ['opened','closed']){
+                this.$on('dropdown-'+event, this['dropdown-'+event]);
+            }
+        });
+    },
+
+    beforeDestroy() {
+        for(let event of ['opened','closed']){
+            this.$off('dropdown-'+event, this['dropdown-'+event]);
+        }
+    },
+
+    methods: {
         'dropdown-opened': function() {
             if (this.containFocus) {
                 document.addEventListener('focus', this.restrictFocus, true);
             }
 
-            this.$dispatch('opened');
+            this.$emit('opened');
 
             // Bubble the event up
             return true;
@@ -75,17 +89,15 @@ export default {
                 document.removeEventListener('focus', this.restrictFocus, true);
             }
 
-            this.$dispatch('closed');
+            this.$emit('closed');
 
             // Bubble the event up
             return true;
-        }
-    },
+        },
 
-    methods: {
         optionSelect(option) {
             if (! (option.disabled || option.type === 'divider')) {
-                this.$dispatch('option-selected', option);
+                this.$emit('option-selected', option);
 
                 if (this.closeOnSelect) {
                     this.closeDropdown();

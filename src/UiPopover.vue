@@ -12,13 +12,34 @@ import ShowsDropdown from './mixins/ShowsDropdown';
 export default {
     name: 'ui-popover',
 
-    events: {
+    mounted() {
+        this.$nextTick(() => {
+            for(let event of ['opened', 'closed']){
+                this.$on('dropdown-'+event, this['dropdown-'+event]);
+            }
+            if (this.trigger) {
+                this.initializeDropdown();
+            };
+        });
+    },
+
+    beforeDestroy() {
+        if (this.drop) {
+            this.drop.remove();
+            this.drop.destroy();
+        }
+        for(let event of ['opened', 'closed']){
+            this.$off('dropdown-'+event, this['dropdown-'+event]);
+        }
+    },
+
+    methods: {
         'dropdown-opened': function() {
             if (this.containFocus) {
                 document.addEventListener('focus', this.restrictFocus, true);
             }
 
-            this.$dispatch('opened');
+            this.$emit('opened');
 
             // Bubble the event up
             return true;
@@ -29,14 +50,12 @@ export default {
                 document.removeEventListener('focus', this.restrictFocus, true);
             }
 
-            this.$dispatch('closed');
+            this.$emit('closed');
 
             // Bubble the event up
             return true;
-        }
-    },
-
-    methods: {
+        },
+        
         restrictFocus(e) {
             if (! this.$refs.dropdown.contains(e.target)) {
                 e.stopPropagation();

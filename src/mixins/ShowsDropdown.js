@@ -28,10 +28,15 @@ export default {
         };
     },
 
-    ready() {
-        if (this.trigger) {
-            this.initializeDropdown();
-        }
+    mounted() {
+        this.$nextTick(() => {
+            for(let event of ['open','close','toggle']){
+                this.$on('ui-dropdown::'+event, this['ui-dropdown::'+event]);
+            }
+            if (this.trigger) {
+                this.initializeDropdown();
+            };
+        });
     },
 
     beforeDestroy() {
@@ -39,10 +44,13 @@ export default {
             this.drop.remove();
             this.drop.destroy();
         }
+        for(let event of ['open','close','toggle']){
+            this.$off('ui-dropdown::'+event, this['ui-dropdown::'+event]);
+        }
     },
 
-    events: {
-        'ui-dropdown::open': function(id) {
+    methods: {
+        'ui-dropdown::open' (id) {
             // Abort if event isn't meant for this component
             if (!this.eventTargetsComponent(id)) {
                 return;
@@ -51,7 +59,7 @@ export default {
             this.openDropdown();
         },
 
-        'ui-dropdown::close': function(id) {
+        'ui-dropdown::close' (id) {
             // Abort if event isn't meant for this component
             if (!this.eventTargetsComponent(id)) {
                 return;
@@ -60,17 +68,15 @@ export default {
             this.closeDropdown();
         },
 
-        'ui-dropdown::toggle': function(id) {
+        'ui-dropdown::toggle' (id) {
             // Abort if event isn't meant for this component
             if (!this.eventTargetsComponent(id)) {
                 return;
             }
 
             this.toggleDropdown();
-        }
-    },
+        },
 
-    methods: {
         initializeDropdown() {
             this.drop = new Drop({
                 target: this.trigger,
@@ -142,7 +148,7 @@ export default {
             this.lastFocussedElement = document.activeElement;
             this.$refs.dropdown.focus();
 
-            this.$dispatch('dropdown-opened');
+            this.$emit('dropdown-opened');
         },
 
         dropdownClosed() {
@@ -152,7 +158,7 @@ export default {
                 this.lastFocussedElement.focus();
             }
 
-            this.$dispatch('dropdown-closed');
+            this.$emit('dropdown-closed');
         }
     },
 

@@ -85,7 +85,7 @@ export default {
         },
 
         previewValue() {
-            this.$dispatch('preview-value-changed', this.previewValue);
+            this.$emit('preview-value-changed', this.previewValue);
         }
     },
 
@@ -97,7 +97,21 @@ export default {
         this.previewValue = this.value;
     },
 
-    events: {
+    mounted() {
+        this.$nextTick(() => {
+            for(let event of ['reset']){
+                this.$on('ui-input::'+event, this['ui-input::'+event]);
+            }
+        });
+    },
+
+    beforeDestroy() {
+        for(let event of ['reset']){
+            this.$off('ui-input::'+event, this['ui-input::'+event]);
+        }
+    },
+
+    methods: {
         'ui-input::reset': function(id) {
             // Abort if reset event isn't meant for this component
             if (!this.eventTargetsComponent(id)) {
@@ -105,10 +119,8 @@ export default {
             }
 
             this.value = this.initialValue;
-        }
-    },
+        },
 
-    methods: {
         startPreview() {
             if (this.disabled) {
                 return;

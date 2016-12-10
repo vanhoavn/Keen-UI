@@ -165,7 +165,22 @@ export default {
         }
     },
 
-    events: {
+
+    mounted() {
+        this.$nextTick(() => {
+            for(let event of ['reset']){
+                this.$on('ui-input::'+event, this['ui-input::'+event]);
+            }
+        });
+    },
+
+    beforeDestroy() {
+        for(let event of ['reset']){
+            this.$off('ui-input::'+event, this['ui-input::'+event]);
+        }
+    },
+
+    methods: {
         'ui-input::reset': function(id) {
             // Abort if reset event isn't meant for this component
             if (!this.eventTargetsComponent(id)) {
@@ -194,13 +209,11 @@ export default {
             this.$nextTick(() => {
                 this.ignoreValueChange = false;
             });
-        }
-    },
+        },
 
-    methods: {
         focussed() {
             this.active = true;
-            this.$dispatch('focussed');
+            this.$emit('focussed');
         },
 
         blurred() {
@@ -210,20 +223,20 @@ export default {
                 this.dirty = true;
             }
 
-            this.$dispatch('blurred');
+            this.$emit('blurred');
             this.validate();
         },
 
         changed() {
-            this.$dispatch('changed');
+            this.$emit('changed');
         },
 
         keydown(e) {
-            this.$dispatch('keydown', e);
+            this.$emit('keydown', e);
         },
 
         keydownEnter(e) {
-            this.$dispatch('keydown-enter', e);
+            this.$emit('keydown-enter', e);
         }
     },
 

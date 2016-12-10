@@ -65,12 +65,12 @@ export default {
 
     methods: {
         click() {
-            this.$dispatch('clicked');
+            this.$emit('clicked');
             this.hide();
         },
 
         actionClick() {
-            this.$dispatch('action-clicked');
+            this.$emit('action-clicked');
             this.hide();
         },
 
@@ -88,7 +88,7 @@ export default {
     transitions: {
         'ui-snackbar-toggle': {
             afterEnter() {
-                this.$dispatch('shown');
+                this.$emit('shown');
 
                 if (this.autoHide) {
                     this.timeout = setTimeout(this.hide, this.duration);
@@ -96,7 +96,7 @@ export default {
             },
 
             afterLeave() {
-                this.$dispatch('hidden');
+                this.$emit('hidden');
 
                 if (this.timeout) {
                     clearTimeout(this.timeout);

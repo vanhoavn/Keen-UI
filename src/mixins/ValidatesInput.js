@@ -26,7 +26,21 @@ export default {
         };
     },
 
-    events: {
+    mounted() {
+        this.$nextTick(() => {
+            for(let event of ['set-validity']){
+                this.$on('ui-input::'+event, this['ui-input::'+event]);
+            }
+        });
+    },
+
+    beforeDestroy() {
+        for(let event of ['set-validity']){
+            this.$off('ui-input::'+event, this['ui-input::'+event]);
+        }
+    },
+
+    methods: {
         'ui-input::set-validity': function(valid, error, id) {
             // Abort if event isn't meant for this component
             if (!this.eventTargetsComponent(id)) {
@@ -34,10 +48,7 @@ export default {
             }
 
             this.setValidity(valid, error);
-        }
-    },
-
-    methods: {
+        },
         validate() {
             if (!this.validationRules || !this.dirty) {
                 return;

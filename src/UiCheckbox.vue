@@ -75,7 +75,21 @@ export default {
         this.initialValue = this.model;
     },
 
-    events: {
+    mounted() {
+        this.$nextTick(() => {
+            for(let event of ['reset']){
+                this.$on('ui-input::'+event, this['ui-input::'+event]);
+            }
+        });
+    },
+
+    beforeDestroy() {
+        for(let event of ['reset']){
+            this.$off('ui-input::'+event, this['ui-input::'+event]);
+        }
+    },
+
+    methods: {
         'ui-input::reset': function(id) {
             // Abort if reset event isn't meant for this component
             if (!this.eventTargetsComponent(id)) {
@@ -83,10 +97,8 @@ export default {
             }
 
             this.model = this.initialValue;
-        }
-    },
-
-    methods: {
+        },
+        
         focus() {
             this.active = true;
         },

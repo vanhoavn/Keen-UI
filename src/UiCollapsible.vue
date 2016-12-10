@@ -93,7 +93,21 @@ export default {
         this.setHeight();
     },
 
-    events: {
+    mounted() {
+        this.$nextTick(() => {
+            for(let event of ['reset']){
+                this.$on('ui-input::'+event, this['ui-input::'+event]);
+            }
+        });
+    },
+
+    beforeDestroy() {
+        for(let event of ['reset']){
+            this.$off('ui-input::'+event, this['ui-input::'+event]);
+        }
+    },
+
+    methods: {
         'ui-collapsible::refresh-height': function(id) {
             // Abort if refresh event isn't meant for this component
             if (!this.eventTargetsComponent(id)) {
@@ -101,10 +115,8 @@ export default {
             }
 
             this.$nextTick(this.setHeight);
-        }
-    },
-
-    methods: {
+        },
+        
         toggleMenu() {
             if (this.disabled) {
                 return;
@@ -141,12 +153,12 @@ export default {
     transitions: {
         'ui-collapsible-toggle': {
             afterEnter() {
-                this.$dispatch('opened');
+                this.$emit('opened');
                 this.setHeight();
             },
 
             afterLeave() {
-                this.$dispatch('closed');
+                this.$emit('closed');
             }
         }
     }
