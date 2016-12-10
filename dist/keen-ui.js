@@ -8137,7 +8137,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	    methods: {
 	        confirm: function confirm() {
-	            this.$dispatch('confirmed');
+	            this.$emit('confirmed');
 	
 	            if (this.closeOnConfirm) {
 	                this.show = false;
@@ -8145,7 +8145,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        },
 	        deny: function deny() {
 	            this.show = false;
-	            this.$dispatch('denied');
+	            this.$emit('denied');
 	        },
 	        opened: function opened() {
 	            var button = void 0;
@@ -8262,10 +8262,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	    name: 'ui-modal',
 	
 	    props: {
-	        show: {
-	            type: Boolean,
-	            required: true
-	        },
 	        type: {
 	            type: String,
 	            default: 'normal', coerce: function coerce(type) {
@@ -8306,6 +8302,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	    data: function data() {
 	        return {
+	            show: false,
 	            lastFocussedElement: null
 	        };
 	    },
@@ -8324,13 +8321,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	            });
 	        }
 	    },
-	
-	    beforeDestroy: function beforeDestroy() {
-	        if (this.show) {
-	            this.tearDown();
-	        }
-	    },
-	
 	
 	    methods: {
 	        close: function close(e) {
@@ -25493,13 +25483,13 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 132 */
 /***/ function(module, exports) {
 
-	module.exports = "\n<div\n    class=\"ui-modal ui-modal-mask\" v-show=\"show\" :transition=\"transition\" :class=\"[type]\"\n    :role=\"role\" @transitionend=\"transitionEnd\"\n>\n    <div class=\"ui-modal-wrapper\" @click=\"close\" ref=\"modal-mask\">\n        <div\n            class=\"ui-modal-container\" tabindex=\"-1\" @keydown.esc=\"close\"\n            ref=\"modal-container\"\n        >\n            <div class=\"ui-modal-header\">\n                <slot name=\"header\">\n                    <h1 v-text=\"header\" class=\"ui-modal-header-text\"></h1>\n                </slot>\n\n                <ui-icon-button\n                    type=\"clear\" icon=\"&#xE5CD\" class=\"ui-modal-close-button\" @click=\"close\"\n                    :disabled=\"!dismissible\" v-if=\"showCloseButton\" ref=\"close-button\"\n                ></ui-icon-button>\n            </div>\n\n            <div class=\"ui-modal-body\">\n                <slot>\n                    <div v-text=\"body\"></div>\n                </slot>\n            </div>\n\n            <div class=\"ui-modal-footer\" v-if=\"!hideFooter\">\n                <slot name=\"footer\">\n                    <ui-button @click=\"close\" v-if=\"dismissible\">Close</ui-button>\n                </slot>\n            </div>\n\n            <div class=\"focus-redirector\" @focus=\"redirectFocus\" tabindex=\"0\"></div>\n        </div>\n    </div>\n</div>\n";
+	module.exports = "\n<div\n    class=\"ui-modal ui-modal-mask\" v-show=\"show\" :transition=\"transition\" :class=\"['ui-modal-' + type]\"\n    :role=\"role\" @transitionend=\"transitionEnd\"\n>\n    <div class=\"ui-modal-wrapper\" @click=\"close\" ref=\"modal-mask\">\n        <div\n            class=\"ui-modal-container\" tabindex=\"-1\" @keydown.esc=\"close\"\n            ref=\"modal-container\"\n        >\n            <div class=\"ui-modal-header\">\n                <slot name=\"header\">\n                    <h1 v-text=\"header\" class=\"ui-modal-header-text\"></h1>\n                </slot>\n\n                <ui-icon-button\n                    type=\"clear\" icon=\"&#xE5CD\" class=\"ui-modal-close-button\" @click=\"close\"\n                    :disabled=\"!dismissible\" v-if=\"showCloseButton\" ref=\"close-button\"\n                ></ui-icon-button>\n            </div>\n\n            <div class=\"ui-modal-body\">\n                <slot>\n                    <div v-text=\"body\"></div>\n                </slot>\n            </div>\n\n            <div class=\"ui-modal-footer\" v-if=\"!hideFooter\">\n                <slot name=\"footer\">\n                    <ui-button @click=\"close\" v-if=\"dismissible\">Close</ui-button>\n                </slot>\n            </div>\n\n            <div class=\"focus-redirector\" @focus=\"redirectFocus\" tabindex=\"0\"></div>\n        </div>\n    </div>\n</div>\n";
 
 /***/ },
 /* 133 */
 /***/ function(module, exports) {
 
-	module.exports = "\n<div class=\"ui-confirm\">\n    <ui-modal\n        :show.sync=\"show\" role=\"alertdialog\" :header=\"header\" @opened=\"opened\" show-close-button\n        :dismissible=\"!loading\" :backdrop-dismissible=\"backdropDismissible\"\n    >\n        <div class=\"ui-confirm-message\">\n            <slot></slot>\n        </div>\n\n        <div slot=\"footer\">\n            <ui-button\n                :color=\"type\" :text=\"confirmButtonText\" :icon=\"confirmButtonIcon\"\n                @click=\"confirm\" :loading=\"loading\" ref=\"confirm-button\"\n            ></ui-button>\n\n            <ui-button\n                :text=\"denyButtonText\" :icon=\"denyButtonIcon\" @click=\"deny\"\n                :disabled=\"loading\" ref=\"deny-button\"\n            ></ui-button>\n        </div>\n    </ui-modal>\n</div>\n";
+	module.exports = "\n<div class=\"ui-confirm\">\n    <ui-modal role=\"alertdialog\" :header=\"header\" @opened=\"opened\" show-close-button\n        :dismissible=\"!loading\" :backdrop-dismissible=\"backdropDismissible\"\n    >\n        <div class=\"ui-confirm-message\">\n            <slot></slot>\n        </div>\n\n        <div slot=\"footer\">\n            <ui-button\n                :color=\"type\" :text=\"confirmButtonText\" :icon=\"confirmButtonIcon\"\n                @click=\"confirm\" :loading=\"loading\" ref=\"confirm-button\"\n            ></ui-button>\n\n            <ui-button\n                :text=\"denyButtonText\" :icon=\"denyButtonIcon\" @click=\"deny\"\n                :disabled=\"loading\" ref=\"deny-button\"\n            ></ui-button>\n        </div>\n    </ui-modal>\n</div>\n";
 
 /***/ },
 /* 134 */

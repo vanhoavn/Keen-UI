@@ -1,6 +1,6 @@
 <template>
     <div
-        class="ui-modal ui-modal-mask" v-show="show" :transition="transition" :class="[type]"
+        class="ui-modal ui-modal-mask" v-show="show" :transition="transition" :class="['ui-modal-' + type]"
         :role="role" @transitionend="transitionEnd"
     >
         <div class="ui-modal-wrapper" @click="close" ref="modal-mask">
@@ -49,10 +49,6 @@ export default {
     name: 'ui-modal',
 
     props: {
-        show: {
-            type: Boolean,
-            required: true
-        },
         type: {
             type: String,
             default: 'normal', // 'small', 'normal', or 'large'
@@ -96,6 +92,7 @@ export default {
 
     data() {
         return {
+            show: false,
             lastFocussedElement: null
         };
     },
@@ -109,12 +106,6 @@ export default {
                     this.closed();
                 }
             });
-        }
-    },
-
-    beforeDestroy() {
-        if (this.show) {
-            this.tearDown();
         }
     },
 
@@ -204,12 +195,6 @@ $transition-duration = 0.2s;
 .ui-modal {
     font-family: $font-stack;
     font-size: 14px;
-
-    &.ui-modal-large {
-        .ui-modal-container {
-            width: 848px;
-        }
-    }
 
     &.ui-modal-small {
         .ui-modal-container {

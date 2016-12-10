@@ -1,7 +1,6 @@
 <template>
     <div class="ui-confirm">
-        <ui-modal
-            :show.sync="show" role="alertdialog" :header="header" @opened="opened" show-close-button
+        <ui-modal role="alertdialog" :header="header" @opened="opened" show-close-button
             :dismissible="!loading" :backdrop-dismissible="backdropDismissible"
         >
             <div class="ui-confirm-message">
@@ -76,7 +75,7 @@ export default {
 
     methods: {
         confirm() {
-            this.$dispatch('confirmed');
+            this.$emit('confirmed');
 
             if (this.closeOnConfirm) {
                 this.show = false;
@@ -85,7 +84,7 @@ export default {
 
         deny() {
             this.show = false;
-            this.$dispatch('denied');
+            this.$emit('denied');
         },
 
         opened() {

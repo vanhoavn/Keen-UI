@@ -1294,9 +1294,6 @@ body[modality="keyboard"] .ui-collapsible-header:focus {
   font-family: Roboto, -apple-system, BlinkMacSystemFont, "Segoe UI", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
   font-size: 14px;
 }
-.ui-modal.ui-modal-large .ui-modal-container {
-  width: 848px;
-}
 .ui-modal.ui-modal-small .ui-modal-container {
   width: 320px;
 }
