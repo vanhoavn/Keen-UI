@@ -1,5 +1,5 @@
 <template>
-    <div class="ui-tooltip" v-text="content" v-el:tooltip></div>
+    <div class="ui-tooltip" v-text="content" ref="tooltip"></div>
 </template>
 
 <script>
@@ -54,7 +54,7 @@ export default {
             if (this.trigger) {
                 this.tooltip = new Tooltip({
                     target: this.trigger,
-                    content: this.$els.tooltip,
+                    content: this.$refs.tooltip,
                     classes: 'ui-tooltip-theme',
                     position: this.position,
                     openOn: 'hover focus'

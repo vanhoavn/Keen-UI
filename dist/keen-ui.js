@@ -820,16 +820,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	            }
 	        },
 	        restrictFocus: function restrictFocus(e) {
-	            if (!this.$els.dropdown.contains(e.target)) {
+	            if (!this.$refs.dropdown.contains(e.target)) {
 	                e.stopPropagation();
 	
-	                this.$els.dropdown.querySelector('.ui-menu-option').focus();
+	                this.$refs.dropdown.querySelector('.ui-menu-option').focus();
 	            }
 	        },
 	        redirectFocus: function redirectFocus(e) {
 	            e.stopPropagation();
 	
-	            this.$els.dropdown.querySelector('.ui-menu-option').focus();
+	            this.$refs.dropdown.querySelector('.ui-menu-option').focus();
 	        }
 	    },
 	
@@ -1976,7 +1976,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        initializeDropdown: function initializeDropdown() {
 	            this.drop = new _tetherDrop2.default({
 	                target: this.trigger,
-	                content: this.$els.dropdown,
+	                content: this.$refs.dropdown,
 	                position: this.dropdownPosition,
 	                constrainToWindow: true,
 	                openOn: this.openOn
@@ -2029,7 +2029,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            _classlist2.default.add(this.trigger, 'dropdown-open');
 	
 	            this.lastFocussedElement = document.activeElement;
-	            this.$els.dropdown.focus();
+	            this.$refs.dropdown.focus();
 	
 	            this.$dispatch('dropdown-opened');
 	        },
@@ -4459,7 +4459,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 62 */
 /***/ function(module, exports) {
 
-	module.exports = "\n<ul\n    class=\"ui-menu\" role=\"menu\" tabindex=\"-1\" @keydown.esc=\"closeDropdown\" v-el:dropdown\n    :class=\"{ 'has-icons': showIcons, 'has-secondary-text': showSecondaryText }\"\n>\n    <ui-menu-option\n        :type=\"option.type\" :icon=\"option.icon\" :text=\"option.text\" :disabled=\"option.disabled\"\n        :secondary-text=\"option.secondaryText\" :option=\"option\" :show-icon=\"showIcons\"\n        :show-secondary-text=\"showSecondaryText\" :hide-ripple-ink=\"hideRippleInk\"\n        :partial=\"option.partial || partial\"\n\n        @keydown.enter.prevent=\"optionSelect(option)\" @click=\"optionSelect(option)\"\n\n        v-for=\"option in options\"\n    ></ui-menu-option>\n\n    <div\n        class=\"ui-menu-focus-redirector\" @focus=\"redirectFocus\" tabindex=\"0\"\n    ></div>\n</ul>\n";
+	module.exports = "\n<ul\n    class=\"ui-menu\" role=\"menu\" tabindex=\"-1\" @keydown.esc=\"closeDropdown\" ref=\"dropdown\"\n    :class=\"{ 'has-icons': showIcons, 'has-secondary-text': showSecondaryText }\"\n>\n    <ui-menu-option\n        :type=\"option.type\" :icon=\"option.icon\" :text=\"option.text\" :disabled=\"option.disabled\"\n        :secondary-text=\"option.secondaryText\" :option=\"option\" :show-icon=\"showIcons\"\n        :show-secondary-text=\"showSecondaryText\" :hide-ripple-ink=\"hideRippleInk\"\n        :partial=\"option.partial || partial\"\n\n        @keydown.enter.prevent=\"optionSelect(option)\" @click=\"optionSelect(option)\"\n\n        v-for=\"option in options\"\n    ></ui-menu-option>\n\n    <div\n        class=\"ui-menu-focus-redirector\" @focus=\"redirectFocus\" tabindex=\"0\"\n    ></div>\n</ul>\n";
 
 /***/ },
 /* 63 */
@@ -4546,10 +4546,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	    methods: {
 	        restrictFocus: function restrictFocus(e) {
-	            if (!this.$els.dropdown.contains(e.target)) {
+	            if (!this.$refs.dropdown.contains(e.target)) {
 	                e.stopPropagation();
 	
-	                this.$els.dropdown.focus();
+	                this.$refs.dropdown.focus();
 	            }
 	        }
 	    },
@@ -4561,7 +4561,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 66 */
 /***/ function(module, exports) {
 
-	module.exports = "\n<div\n    class=\"ui-popover\" role=\"dialog\" tabindex=\"-1\" @keydown.esc=\"closeDropdown\" v-el:dropdown\n>\n    <slot></slot>\n</div>\n";
+	module.exports = "\n<div\n    class=\"ui-popover\" role=\"dialog\" tabindex=\"-1\" @keydown.esc=\"closeDropdown\" ref=\"dropdown\"\n>\n    <slot></slot>\n</div>\n";
 
 /***/ },
 /* 67 */
@@ -4890,7 +4890,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            if (this.trigger) {
 	                this.tooltip = new _tetherTooltip2.default({
 	                    target: this.trigger,
-	                    content: this.$els.tooltip,
+	                    content: this.$refs.tooltip,
 	                    classes: 'ui-tooltip-theme',
 	                    position: this.position,
 	                    openOn: 'hover focus'
@@ -5048,13 +5048,13 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 78 */
 /***/ function(module, exports) {
 
-	module.exports = "\n<div class=\"ui-tooltip\" v-text=\"content\" v-el:tooltip></div>\n";
+	module.exports = "\n<div class=\"ui-tooltip\" v-text=\"content\" ref=\"tooltip\"></div>\n";
 
 /***/ },
 /* 79 */
 /***/ function(module, exports) {
 
-	module.exports = "\n<button\n    class=\"ui-icon-button\" :class=\"styleClasses\" :aria-label=\"ariaLabel || tooltip\"\n    :type=\"buttonType\" v-disabled=\"disabled || loading\" v-el:button\n>\n    <ui-icon\n        class=\"ui-icon-button-icon\" :icon=\"icon\" v-show=\"!loading\"\n    ></ui-icon>\n\n    <ui-progress-circular\n        class=\"ui-icon-button-spinner\" :color=\"spinnerColor\" :size=\"24\" :stroke=\"4.5\"\n        disable-transition v-show=\"loading\"\n    ></ui-progress-circular>\n\n    <ui-ripple-ink v-if=\"!hideRippleInk && !disabled\" :trigger=\"$els.button\"></ui-ripple-ink>\n\n    <ui-tooltip\n        :trigger=\"$els.button\" :content=\"tooltip\" :position=\"tooltipPosition\" v-if=\"tooltip\"\n        :open-on=\"openTooltipOn\"\n    ></ui-tooltip>\n\n    <ui-menu\n        class=\"ui-button-dropdown-menu\" :trigger=\"$els.button\" :options=\"menuOptions\"\n        :show-icons=\"showMenuIcons\" :show-secondary-text=\"showMenuSecondaryText\"\n        :open-on=\"openDropdownOn\" @option-selected=\"menuOptionSelect\"\n        :dropdown-position=\"dropdownPosition\" v-if=\"hasDropdownMenu\"\n    ></ui-menu>\n\n    <ui-popover\n        :trigger=\"$els.button\" :open-on=\"openDropdownOn\" :dropdown-position=\"dropdownPosition\"\n        v-if=\"hasPopover\"\n    >\n        <slot name=\"popover\"></slot>\n    </ui-popover>\n</button>\n";
+	module.exports = "\n<button\n    class=\"ui-icon-button\" :class=\"styleClasses\" :aria-label=\"ariaLabel || tooltip\"\n    :type=\"buttonType\" v-disabled=\"disabled || loading\" ref=\"button\"\n>\n    <ui-icon\n        class=\"ui-icon-button-icon\" :icon=\"icon\" v-show=\"!loading\"\n    ></ui-icon>\n\n    <ui-progress-circular\n        class=\"ui-icon-button-spinner\" :color=\"spinnerColor\" :size=\"24\" :stroke=\"4.5\"\n        disable-transition v-show=\"loading\"\n    ></ui-progress-circular>\n\n    <ui-ripple-ink v-if=\"!hideRippleInk && !disabled\" :trigger=\"$refs.button\"></ui-ripple-ink>\n\n    <ui-tooltip\n        :trigger=\"$refs.button\" :content=\"tooltip\" :position=\"tooltipPosition\" v-if=\"tooltip\"\n        :open-on=\"openTooltipOn\"\n    ></ui-tooltip>\n\n    <ui-menu\n        class=\"ui-button-dropdown-menu\" :trigger=\"$refs.button\" :options=\"menuOptions\"\n        :show-icons=\"showMenuIcons\" :show-secondary-text=\"showMenuSecondaryText\"\n        :open-on=\"openDropdownOn\" @option-selected=\"menuOptionSelect\"\n        :dropdown-position=\"dropdownPosition\" v-if=\"hasDropdownMenu\"\n    ></ui-menu>\n\n    <ui-popover\n        :trigger=\"$refs.button\" :open-on=\"openDropdownOn\" :dropdown-position=\"dropdownPosition\"\n        v-if=\"hasPopover\"\n    >\n        <slot name=\"popover\"></slot>\n    </ui-popover>\n</button>\n";
 
 /***/ },
 /* 80 */
@@ -5215,7 +5215,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                return;
 	            }
 	
-	            if (document.activeElement === this.$els.input) {
+	            if (document.activeElement === this.$refs.input) {
 	                document.activeElement.blur();
 	            }
 	
@@ -5273,7 +5273,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	            this.$nextTick(function () {
 	                _this.close();
-	                _this.$els.input.focus();
+	                _this.$refs.input.focus();
 	            });
 	        },
 	        highlight: function highlight(index) {
@@ -5325,7 +5325,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            }
 	        },
 	        closeOnExternalClick: function closeOnExternalClick(e) {
-	            if (!this.$els.autocomplete.contains(e.target) && this.showDropdown) {
+	            if (!this.$refs.autocomplete.contains(e.target) && this.showDropdown) {
 	                this.close();
 	            }
 	        },
@@ -7350,7 +7350,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 108 */
 /***/ function(module, exports) {
 
-	module.exports = "\n<div\n    class=\"ui-autocomplete\" v-el:autocomplete\n    :class=\"{\n        'disabled': disabled, 'invalid': !valid, 'dirty': dirty, 'active': active,\n        'has-label': !hideLabel, 'icon-right': iconRight\n    }\"\n>\n    <div class=\"ui-autocomplete-icon-wrapper\" v-if=\"showIcon\">\n        <ui-icon :icon=\"icon\" class=\"ui-autocomplete-icon\"></ui-icon>\n    </div>\n\n    <div class=\"ui-autocomplete-content\">\n        <label class=\"ui-autocomplete-label\">\n            <div class=\"ui-autocomplete-label-text\" v-text=\"label\" v-if=\"!hideLabel\"></div>\n\n            <ui-icon\n                class=\"ui-autocomplete-clear-button\" icon=\"&#xE5CD\" title=\"Clear\"\n                @click=\"clearSearch\" v-show=\"!disabled && value.length\"\n            ></ui-icon>\n\n            <input\n                class=\"ui-autocomplete-input\" :placeholder=\"placeholder\" :name=\"name\"\n                :id=\"id\" autocomplete=\"off\" v-autofocus=\"autofocus\" :debounce=\"debounce\"\n\n                @focus=\"focus\" @blur=\"blur\" @keydown.up.prevent=\"highlight(highlightedItem - 1)\"\n                @keydown.down.prevent=\"highlight(highlightedItem + 1)\" @keydown.tab=\"close\"\n                @keydown.enter=\"selectHighlighted(highlightedItem, $event)\"\n\n                v-model=\"value\" v-disabled=\"disabled\" v-el:input\n            >\n\n            <ul class=\"ui-autocomplete-suggestions\" v-show=\"showDropdown\">\n                <ui-autocomplete-suggestion\n                    :highlighted=\"highlightedItem === index\" :item=\"item\" :partial=\"partial\"\n                    :keys=\"keys\"\n\n                    v-for=\"(index, item) in suggestions | filterBy search | limitBy limit\"\n                    v-ref:items @click=\"select(item)\"\n                ></ui-autocomplete-suggestion>\n            </ul>\n        </label>\n\n        <div class=\"ui-autocomplete-feedback\" v-if=\"showFeedback\">\n            <div\n                class=\"ui-autocomplete-error-text\" v-text=\"validationError\"\n                transition=\"ui-autocomplete-feedback-toggle\"\n                v-show=\"!hideValidationErrors && !valid\"\n            ></div>\n\n            <div\n                class=\"ui-autocomplete-help-text\" transition=\"ui-autocomplete-feedback-toggle\"\n                v-text=\"helpText\" v-else\n            ></div>\n        </div>\n    </div>\n</div>\n";
+	module.exports = "\n<div\n    class=\"ui-autocomplete\" ref=\"autocomplete\"\n    :class=\"{\n        'disabled': disabled, 'invalid': !valid, 'dirty': dirty, 'active': active,\n        'has-label': !hideLabel, 'icon-right': iconRight\n    }\"\n>\n    <div class=\"ui-autocomplete-icon-wrapper\" v-if=\"showIcon\">\n        <ui-icon :icon=\"icon\" class=\"ui-autocomplete-icon\"></ui-icon>\n    </div>\n\n    <div class=\"ui-autocomplete-content\">\n        <label class=\"ui-autocomplete-label\">\n            <div class=\"ui-autocomplete-label-text\" v-text=\"label\" v-if=\"!hideLabel\"></div>\n\n            <ui-icon\n                class=\"ui-autocomplete-clear-button\" icon=\"&#xE5CD\" title=\"Clear\"\n                @click=\"clearSearch\" v-show=\"!disabled && value.length\"\n            ></ui-icon>\n\n            <input\n                class=\"ui-autocomplete-input\" :placeholder=\"placeholder\" :name=\"name\"\n                :id=\"id\" autocomplete=\"off\" v-autofocus=\"autofocus\" :debounce=\"debounce\"\n\n                @focus=\"focus\" @blur=\"blur\" @keydown.up.prevent=\"highlight(highlightedItem - 1)\"\n                @keydown.down.prevent=\"highlight(highlightedItem + 1)\" @keydown.tab=\"close\"\n                @keydown.enter=\"selectHighlighted(highlightedItem, $event)\"\n\n                v-model=\"value\" v-disabled=\"disabled\" ref=\"input\"\n            >\n\n            <ul class=\"ui-autocomplete-suggestions\" v-show=\"showDropdown\">\n                <ui-autocomplete-suggestion\n                    :highlighted=\"highlightedItem === index\" :item=\"item\" :partial=\"partial\"\n                    :keys=\"keys\"\n\n                    v-for=\"(index, item) in suggestions | filterBy search | limitBy limit\"\n                    v-ref:items @click=\"select(item)\"\n                ></ui-autocomplete-suggestion>\n            </ul>\n        </label>\n\n        <div class=\"ui-autocomplete-feedback\" v-if=\"showFeedback\">\n            <div\n                class=\"ui-autocomplete-error-text\" v-text=\"validationError\"\n                transition=\"ui-autocomplete-feedback-toggle\"\n                v-show=\"!hideValidationErrors && !valid\"\n            ></div>\n\n            <div\n                class=\"ui-autocomplete-help-text\" transition=\"ui-autocomplete-feedback-toggle\"\n                v-text=\"helpText\" v-else\n            ></div>\n        </div>\n    </div>\n</div>\n";
 
 /***/ },
 /* 109 */
@@ -7521,7 +7521,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 112 */
 /***/ function(module, exports) {
 
-	module.exports = "\n<button\n    class=\"ui-button\" :class=\"styleClasses\" :type=\"buttonType\" v-disabled=\"disabled || loading\"\n    v-el:button\n>\n    <div class=\"ui-button-content\" :class=\"{ 'invisible': loading }\">\n        <ui-icon\n            class=\"ui-button-icon\" :class=\"{ 'position-right': iconRight }\" :icon=\"icon\"\n            v-if=\"showIcon\"\n        ></ui-icon>\n\n        <div class=\"ui-button-text\">\n            <slot>\n                <span v-text=\"text\"></span>\n            </slot>\n        </div>\n\n        <ui-icon\n            class=\"ui-button-dropdown-icon\" icon=\"&#xE5C5;\"\n            v-if=\"!iconRight && showDropdownIcon && (hasDropdownMenu || hasPopover)\"\n        ></ui-icon>\n    </div>\n\n    <ui-progress-circular\n        class=\"ui-button-spinner\" :color=\"spinnerColor\" :size=\"18\" :stroke=\"4.5\"\n        disable-transition v-show=\"loading\"\n    ></ui-progress-circular>\n\n    <ui-ripple-ink v-if=\"!hideRippleInk && !disabled\" :trigger=\"$els.button\"></ui-ripple-ink>\n\n    <ui-menu\n        class=\"ui-button-dropdown-menu\" :trigger=\"$els.button\" :options=\"menuOptions\"\n        :show-icons=\"showMenuIcons\" :show-secondary-text=\"showMenuSecondaryText\"\n        :open-on=\"openDropdownOn\" @option-selected=\"menuOptionSelect\"\n        :dropdown-position=\"dropdownPosition\" v-if=\"hasDropdownMenu\"\n    ></ui-menu>\n\n    <ui-popover\n        :trigger=\"$els.button\" :open-on=\"openDropdownOn\" :dropdown-position=\"dropdownPosition\"\n        v-if=\"hasPopover\"\n    >\n        <slot name=\"popover\"></slot>\n    </ui-popover>\n</button>\n";
+	module.exports = "\n<button\n    class=\"ui-button\" :class=\"styleClasses\" :type=\"buttonType\" v-disabled=\"disabled || loading\"\n    ref=\"button\"\"\n>\n    <div class=\"ui-button-content\" :class=\"{ 'invisible': loading }\">\n        <ui-icon\n            class=\"ui-button-icon\" :class=\"{ 'position-right': iconRight }\" :icon=\"icon\"\n            v-if=\"showIcon\"\n        ></ui-icon>\n\n        <div class=\"ui-button-text\">\n            <slot>\n                <span v-text=\"text\"></span>\n            </slot>\n        </div>\n\n        <ui-icon\n            class=\"ui-button-dropdown-icon\" icon=\"&#xE5C5;\"\n            v-if=\"!iconRight && showDropdownIcon && (hasDropdownMenu || hasPopover)\"\n        ></ui-icon>\n    </div>\n\n    <ui-progress-circular\n        class=\"ui-button-spinner\" :color=\"spinnerColor\" :size=\"18\" :stroke=\"4.5\"\n        disable-transition v-show=\"loading\"\n    ></ui-progress-circular>\n\n    <ui-ripple-ink v-if=\"!hideRippleInk && !disabled\" :trigger=\"$refs.button\"></ui-ripple-ink>\n\n    <ui-menu\n        class=\"ui-button-dropdown-menu\" :trigger=\"$refs.button\" :options=\"menuOptions\"\n        :show-icons=\"showMenuIcons\" :show-secondary-text=\"showMenuSecondaryText\"\n        :open-on=\"openDropdownOn\" @option-selected=\"menuOptionSelect\"\n        :dropdown-position=\"dropdownPosition\" v-if=\"hasDropdownMenu\"\n    ></ui-menu>\n\n    <ui-popover\n        :trigger=\"$refs.button\" :open-on=\"openDropdownOn\" :dropdown-position=\"dropdownPosition\"\n        v-if=\"hasPopover\"\n    >\n        <slot name=\"popover\"></slot>\n    </ui-popover>\n</button>\n";
 
 /***/ },
 /* 113 */
@@ -7813,7 +7813,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            this.open = !this.open;
 	        },
 	        setHeight: function setHeight() {
-	            var body = this.$els.body;
+	            var body = this.$refs.body;
 	
 	            body.style.display = 'block';
 	            this.height = body.scrollHeight;
@@ -7851,7 +7851,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 120 */
 /***/ function(module, exports) {
 
-	module.exports = "\n<div class=\"ui-collapsible\">\n    <button\n        class=\"ui-collapsible-header\" :class=\"{ 'disabled': disabled }\" :aria-controls=\"id\"\n        :aria-expanded=\"open ? 'true' : 'false'\" @click=\"toggleMenu\" v-disabled=\"disabled\"\n        v-el:button\n    >\n        <div class=\"ui-collapsible-header-content\">\n            <slot name=\"header\">\n                <div v-text=\"header\"></div>\n            </slot>\n        </div>\n\n        <ui-icon class=\"ui-collapsible-header-icon\" :icon=\"icon\" v-if=\"!hideIcon\"></ui-icon>\n\n        <ui-ripple-ink\n            v-if=\"!hideRippleInk && !disabled && isReady\" :trigger=\"$els.button\"\n        ></ui-ripple-ink>\n    </button>\n\n    <div\n        class=\"ui-collapsible-body-wrapper\" :transition=\"transition\"\n        :style=\"{ 'height': calculatedHeight }\" v-show=\"open\"v-el:body\n    >\n        <div class=\"ui-collapsible-body\" :id=\"id\" :aria-hidden=\"open ? null : 'true'\">\n            <slot></slot>\n        </div>\n    </div>\n</div>\n";
+	module.exports = "\n<div class=\"ui-collapsible\">\n    <button\n        class=\"ui-collapsible-header\" :class=\"{ 'disabled': disabled }\" :aria-controls=\"id\"\n        :aria-expanded=\"open ? 'true' : 'false'\" @click=\"toggleMenu\" v-disabled=\"disabled\"\n        ref=\"button\"\n    >\n        <div class=\"ui-collapsible-header-content\">\n            <slot name=\"header\">\n                <div v-text=\"header\"></div>\n            </slot>\n        </div>\n\n        <ui-icon class=\"ui-collapsible-header-icon\" :icon=\"icon\" v-if=\"!hideIcon\"></ui-icon>\n\n        <ui-ripple-ink\n            v-if=\"!hideRippleInk && !disabled && isReady\" :trigger=\"$refs.button\"\n        ></ui-ripple-ink>\n    </button>\n\n    <div\n        class=\"ui-collapsible-body-wrapper\" :transition=\"transition\"\n        :style=\"{ 'height': calculatedHeight }\" v-show=\"open\"ref=\"body\"\n    >\n        <div class=\"ui-collapsible-body\" :id=\"id\" :aria-hidden=\"open ? null : 'true'\">\n            <slot></slot>\n        </div>\n    </div>\n</div>\n";
 
 /***/ },
 /* 121 */
@@ -7978,9 +7978,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	            var button = void 0;
 	
 	            if (this.autofocus === 'confirm-button') {
-	                button = this.$els.confirmButton;
+	                button = this.$refs.confirmButton;
 	            } else if (this.autofocus === 'deny-button') {
-	                button = this.$els.denyButton;
+	                button = this.$refs.denyButton;
 	            }
 	
 	            if (button) {
@@ -7996,9 +7996,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	            var button = void 0;
 	
 	            if (this.autofocus === 'confirm-button') {
-	                button = this.$els.confirmButton;
+	                button = this.$refs.confirmButton;
 	            } else if (this.autofocus === 'deny-button') {
-	                button = this.$els.denyButton;
+	                button = this.$refs.denyButton;
 	            }
 	
 	            if (button) {
@@ -8166,11 +8166,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	                return;
 	            }
 	
-	            if (e.currentTarget === this.$els.modalMask && e.target !== e.currentTarget) {
+	            if (e.currentTarget === this.$refs.modalMask && e.target !== e.currentTarget) {
 	                return;
 	            }
 	
-	            if (e.currentTarget === this.$els.modalMask && !this.backdropDismissible) {
+	            if (e.currentTarget === this.$refs.modalMask && !this.backdropDismissible) {
 	                return;
 	            }
 	
@@ -8178,7 +8178,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        },
 	        opened: function opened() {
 	            this.lastFocussedElement = document.activeElement;
-	            this.$els.modalContainer.focus();
+	            this.$refs.modalContainer.focus();
 	
 	            _classlist2.default.add(document.body, 'ui-modal-open');
 	
@@ -8193,12 +8193,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	        redirectFocus: function redirectFocus(e) {
 	            e.stopPropagation();
 	
-	            this.$els.modalContainer.focus();
+	            this.$refs.modalContainer.focus();
 	        },
 	        restrictFocus: function restrictFocus(e) {
-	            if (!this.$els.modalContainer.contains(e.target)) {
+	            if (!this.$refs.modalContainer.contains(e.target)) {
 	                e.stopPropagation();
-	                this.$els.modalContainer.focus();
+	                this.$refs.modalContainer.focus();
 	            }
 	        },
 	        tearDown: function tearDown() {
@@ -25319,13 +25319,13 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 129 */
 /***/ function(module, exports) {
 
-	module.exports = "\n<div\n    class=\"ui-modal ui-modal-mask\" v-show=\"show\" :transition=\"transition\" :class=\"[type]\"\n    :role=\"role\" @transitionend=\"transitionEnd\"\n>\n    <div class=\"ui-modal-wrapper\" @click=\"close\" v-el:modal-mask>\n        <div\n            class=\"ui-modal-container\" tabindex=\"-1\" @keydown.esc=\"close\"\n            v-el:modal-container\n        >\n            <div class=\"ui-modal-header\">\n                <slot name=\"header\">\n                    <h1 v-text=\"header\" class=\"ui-modal-header-text\"></h1>\n                </slot>\n\n                <ui-icon-button\n                    type=\"clear\" icon=\"&#xE5CD\" class=\"ui-modal-close-button\" @click=\"close\"\n                    :disabled=\"!dismissible\" v-if=\"showCloseButton\" v-el:close-button\n                ></ui-icon-button>\n            </div>\n\n            <div class=\"ui-modal-body\">\n                <slot>\n                    <div v-text=\"body\"></div>\n                </slot>\n            </div>\n\n            <div class=\"ui-modal-footer\" v-if=\"!hideFooter\">\n                <slot name=\"footer\">\n                    <ui-button @click=\"close\" v-if=\"dismissible\">Close</ui-button>\n                </slot>\n            </div>\n\n            <div class=\"focus-redirector\" @focus=\"redirectFocus\" tabindex=\"0\"></div>\n        </div>\n    </div>\n</div>\n";
+	module.exports = "\n<div\n    class=\"ui-modal ui-modal-mask\" v-show=\"show\" :transition=\"transition\" :class=\"[type]\"\n    :role=\"role\" @transitionend=\"transitionEnd\"\n>\n    <div class=\"ui-modal-wrapper\" @click=\"close\" ref=\"modal-mask\">\n        <div\n            class=\"ui-modal-container\" tabindex=\"-1\" @keydown.esc=\"close\"\n            ref=\"modal-container\"\n        >\n            <div class=\"ui-modal-header\">\n                <slot name=\"header\">\n                    <h1 v-text=\"header\" class=\"ui-modal-header-text\"></h1>\n                </slot>\n\n                <ui-icon-button\n                    type=\"clear\" icon=\"&#xE5CD\" class=\"ui-modal-close-button\" @click=\"close\"\n                    :disabled=\"!dismissible\" v-if=\"showCloseButton\" ref=\"close-button\"\n                ></ui-icon-button>\n            </div>\n\n            <div class=\"ui-modal-body\">\n                <slot>\n                    <div v-text=\"body\"></div>\n                </slot>\n            </div>\n\n            <div class=\"ui-modal-footer\" v-if=\"!hideFooter\">\n                <slot name=\"footer\">\n                    <ui-button @click=\"close\" v-if=\"dismissible\">Close</ui-button>\n                </slot>\n            </div>\n\n            <div class=\"focus-redirector\" @focus=\"redirectFocus\" tabindex=\"0\"></div>\n        </div>\n    </div>\n</div>\n";
 
 /***/ },
 /* 130 */
 /***/ function(module, exports) {
 
-	module.exports = "\n<div class=\"ui-confirm\">\n    <ui-modal\n        :show.sync=\"show\" role=\"alertdialog\" :header=\"header\" @opened=\"opened\" show-close-button\n        :dismissible=\"!loading\" :backdrop-dismissible=\"backdropDismissible\"\n    >\n        <div class=\"ui-confirm-message\">\n            <slot></slot>\n        </div>\n\n        <div slot=\"footer\">\n            <ui-button\n                :color=\"type\" :text=\"confirmButtonText\" :icon=\"confirmButtonIcon\"\n                @click=\"confirm\" :loading=\"loading\" v-el:confirm-button\n            ></ui-button>\n\n            <ui-button\n                :text=\"denyButtonText\" :icon=\"denyButtonIcon\" @click=\"deny\"\n                :disabled=\"loading\" v-el:deny-button\n            ></ui-button>\n        </div>\n    </ui-modal>\n</div>\n";
+	module.exports = "\n<div class=\"ui-confirm\">\n    <ui-modal\n        :show.sync=\"show\" role=\"alertdialog\" :header=\"header\" @opened=\"opened\" show-close-button\n        :dismissible=\"!loading\" :backdrop-dismissible=\"backdropDismissible\"\n    >\n        <div class=\"ui-confirm-message\">\n            <slot></slot>\n        </div>\n\n        <div slot=\"footer\">\n            <ui-button\n                :color=\"type\" :text=\"confirmButtonText\" :icon=\"confirmButtonIcon\"\n                @click=\"confirm\" :loading=\"loading\" ref=\"confirm-button\"\n            ></ui-button>\n\n            <ui-button\n                :text=\"denyButtonText\" :icon=\"denyButtonIcon\" @click=\"deny\"\n                :disabled=\"loading\" ref=\"deny-button\"\n            ></ui-button>\n        </div>\n    </ui-modal>\n</div>\n";
 
 /***/ },
 /* 131 */
@@ -25440,7 +25440,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 134 */
 /***/ function(module, exports) {
 
-	module.exports = "\n<button\n    class=\"ui-fab\" :class=\"[this.type, this.color]\" :aria-label=\"ariaLabel || tooltip\"\n    v-disabled=\"disabled\" v-el:button\n>\n    <ui-icon class=\"ui-fab-icon\" :icon=\"icon\"></ui-icon>\n\n    <ui-ripple-ink :trigger=\"$els.button\" v-if=\"!hideRippleInk && !disabled\"></ui-ripple-ink>\n\n    <ui-tooltip\n        :trigger=\"$els.button\" :content=\"tooltip\" :position=\"tooltipPosition\" v-if=\"tooltip\"\n        :open-on=\"openTooltipOn\"\n    ></ui-tooltip>\n</button>\n";
+	module.exports = "\n<button\n    class=\"ui-fab\" :class=\"[this.type, this.color]\" :aria-label=\"ariaLabel || tooltip\"\n    v-disabled=\"disabled\" ref=\"button\"\n>\n    <ui-icon class=\"ui-fab-icon\" :icon=\"icon\"></ui-icon>\n\n    <ui-ripple-ink :trigger=\"$refs.button\" v-if=\"!hideRippleInk && !disabled\"></ui-ripple-ink>\n\n    <ui-tooltip\n        :trigger=\"$refs.button\" :content=\"tooltip\" :position=\"tooltipPosition\" v-if=\"tooltip\"\n        :open-on=\"openTooltipOn\"\n    ></ui-tooltip>\n</button>\n";
 
 /***/ },
 /* 135 */
@@ -26472,7 +26472,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    watch: {
 	        filteredOptions: function filteredOptions() {
 	            this.highlightedIndex = 0;
-	            (0, _elementScroll.resetScroll)(this.$els.optionsList);
+	            (0, _elementScroll.resetScroll)(this.$refs.optionsList);
 	        },
 	        showDropdown: function showDropdown() {
 	            if (this.showDropdown) {
@@ -26664,12 +26664,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	            this.$nextTick(function () {
 	                if (_this3.showSearch) {
-	                    _this3.$els.searchInput.focus();
+	                    _this3.$refs.searchInput.focus();
 	                } else {
-	                    _this3.$els.dropdown.focus();
+	                    _this3.$refs.dropdown.focus();
 	                }
 	
-	                _this3.scrollOptionIntoView(_this3.$els.optionsList.querySelector('.selected'));
+	                _this3.scrollOptionIntoView(_this3.$refs.optionsList.querySelector('.selected'));
 	            });
 	        },
 	        close: function close(deactivate) {
@@ -26682,7 +26682,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            if (deactivate) {
 	                this.active = false;
 	            } else {
-	                this.$els.label.focus();
+	                this.$refs.label.focus();
 	            }
 	        },
 	        closeOnExternalClick: function closeOnExternalClick(e) {
@@ -26717,7 +26717,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            }
 	        },
 	        scrollOptionIntoView: function scrollOptionIntoView(optionEl) {
-	            (0, _elementScroll.scrollIntoView)(optionEl, this.$els.optionsList, 80);
+	            (0, _elementScroll.scrollIntoView)(optionEl, this.$refs.optionsList, 80);
 	        }
 	    },
 	
@@ -27075,7 +27075,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 173 */
 /***/ function(module, exports) {
 
-	module.exports = "\n<div\n    class=\"ui-select\" :id=\"id\" :class=\"{\n        'disabled': disabled, 'invalid': !valid, 'dirty': dirty, 'active': active,\n        'has-label': !hideLabel, 'icon-right': iconRight\n    }\"\n>\n    <div class=\"ui-select-icon-wrapper\" v-if=\"showIcon\">\n        <ui-icon :icon=\"icon\" class=\"ui-select-icon\"></ui-icon>\n    </div>\n\n    <div class=\"ui-select-content\">\n        <div\n            class=\"ui-select-label\" :tabindex=\"disabled ? null : '0'\" v-el:label\n            @focus=\"focus\" @keydown.tab=\"blur\" @click=\"toggle\" @keydown.space.prevent=\"open\"\n            @keydown.enter.prevent=\"open\"\n        >\n            <div class=\"ui-select-label-text\" v-text=\"label\" v-if=\"!hideLabel\"></div>\n\n            <div class=\"ui-select-display\">\n                <div\n                    class=\"ui-select-value\" :class=\"{ placeholder: !hasDisplayText }\"\n                    v-text=\"hasDisplayText ? displayText : placeholder\"\n                ></div>\n\n                <ui-icon icon=\"arrow_drop_down\" class=\"ui-select-dropdown-icon\"></ui-icon>\n            </div>\n\n            <div\n                class=\"ui-select-dropdown\" tabindex=\"-1\" v-show=\"showDropdown\" v-el:dropdown\n                @keydown.esc.prevent=\"close()\" @keydown.tab=\"close()\"\n                @keydown.up.prevent=\"highlight(highlightedIndex - 1)\"\n                @keydown.down.prevent=\"highlight(highlightedIndex + 1)\"\n                @keydown.enter.prevent.stop=\"selectHighlighted(highlightedIndex, $event)\"\n            >\n                <div class=\"ui-select-search\" v-if=\"showSearch\" @click.stop @keydown.space.stop>\n                    <input\n                        class=\"ui-select-search-input\" type=\"text\" v-el:search-input\n                        :placeholder=\"searchPlaceholder\" v-model=\"query\" autocomplete=\"off\"\n                    >\n\n                    <ui-progress-circular\n                        class=\"ui-select-search-spinner\" :size=\"24\" :stroke=\"4\" :show=\"loading\"\n                    ></ui-progress-circular>\n                </div>\n\n                <ul class=\"ui-select-options\" v-el:options-list>\n                    <ui-select-option\n                        :option=\"option\" :partial=\"partial\" :show-checkbox=\"multiple\" :\n                        :keys=\"keys\" @click.stop.prevent=\"select(option, index)\"\n                        @mouseover.stop=\"highlight(index, true)\"\n\n                        :highlighted=\"highlightedIndex === index\"\n                        :selected=\"isSelected(option)\"\n\n                        v-for=\"(index, option) in filteredOptions\" v-ref:options\n                    ></ui-select-option>\n\n                    <li class=\"ui-select-no-results\" v-if=\"nothingFound\">No results found</li>\n                </ul>\n            </div>\n        </div>\n\n        <div class=\"ui-select-feedback\" v-if=\"showFeedback\">\n            <div\n                class=\"ui-select-error-text\" transition=\"ui-select-feedback-toggle\"\n                v-text=\"validationError\" v-show=\"!hideValidationErrors && !valid\"\n            ></div>\n\n            <div\n                class=\"ui-select-help-text\" transition=\"ui-select-feedback-toggle\"\n                v-text=\"helpText\" v-else\n            ></div>\n        </div>\n    </div>\n</div>\n";
+	module.exports = "\n<div\n    class=\"ui-select\" :id=\"id\" :class=\"{\n        'disabled': disabled, 'invalid': !valid, 'dirty': dirty, 'active': active,\n        'has-label': !hideLabel, 'icon-right': iconRight\n    }\"\n>\n    <div class=\"ui-select-icon-wrapper\" v-if=\"showIcon\">\n        <ui-icon :icon=\"icon\" class=\"ui-select-icon\"></ui-icon>\n    </div>\n\n    <div class=\"ui-select-content\">\n        <div\n            class=\"ui-select-label\" :tabindex=\"disabled ? null : '0'\" ref=\"label\"\n            @focus=\"focus\" @keydown.tab=\"blur\" @click=\"toggle\" @keydown.space.prevent=\"open\"\n            @keydown.enter.prevent=\"open\"\n        >\n            <div class=\"ui-select-label-text\" v-text=\"label\" v-if=\"!hideLabel\"></div>\n\n            <div class=\"ui-select-display\">\n                <div\n                    class=\"ui-select-value\" :class=\"{ placeholder: !hasDisplayText }\"\n                    v-text=\"hasDisplayText ? displayText : placeholder\"\n                ></div>\n\n                <ui-icon icon=\"arrow_drop_down\" class=\"ui-select-dropdown-icon\"></ui-icon>\n            </div>\n\n            <div\n                class=\"ui-select-dropdown\" tabindex=\"-1\" v-show=\"showDropdown\" ref=\"dropdown\"\n                @keydown.esc.prevent=\"close()\" @keydown.tab=\"close()\"\n                @keydown.up.prevent=\"highlight(highlightedIndex - 1)\"\n                @keydown.down.prevent=\"highlight(highlightedIndex + 1)\"\n                @keydown.enter.prevent.stop=\"selectHighlighted(highlightedIndex, $event)\"\n            >\n                <div class=\"ui-select-search\" v-if=\"showSearch\" @click.stop @keydown.space.stop>\n                    <input\n                        class=\"ui-select-search-input\" type=\"text\" ref=\"search-input\"\n                        :placeholder=\"searchPlaceholder\" v-model=\"query\" autocomplete=\"off\"\n                    >\n\n                    <ui-progress-circular\n                        class=\"ui-select-search-spinner\" :size=\"24\" :stroke=\"4\" :show=\"loading\"\n                    ></ui-progress-circular>\n                </div>\n\n                <ul class=\"ui-select-options\" ref=\"options-list\">\n                    <ui-select-option\n                        :option=\"option\" :partial=\"partial\" :show-checkbox=\"multiple\" :\n                        :keys=\"keys\" @click.stop.prevent=\"select(option, index)\"\n                        @mouseover.stop=\"highlight(index, true)\"\n\n                        :highlighted=\"highlightedIndex === index\"\n                        :selected=\"isSelected(option)\"\n\n                        v-for=\"(index, option) in filteredOptions\" ref=\"options\"\n                    ></ui-select-option>\n\n                    <li class=\"ui-select-no-results\" v-if=\"nothingFound\">No results found</li>\n                </ul>\n            </div>\n        </div>\n\n        <div class=\"ui-select-feedback\" v-if=\"showFeedback\">\n            <div\n                class=\"ui-select-error-text\" transition=\"ui-select-feedback-toggle\"\n                v-text=\"validationError\" v-show=\"!hideValidationErrors && !valid\"\n            ></div>\n\n            <div\n                class=\"ui-select-help-text\" transition=\"ui-select-feedback-toggle\"\n                v-text=\"helpText\" v-else\n            ></div>\n        </div>\n    </div>\n</div>\n";
 
 /***/ },
 /* 174 */
@@ -27195,7 +27195,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    watch: {
 	        value: function value() {
 	            if (!this.dragging) {
-	                this.$els.thumb.style.left = this.value + '%';
+	                this.$refs.thumb.style.left = this.value + '%';
 	            }
 	        },
 	        disabled: function disabled() {
@@ -27220,10 +27220,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	    ready: function ready() {
 	        this.initialValue = this.value;
 	
-	        this.$els.thumb.style.left = this.value + '%';
+	        this.$refs.thumb.style.left = this.value + '%';
 	
-	        this.draggable = new _draggabilly2.default(this.$els.thumb, {
-	            containment: this.$els.containment,
+	        this.draggable = new _draggabilly2.default(this.$refs.thumb, {
+	            containment: this.$refs.containment,
 	            axis: 'x'
 	        });
 	
@@ -27254,13 +27254,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	                return;
 	            }
 	
-	            var sliderPosition = this.$els.slider.getBoundingClientRect();
+	            var sliderPosition = this.$refs.slider.getBoundingClientRect();
 	
 	            var newValue = (e.clientX - sliderPosition.left) / sliderPosition.width * 100;
 	
 	            this.setValue(newValue);
 	
-	            if (e.target !== this.$els.thumb) {
+	            if (e.target !== this.$refs.thumb) {
 	                this.draggable._pointerDown(e, e);
 	            }
 	
@@ -27272,7 +27272,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        },
 	        dragMove: function dragMove() {
 	            var x = this.draggable.position.x;
-	            var newValue = x / this.$els.slider.getBoundingClientRect().width * 100;
+	            var newValue = x / this.$refs.slider.getBoundingClientRect().width * 100;
 	
 	            this.setValue(newValue);
 	        },
@@ -29546,7 +29546,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 185 */
 /***/ function(module, exports) {
 
-	module.exports = "\n<div\n    class=\"ui-slider\" :id=\"id\"\n    :class=\"{\n        min: value === 0, max: value === 100, dragging: dragging, disabled: disabled,\n        active: active, 'has-label': hasLabel\n    }\"\n\n    :tabindex=\"disabled ? null : 0\" role=\"slider\" :aria-valuemin=\"0\" :aria-valuemax=\"100\"\n    :aria-valuenow=\"value\"\n\n    @keydown.left.prevent=\"decrement\" @keydown.right.prevent=\"increment\"\n    @keydown.down.prevent=\"decrement\" @keydown.up.prevent=\"increment\"\n    @focus=\"focus\" @blur=\"blur\"\n>\n    <input type=\"hidden\" :value=\"value\" :name=\"name\">\n\n    <div class=\"ui-slider-icon-wrapper\" v-if=\"showIcon\">\n        <ui-icon :icon=\"icon\" class=\"ui-slider-icon\"></ui-icon>\n    </div>\n\n    <div class=\"ui-slider-content\">\n        <div class=\"ui-slider-label\" v-text=\"label\" v-if=\"!hideLabel\"></div>\n\n        <div class=\"ui-slider-wrapper\" v-el:slider @mousedown=\"sliderClick\">\n            <div class=\"ui-slider-containment\" v-el:containment></div>\n\n            <div class=\"ui-slider-track\">\n                <div class=\"ui-slider-track-fill\" :style=\"{ width: value + '%'}\"></div>\n            </div>\n\n            <div class=\"ui-slider-thumb-container\" v-el:thumb>\n                <div class=\"ui-slider-focus-ring\"></div>\n                <div class=\"ui-slider-thumb\"></div>\n            </div>\n        </div>\n    </div>\n</div>\n";
+	module.exports = "\n<div\n    class=\"ui-slider\" :id=\"id\"\n    :class=\"{\n        min: value === 0, max: value === 100, dragging: dragging, disabled: disabled,\n        active: active, 'has-label': hasLabel\n    }\"\n\n    :tabindex=\"disabled ? null : 0\" role=\"slider\" :aria-valuemin=\"0\" :aria-valuemax=\"100\"\n    :aria-valuenow=\"value\"\n\n    @keydown.left.prevent=\"decrement\" @keydown.right.prevent=\"increment\"\n    @keydown.down.prevent=\"decrement\" @keydown.up.prevent=\"increment\"\n    @focus=\"focus\" @blur=\"blur\"\n>\n    <input type=\"hidden\" :value=\"value\" :name=\"name\">\n\n    <div class=\"ui-slider-icon-wrapper\" v-if=\"showIcon\">\n        <ui-icon :icon=\"icon\" class=\"ui-slider-icon\"></ui-icon>\n    </div>\n\n    <div class=\"ui-slider-content\">\n        <div class=\"ui-slider-label\" v-text=\"label\" v-if=\"!hideLabel\"></div>\n\n        <div class=\"ui-slider-wrapper\" ref=\"slider\" @mousedown=\"sliderClick\">\n            <div class=\"ui-slider-containment\" ref=\"containment\"></div>\n\n            <div class=\"ui-slider-track\">\n                <div class=\"ui-slider-track-fill\" :style=\"{ width: value + '%'}\"></div>\n            </div>\n\n            <div class=\"ui-slider-thumb-container\" ref=\"thumb\">\n                <div class=\"ui-slider-focus-ring\"></div>\n                <div class=\"ui-slider-thumb\"></div>\n            </div>\n        </div>\n    </div>\n</div>\n";
 
 /***/ },
 /* 186 */
@@ -30199,7 +30199,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            if (this.activeTabElement) {
 	                var left = this.activeTabElement.offsetLeft;
 	                var width = this.activeTabElement.offsetWidth;
-	                var tabContainerWidth = this.$els.tabsContainer.offsetWidth;
+	                var tabContainerWidth = this.$refs.tabsContainer.offsetWidth;
 	
 	                return tabContainerWidth - (left + width) + 'px';
 	            }
@@ -30216,8 +30216,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	        this.activeTab = this.activeTab || this.$children[0].id;
 	
 	        this.$nextTick(function () {
-	            if (_this.$els.tabsContainer) {
-	                _this.activeTabElement = _this.$els.tabsContainer.querySelector('.active');
+	            if (_this.$refs.tabsContainer) {
+	                _this.activeTabElement = _this.$refs.tabsContainer.querySelector('.active');
 	            }
 	        });
 	    },
@@ -30421,13 +30421,13 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 208 */
 /***/ function(module, exports) {
 
-	module.exports = "\n<li\n    class=\"ui-tab-header-item\" role=\"tab\"\n    :class=\"['type-' + type, { 'active': active, 'disabled': disabled }]\"\n\n    :tabindex=\"active ? 0 : -1\" :aria-controls=\"id\" :aria-selected=\"active ? 'true' : null\"\n    v-disabled=\"disabled\" v-el:item\n>\n    <div\n        class=\"ui-tab-header-item-icon\" v-if=\"type === 'icon' || type === 'icon-and-text'\"\n    >\n        <ui-icon :icon=\"icon\"></ui-icon>\n    </div>\n\n    <div\n        class=\"ui-tab-header-item-text\" v-text=\"text\"\n        v-if=\"type === 'text' || type === 'icon-and-text'\"\n    ></div>\n\n    <ui-ripple-ink :trigger=\"$els.item\" v-if=\"!hideRippleInk && !disabled\"></ui-ripple-ink>\n</li>\n";
+	module.exports = "\n<li\n    class=\"ui-tab-header-item\" role=\"tab\"\n    :class=\"['type-' + type, { 'active': active, 'disabled': disabled }]\"\n\n    :tabindex=\"active ? 0 : -1\" :aria-controls=\"id\" :aria-selected=\"active ? 'true' : null\"\n    v-disabled=\"disabled\" ref=\"item\"\n>\n    <div\n        class=\"ui-tab-header-item-icon\" v-if=\"type === 'icon' || type === 'icon-and-text'\"\n    >\n        <ui-icon :icon=\"icon\"></ui-icon>\n    </div>\n\n    <div\n        class=\"ui-tab-header-item-text\" v-text=\"text\"\n        v-if=\"type === 'text' || type === 'icon-and-text'\"\n    ></div>\n\n    <ui-ripple-ink :trigger=\"$refs.item\" v-if=\"!hideRippleInk && !disabled\"></ui-ripple-ink>\n</li>\n";
 
 /***/ },
 /* 209 */
 /***/ function(module, exports) {
 
-	module.exports = "\n<div class=\"ui-tabs\" :class=\"styleClasses\">\n    <div class=\"ui-tabs-header\" :class=\"[backgroundColor]\">\n        <ul\n            class=\"ui-tabs-header-items\" :class=\"[textColor, textColorActive]\" role=\"tablist\"\n            v-el:tabs-container\n        >\n            <ui-tab-header-item\n                :type=\"type\" :id=\"tab.id\" :icon=\"tab.icon\" :text=\"tab.header\"\n                :active=\"activeTab === tab.id\" :disabled=\"tab.disabled\"\n                :hide-ripple-ink=\"hideRippleInk\"\n\n                @click=\"select($event, tab)\" @keydown.left=\"selectPrev(index)\"\n                @keydown.right=\"selectNext($index)\"\n\n                v-for=\"(index, tab) in $children\" v-ref:tab-elements\n            ></ui-tab-header-item>\n        </ul>\n\n        <div\n            class=\"ui-tabs-active-tab-indicator\" :class=\"[indicatorColor]\"\n            :style=\"{ 'left': indicatorLeft, 'right': indicatorRight }\"\n        ></div>\n    </div>\n\n    <div class=\"ui-tabs-body\">\n        <slot></slot>\n    </div>\n</div>\n";
+	module.exports = "\n<div class=\"ui-tabs\" :class=\"styleClasses\">\n    <div class=\"ui-tabs-header\" :class=\"[backgroundColor]\">\n        <ul\n            class=\"ui-tabs-header-items\" :class=\"[textColor, textColorActive]\" role=\"tablist\"\n            ref=\"tabs-container\"\n        >\n            <ui-tab-header-item\n                :type=\"type\" :id=\"tab.id\" :icon=\"tab.icon\" :text=\"tab.header\"\n                :active=\"activeTab === tab.id\" :disabled=\"tab.disabled\"\n                :hide-ripple-ink=\"hideRippleInk\"\n\n                @click=\"select($event, tab)\" @keydown.left=\"selectPrev(index)\"\n                @keydown.right=\"selectNext($index)\"\n\n                v-for=\"(index, tab) in $children\" v-ref:tab-elements\n            ></ui-tab-header-item>\n        </ul>\n\n        <div\n            class=\"ui-tabs-active-tab-indicator\" :class=\"[indicatorColor]\"\n            :style=\"{ 'left': indicatorLeft, 'right': indicatorRight }\"\n        ></div>\n    </div>\n\n    <div class=\"ui-tabs-body\">\n        <slot></slot>\n    </div>\n</div>\n";
 
 /***/ },
 /* 210 */

@@ -1,6 +1,6 @@
 <template>
     <div
-        class="ui-popover" role="dialog" tabindex="-1" @keydown.esc="closeDropdown" v-el:dropdown
+        class="ui-popover" role="dialog" tabindex="-1" @keydown.esc="closeDropdown" ref="dropdown"
     >
         <slot></slot>
     </div>
@@ -38,10 +38,10 @@ export default {
 
     methods: {
         restrictFocus(e) {
-            if (! this.$els.dropdown.contains(e.target)) {
+            if (! this.$refs.dropdown.contains(e.target)) {
                 e.stopPropagation();
 
-                this.$els.dropdown.focus();
+                this.$refs.dropdown.focus();
             }
         }
     },

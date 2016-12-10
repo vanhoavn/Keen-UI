@@ -3,7 +3,7 @@
         <div class="ui-tabs-header" :class="[backgroundColor]">
             <ul
                 class="ui-tabs-header-items" :class="[textColor, textColorActive]" role="tablist"
-                v-el:tabs-container
+                ref="tabs-container"
             >
                 <ui-tab-header-item
                     :type="type" :id="tab.id" :icon="tab.icon" :text="tab.header"
@@ -121,7 +121,7 @@ export default {
             if (this.activeTabElement) {
                 let left = this.activeTabElement.offsetLeft;
                 let width = this.activeTabElement.offsetWidth;
-                let tabContainerWidth = this.$els.tabsContainer.offsetWidth;
+                let tabContainerWidth = this.$refs.tabsContainer.offsetWidth;
 
                 return (tabContainerWidth - (left + width)) + 'px';
             }
@@ -139,8 +139,8 @@ export default {
 
         // Set the active tab element (to show indicator)
         this.$nextTick(() => {
-            if (this.$els.tabsContainer) {
-                this.activeTabElement = this.$els.tabsContainer.querySelector('.active');
+            if (this.$refs.tabsContainer) {
+                this.activeTabElement = this.$refs.tabsContainer.querySelector('.active');
             }
         });
     },

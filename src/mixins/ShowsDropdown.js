@@ -74,7 +74,7 @@ export default {
         initializeDropdown() {
             this.drop = new Drop({
                 target: this.trigger,
-                content: this.$els.dropdown,
+                content: this.$refs.dropdown,
                 position: this.dropdownPosition,
                 constrainToWindow: true,
                 openOn: this.openOn
@@ -140,7 +140,7 @@ export default {
             classlist.add(this.trigger, 'dropdown-open');
 
             this.lastFocussedElement = document.activeElement;
-            this.$els.dropdown.focus();
+            this.$refs.dropdown.focus();
 
             this.$dispatch('dropdown-opened');
         },

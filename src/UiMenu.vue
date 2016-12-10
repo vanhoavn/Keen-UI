@@ -1,6 +1,6 @@
 <template>
     <ul
-        class="ui-menu" role="menu" tabindex="-1" @keydown.esc="closeDropdown" v-el:dropdown
+        class="ui-menu" role="menu" tabindex="-1" @keydown.esc="closeDropdown" ref="dropdown"
         :class="{ 'has-icons': showIcons, 'has-secondary-text': showSecondaryText }"
     >
         <ui-menu-option
@@ -94,17 +94,17 @@ export default {
         },
 
         restrictFocus(e) {
-            if (! this.$els.dropdown.contains(e.target)) {
+            if (! this.$refs.dropdown.contains(e.target)) {
                 e.stopPropagation();
 
-                this.$els.dropdown.querySelector('.ui-menu-option').focus();
+                this.$refs.dropdown.querySelector('.ui-menu-option').focus();
             }
         },
 
         redirectFocus(e) {
             e.stopPropagation();
 
-            this.$els.dropdown.querySelector('.ui-menu-option').focus();
+            this.$refs.dropdown.querySelector('.ui-menu-option').focus();
         }
     },
 

@@ -3,7 +3,7 @@
         <button
             class="ui-collapsible-header" :class="{ 'disabled': disabled }" :aria-controls="id"
             :aria-expanded="open ? 'true' : 'false'" @click="toggleMenu" v-disabled="disabled"
-            v-el:button
+            ref="button"
         >
             <div class="ui-collapsible-header-content">
                 <slot name="header">
@@ -14,13 +14,13 @@
             <ui-icon class="ui-collapsible-header-icon" :icon="icon" v-if="!hideIcon"></ui-icon>
 
             <ui-ripple-ink
-                v-if="!hideRippleInk && !disabled && isReady" :trigger="$els.button"
+                v-if="!hideRippleInk && !disabled && isReady" :trigger="$refs.button"
             ></ui-ripple-ink>
         </button>
 
         <div
             class="ui-collapsible-body-wrapper" :transition="transition"
-            :style="{ 'height': calculatedHeight }" v-show="open"v-el:body
+            :style="{ 'height': calculatedHeight }" v-show="open"ref="body"
         >
             <div class="ui-collapsible-body" :id="id" :aria-hidden="open ? null : 'true'">
                 <slot></slot>
@@ -114,7 +114,7 @@ export default {
         },
 
         setHeight() {
-            var body = this.$els.body;
+            var body = this.$refs.body;
 
             body.style.display = 'block';
             this.height = body.scrollHeight;

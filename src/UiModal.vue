@@ -3,10 +3,10 @@
         class="ui-modal ui-modal-mask" v-show="show" :transition="transition" :class="[type]"
         :role="role" @transitionend="transitionEnd"
     >
-        <div class="ui-modal-wrapper" @click="close" v-el:modal-mask>
+        <div class="ui-modal-wrapper" @click="close" ref="modal-mask">
             <div
                 class="ui-modal-container" tabindex="-1" @keydown.esc="close"
-                v-el:modal-container
+                ref="modal-container"
             >
                 <div class="ui-modal-header">
                     <slot name="header">
@@ -15,7 +15,7 @@
 
                     <ui-icon-button
                         type="clear" icon="&#xE5CD" class="ui-modal-close-button" @click="close"
-                        :disabled="!dismissible" v-if="showCloseButton" v-el:close-button
+                        :disabled="!dismissible" v-if="showCloseButton" ref="close-button"
                     ></ui-icon-button>
                 </div>
 
@@ -127,13 +127,13 @@ export default {
 
             // Make sure the element clicked was the modal mask and not a child
             // whose click event has bubbled up
-            if (e.currentTarget === this.$els.modalMask && e.target !== e.currentTarget) {
+            if (e.currentTarget === this.$refs.modalMask && e.target !== e.currentTarget) {
                 return;
             }
 
             // Don't close if this event was triggered by the modal mask
             // and this.backdropDismissible is false
-            if (e.currentTarget === this.$els.modalMask && !this.backdropDismissible) {
+            if (e.currentTarget === this.$refs.modalMask && !this.backdropDismissible) {
                 return;
             }
 
@@ -142,7 +142,7 @@ export default {
 
         opened() {
             this.lastFocussedElement = document.activeElement;
-            this.$els.modalContainer.focus();
+            this.$refs.modalContainer.focus();
 
             classlist.add(document.body, 'ui-modal-open');
 
@@ -159,13 +159,13 @@ export default {
         redirectFocus(e) {
             e.stopPropagation();
 
-            this.$els.modalContainer.focus();
+            this.$refs.modalContainer.focus();
         },
 
         restrictFocus(e) {
-            if (!this.$els.modalContainer.contains(e.target)) {
+            if (!this.$refs.modalContainer.contains(e.target)) {
                 e.stopPropagation();
-                this.$els.modalContainer.focus();
+                this.$refs.modalContainer.focus();
             }
         },
 

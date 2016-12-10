@@ -1,6 +1,6 @@
 <template>
     <div
-        class="ui-autocomplete" v-el:autocomplete
+        class="ui-autocomplete" ref="autocomplete"
         :class="{
             'disabled': disabled, 'invalid': !valid, 'dirty': dirty, 'active': active,
             'has-label': !hideLabel, 'icon-right': iconRight
@@ -27,7 +27,7 @@
                     @keydown.down.prevent="highlight(highlightedItem + 1)" @keydown.tab="close"
                     @keydown.enter="selectHighlighted(highlightedItem, $event)"
 
-                    v-model="value" v-disabled="disabled" v-el:input
+                    v-model="value" v-disabled="disabled" ref="input"
                 >
 
                 <ul class="ui-autocomplete-suggestions" v-show="showDropdown">
@@ -144,7 +144,7 @@ export default {
 
             // Blur input before resetting to avoid "required" errors
             // when input is blurred after reset
-            if (document.activeElement === this.$els.input) {
+            if (document.activeElement === this.$refs.input) {
                 document.activeElement.blur();
             }
 
@@ -202,7 +202,7 @@ export default {
 
             this.$nextTick(() => {
                 this.close();
-                this.$els.input.focus();
+                this.$refs.input.focus();
             });
         },
 
@@ -260,7 +260,7 @@ export default {
         },
 
         closeOnExternalClick(e) {
-            if (! this.$els.autocomplete.contains(e.target) && this.showDropdown) {
+            if (! this.$refs.autocomplete.contains(e.target) && this.showDropdown) {
                 this.close();
             }
         },

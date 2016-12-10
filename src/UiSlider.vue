@@ -22,14 +22,14 @@
         <div class="ui-slider-content">
             <div class="ui-slider-label" v-text="label" v-if="!hideLabel"></div>
 
-            <div class="ui-slider-wrapper" v-el:slider @mousedown="sliderClick">
-                <div class="ui-slider-containment" v-el:containment></div>
+            <div class="ui-slider-wrapper" ref="slider" @mousedown="sliderClick">
+                <div class="ui-slider-containment" ref="containment"></div>
 
                 <div class="ui-slider-track">
                     <div class="ui-slider-track-fill" :style="{ width: value + '%'}"></div>
                 </div>
 
-                <div class="ui-slider-thumb-container" v-el:thumb>
+                <div class="ui-slider-thumb-container" ref="thumb">
                     <div class="ui-slider-focus-ring"></div>
                     <div class="ui-slider-thumb"></div>
                 </div>
@@ -96,7 +96,7 @@ export default {
     watch: {
         value() {
             if (!this.dragging) {
-                this.$els.thumb.style.left = this.value + '%';
+                this.$refs.thumb.style.left = this.value + '%';
             }
         },
 
@@ -125,11 +125,11 @@ export default {
         this.initialValue = this.value;
 
         // Set initial position
-        this.$els.thumb.style.left = this.value + '%';
+        this.$refs.thumb.style.left = this.value + '%';
 
         // Initialize Draggabilly
-        this.draggable = new Draggabilly(this.$els.thumb, {
-            containment: this.$els.containment,
+        this.draggable = new Draggabilly(this.$refs.thumb, {
+            containment: this.$refs.containment,
             axis: 'x'
         });
 
@@ -163,14 +163,14 @@ export default {
                 return;
             }
 
-            let sliderPosition = this.$els.slider.getBoundingClientRect();
+            let sliderPosition = this.$refs.slider.getBoundingClientRect();
 
             let newValue = ((e.clientX - sliderPosition.left) / sliderPosition.width) * 100;
 
             this.setValue(newValue);
 
             // Allow for click and drag on the track
-            if (e.target !== this.$els.thumb) {
+            if (e.target !== this.$refs.thumb) {
                 this.draggable._pointerDown(e, e);
             }
 
@@ -184,7 +184,7 @@ export default {
 
         dragMove() {
             let x = this.draggable.position.x;
-            let newValue = (x / this.$els.slider.getBoundingClientRect().width) * 100;
+            let newValue = (x / this.$refs.slider.getBoundingClientRect().width) * 100;
 
             this.setValue(newValue);
         },

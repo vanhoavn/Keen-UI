@@ -1,14 +1,14 @@
 <template>
     <button
         class="ui-fab" :class="[this.type, this.color]" :aria-label="ariaLabel || tooltip"
-        v-disabled="disabled" v-el:button
+        v-disabled="disabled" ref="button"
     >
         <ui-icon class="ui-fab-icon" :icon="icon"></ui-icon>
 
-        <ui-ripple-ink :trigger="$els.button" v-if="!hideRippleInk && !disabled"></ui-ripple-ink>
+        <ui-ripple-ink :trigger="$refs.button" v-if="!hideRippleInk && !disabled"></ui-ripple-ink>
 
         <ui-tooltip
-            :trigger="$els.button" :content="tooltip" :position="tooltipPosition" v-if="tooltip"
+            :trigger="$refs.button" :content="tooltip" :position="tooltipPosition" v-if="tooltip"
             :open-on="openTooltipOn"
         ></ui-tooltip>
     </button>

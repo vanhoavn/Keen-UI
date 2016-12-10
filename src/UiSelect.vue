@@ -11,7 +11,7 @@
 
         <div class="ui-select-content">
             <div
-                class="ui-select-label" :tabindex="disabled ? null : '0'" v-el:label
+                class="ui-select-label" :tabindex="disabled ? null : '0'" ref="label"
                 @focus="focus" @keydown.tab="blur" @click="toggle" @keydown.space.prevent="open"
                 @keydown.enter.prevent="open"
             >
@@ -27,7 +27,7 @@
                 </div>
 
                 <div
-                    class="ui-select-dropdown" tabindex="-1" v-show="showDropdown" v-el:dropdown
+                    class="ui-select-dropdown" tabindex="-1" v-show="showDropdown" ref="dropdown"
                     @keydown.esc.prevent="close()" @keydown.tab="close()"
                     @keydown.up.prevent="highlight(highlightedIndex - 1)"
                     @keydown.down.prevent="highlight(highlightedIndex + 1)"
@@ -35,7 +35,7 @@
                 >
                     <div class="ui-select-search" v-if="showSearch" @click.stop @keydown.space.stop>
                         <input
-                            class="ui-select-search-input" type="text" v-el:search-input
+                            class="ui-select-search-input" type="text" ref="search-input"
                             :placeholder="searchPlaceholder" v-model="query" autocomplete="off"
                         >
 
@@ -44,7 +44,7 @@
                         ></ui-progress-circular>
                     </div>
 
-                    <ul class="ui-select-options" v-el:options-list>
+                    <ul class="ui-select-options" ref="options-list">
                         <ui-select-option
                             :option="option" :partial="partial" :show-checkbox="multiple" :
                             :keys="keys" @click.stop.prevent="select(option, index)"
@@ -53,7 +53,7 @@
                             :highlighted="highlightedIndex === index"
                             :selected="isSelected(option)"
 
-                            v-for="(index, option) in filteredOptions" v-ref:options
+                            v-for="(index, option) in filteredOptions" ref="options"
                         ></ui-select-option>
 
                         <li class="ui-select-no-results" v-if="nothingFound">No results found</li>
@@ -201,7 +201,7 @@ export default {
     watch: {
         filteredOptions() {
             this.highlightedIndex = 0;
-            resetScroll(this.$els.optionsList);
+            resetScroll(this.$refs.optionsList);
         },
 
         showDropdown() {
@@ -405,12 +405,12 @@ export default {
         opened() {
             this.$nextTick(() => {
                 if (this.showSearch) {
-                    this.$els.searchInput.focus();
+                    this.$refs.searchInput.focus();
                 } else {
-                    this.$els.dropdown.focus();
+                    this.$refs.dropdown.focus();
                 }
 
-                this.scrollOptionIntoView(this.$els.optionsList.querySelector('.selected'));
+                this.scrollOptionIntoView(this.$refs.optionsList.querySelector('.selected'));
             });
         },
 
@@ -424,7 +424,7 @@ export default {
             if (deactivate) {
                 this.active = false;
             } else {
-                this.$els.label.focus();
+                this.$refs.label.focus();
             }
         },
 
@@ -463,7 +463,7 @@ export default {
         },
 
         scrollOptionIntoView(optionEl) {
-            scrollIntoView(optionEl, this.$els.optionsList, 80);
+            scrollIntoView(optionEl, this.$refs.optionsList, 80);
         }
     },
 

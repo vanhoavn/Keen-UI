@@ -11,12 +11,12 @@
             <div slot="footer">
                 <ui-button
                     :color="type" :text="confirmButtonText" :icon="confirmButtonIcon"
-                    @click="confirm" :loading="loading" v-el:confirm-button
+                    @click="confirm" :loading="loading" ref="confirm-button"
                 ></ui-button>
 
                 <ui-button
                     :text="denyButtonText" :icon="denyButtonIcon" @click="deny"
-                    :disabled="loading" v-el:deny-button
+                    :disabled="loading" ref="deny-button"
                 ></ui-button>
             </div>
         </ui-modal>
@@ -92,9 +92,9 @@ export default {
             let button;
 
             if (this.autofocus === 'confirm-button') {
-                button = this.$els.confirmButton;
+                button = this.$refs.confirmButton;
             } else if (this.autofocus === 'deny-button') {
-                button = this.$els.denyButton;
+                button = this.$refs.denyButton;
             }
 
             if (button) {
@@ -112,9 +112,9 @@ export default {
             let button;
 
             if (this.autofocus === 'confirm-button') {
-                button = this.$els.confirmButton;
+                button = this.$refs.confirmButton;
             } else if (this.autofocus === 'deny-button') {
-                button = this.$els.denyButton;
+                button = this.$refs.denyButton;
             }
 
             if (button) {
