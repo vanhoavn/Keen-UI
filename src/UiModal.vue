@@ -117,13 +117,13 @@ export default {
 
             // Make sure the element clicked was the modal mask and not a child
             // whose click event has bubbled up
-            if (e.currentTarget === this.$refs.modalMask && e.target !== e.currentTarget) {
+            if (e.currentTarget === this.$refs['modal-mask'] && e.target !== e.currentTarget) {
                 return;
             }
 
             // Don't close if this event was triggered by the modal mask
             // and this.backdropDismissible is false
-            if (e.currentTarget === this.$refs.modalMask && !this.backdropDismissible) {
+            if (e.currentTarget === this.$refs['modal-mask'] && !this.backdropDismissible) {
                 return;
             }
 
@@ -132,7 +132,7 @@ export default {
 
         opened() {
             this.lastFocussedElement = document.activeElement;
-            this.$refs.modalContainer.focus();
+            this.$refs['modal-container'].focus();
 
             classlist.add(document.body, 'ui-modal-open');
 
@@ -149,13 +149,13 @@ export default {
         redirectFocus(e) {
             e.stopPropagation();
 
-            this.$refs.modalContainer.focus();
+            this.$refs['modal-container'].focus();
         },
 
         restrictFocus(e) {
-            if (!this.$refs.modalContainer.contains(e.target)) {
+            if (!this.$refs['modal-container'].contains(e.target)) {
                 e.stopPropagation();
-                this.$refs.modalContainer.focus();
+                this.$refs['modal-container'].focus();
             }
         },
 

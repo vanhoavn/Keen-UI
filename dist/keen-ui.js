@@ -8328,11 +8328,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	                return;
 	            }
 	
-	            if (e.currentTarget === this.$refs.modalMask && e.target !== e.currentTarget) {
+	            if (e.currentTarget === this.$refs['modal-mask'] && e.target !== e.currentTarget) {
 	                return;
 	            }
 	
-	            if (e.currentTarget === this.$refs.modalMask && !this.backdropDismissible) {
+	            if (e.currentTarget === this.$refs['modal-mask'] && !this.backdropDismissible) {
 	                return;
 	            }
 	
@@ -8340,7 +8340,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        },
 	        opened: function opened() {
 	            this.lastFocussedElement = document.activeElement;
-	            this.$refs.modalContainer.focus();
+	            this.$refs['modal-container'].focus();
 	
 	            _classlist2.default.add(document.body, 'ui-modal-open');
 	
@@ -8355,12 +8355,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	        redirectFocus: function redirectFocus(e) {
 	            e.stopPropagation();
 	
-	            this.$refs.modalContainer.focus();
+	            this.$refs['modal-container'].focus();
 	        },
 	        restrictFocus: function restrictFocus(e) {
-	            if (!this.$refs.modalContainer.contains(e.target)) {
+	            if (!this.$refs['modal-container'].contains(e.target)) {
 	                e.stopPropagation();
-	                this.$refs.modalContainer.focus();
+	                this.$refs['modal-container'].focus();
 	            }
 	        },
 	        tearDown: function tearDown() {
