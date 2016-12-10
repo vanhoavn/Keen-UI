@@ -14,7 +14,7 @@
                     </slot>
 
                     <ui-icon-button
-                        type="clear" icon="&#xE5CD" class="ui-modal-close-button" @click="close"
+                        type="clear" :icon="'\ue5cd'" class="ui-modal-close-button" @click="close"
                         :disabled="!dismissible" v-if="showCloseButton" ref="close-button"
                     ></ui-icon-button>
                 </div>

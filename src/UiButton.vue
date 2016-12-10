@@ -1,5 +1,6 @@
 <template>
     <button
+        click="$emit('click', $event)"
         class="ui-button" :class="styleClasses" :type="buttonType" v-disabled="disabled || loading"
         ref="button"
     >

@@ -1,5 +1,6 @@
 <template>
     <button
+        click="$emit('click', $event)"
         class="ui-icon-button" :class="styleClasses" :aria-label="ariaLabel || tooltip"
         :type="buttonType" v-disabled="disabled || loading" ref="button"
     >
