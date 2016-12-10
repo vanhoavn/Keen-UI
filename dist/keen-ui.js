@@ -4706,8 +4706,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	    value: true
 	});
 	
-	exports.default = function (value) {
-	    this.el.disabled = Boolean(value);
+	exports.default = function (el, binding, vnode, oldVnode) {
+	    if (el) {
+	        el.disabled = Boolean(binding.value);
+	    }
 	};
 
 /***/ },
@@ -5541,8 +5543,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	    value: true
 	});
 	
-	exports.default = function (value) {
-	    this.el.autofocus = Boolean(value);
+	exports.default = function (el, binding, vnode, oldVnode) {
+	    if (el) {
+	        el.autofocus = Boolean(binding.value);
+	    }
 	};
 
 /***/ },

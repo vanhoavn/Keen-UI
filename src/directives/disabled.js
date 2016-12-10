@@ -1,3 +1,5 @@
-export default function(value) {
-    this.el.disabled = Boolean(value);
+export default function(el, binding, vnode, oldVnode) {
+    if(el){
+        el.disabled = Boolean(binding.value);
+    }
 }
