@@ -90,7 +90,6 @@ export default {
                 this.destroyDropdown()
             } else return;
             
-            console.log('initializeDropdown ', el, this.$refs.dropdown);
             if(!el || !this.$refs || !this.$refs.dropdown) return;
 
             this.currentTrigger = el;
