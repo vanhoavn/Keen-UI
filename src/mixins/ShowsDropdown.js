@@ -6,7 +6,9 @@ import ReceivesTargetedEvent from './ReceivesTargetedEvent';
 export default {
     props: {
         id: String,
-        trigger: Element,
+        trigger: {
+            type: [Element, Function],
+        },
         containFocus: {
             type: Boolean,
             default: true
@@ -24,28 +26,34 @@ export default {
     data() {
         return {
             drop: null,
-            lastFocussedElement: null
+            lastFocussedElement: null,
+            currentTrigger: null,
         };
     },
 
     mounted() {
+        for(let event of ['open','close','toggle']){
+            this.$on('ui-dropdown::'+event, this['ui-dropdown::'+event]);
+        }
         this.$nextTick(() => {
-            for(let event of ['open','close','toggle']){
-                this.$on('ui-dropdown::'+event, this['ui-dropdown::'+event]);
-            }
-            if (this.trigger) {
-                this.initializeDropdown();
-            };
+            this.initializeDropdown(this.triggerComputed);
         });
     },
 
     beforeDestroy() {
-        if (this.drop) {
-            this.drop.remove();
-            this.drop.destroy();
-        }
+        this.destroyDropdown();
         for(let event of ['open','close','toggle']){
             this.$off('ui-dropdown::'+event, this['ui-dropdown::'+event]);
+        }
+    },
+    
+    computed: {
+        triggerComputed() {
+            if(this.trigger instanceof Function){
+                return this.trigger();
+            } else {
+                return this.trigger;
+            }
         }
     },
 
@@ -77,14 +85,25 @@ export default {
             this.toggleDropdown();
         },
 
-        initializeDropdown() {
+        initializeDropdown(el) {
+            if(el !== this.currentTrigger) {
+                this.destroyDropdown()
+            } else return;
+            
+            console.log('initializeDropdown ', el, this.$refs.dropdown);
+            if(!el || !this.$refs || !this.$refs.dropdown) return;
+
+            this.currentTrigger = el;
+            
             this.drop = new Drop({
-                target: this.trigger,
+                target: el,
                 content: this.$refs.dropdown,
                 position: this.dropdownPosition,
                 constrainToWindow: true,
                 openOn: this.openOn
             });
+
+            console.log(this.drop);
 
             // TO FIX: Hacky workaround for Tether not positioning
             // correctly for positions other than 'bottom left'
@@ -98,6 +117,14 @@ export default {
             this.drop.on('open', this.positionDrop);
             this.drop.on('open', this.dropdownOpened);
             this.drop.on('close', this.dropdownClosed);
+        },
+
+        destroyDropdown() {
+            if (this.drop) {
+                this.drop.remove();
+                this.drop.destroy();
+            }
+            this.currentTrigger = null;
         },
 
         openDropdown() {

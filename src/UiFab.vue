@@ -5,10 +5,10 @@
     >
         <ui-icon class="ui-fab-icon" :icon="icon"></ui-icon>
 
-        <ui-ripple-ink :trigger="$refs.button" v-if="!hideRippleInk && !disabled"></ui-ripple-ink>
+        <ui-ripple-ink :trigger="$el" v-if="!hideRippleInk && !disabled"></ui-ripple-ink>
 
         <ui-tooltip
-            :trigger="$refs.button" :content="tooltip" :position="tooltipPosition" v-if="tooltip"
+            :trigger="$el" :content="tooltip" :position="tooltipPosition" v-if="tooltip"
             :open-on="openTooltipOn"
         ></ui-tooltip>
     </button>

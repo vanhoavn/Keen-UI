@@ -13,21 +13,12 @@ export default {
     name: 'ui-popover',
 
     mounted() {
-        this.$nextTick(() => {
-            for(let event of ['opened', 'closed']){
-                this.$on('dropdown-'+event, this['dropdown-'+event]);
-            }
-            if (this.trigger) {
-                this.initializeDropdown();
-            };
-        });
+        for(let event of ['opened', 'closed']){
+            this.$on('dropdown-'+event, this['dropdown-'+event]);
+        }
     },
 
     beforeDestroy() {
-        if (this.drop) {
-            this.drop.remove();
-            this.drop.destroy();
-        }
         for(let event of ['opened', 'closed']){
             this.$off('dropdown-'+event, this['dropdown-'+event]);
         }

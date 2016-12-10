@@ -14,7 +14,7 @@
             <ui-icon class="ui-collapsible-header-icon" :icon="icon" v-if="!hideIcon"></ui-icon>
 
             <ui-ripple-ink
-                v-if="!hideRippleInk && !disabled && isReady" :trigger="$refs.button"
+                v-if="!hideRippleInk && !disabled && isReady" :trigger="button_ref"
             ></ui-ripple-ink>
         </button>
 
@@ -134,7 +134,11 @@ export default {
             if (!this.open) {
                 body.style.display = 'none';
             }
-        }
+        },
+
+        button_ref() {
+            return this.$refs.button;
+        },
     },
 
     components: {

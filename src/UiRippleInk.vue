@@ -112,35 +112,70 @@ export default {
 
     props: {
         trigger: {
-            type: Element,
-            required: true
+            //type: [Element, Function],
+            required: false
         }
+    },
+
+    data() {
+        return {
+            currentTrigger: null,
+        };
     },
 
     watch: {
         trigger() {
-            this.initialize();
+            if (this.trigger) {
+                this.hook(this.triggerComputed);
+            }
         }
     },
 
-    ready() {
-        this.initialize();
+    mounted() {
+        if (this.trigger) {
+            this.hook(this.triggerComputed);
+        }
     },
 
     beforeDestory() {
-        if (this.trigger) {
-            this.trigger.removeEventListener('mousedown', handleMouseDown);
-            this.trigger.removeEventListener('touchstart', handleTouchStart);
+        if (this.currentTrigger) {
+            this.unhook(this.currentTrigger)
+        }
+    },
+
+    computed: {
+        triggerComputed() {
+            if(this.trigger instanceof Function){
+                return this.trigger();
+            } else {
+                return this.trigger;
+            }
         }
     },
 
     methods: {
-        initialize() {
-            if (this.trigger) {
-                this.trigger.addEventListener('touchstart', handleTouchStart);
-                this.trigger.addEventListener('mousedown', handleMouseDown);
+        hook(el) {
+            if(el != this.currentTrigger) {
+                this.unhook(this.currentTrigger);
+            } else {
+                return;
             }
-        }
+            if(el) {
+                el.addEventListener('touchstart', handleTouchStart);
+                el.addEventListener('mousedown', handleMouseDown);
+            };
+            this.currentTrigger = el;
+        },
+
+        unhook(el) {
+            if(el) {
+                el.removeEventListener('mousedown', handleMouseDown);
+                el.removeEventListener('touchstart', handleTouchStart);
+            };
+            if(el === this.currentTrigger) {
+                this.currentTrigger = null;
+            };
+        },
     }
 };
 </script>

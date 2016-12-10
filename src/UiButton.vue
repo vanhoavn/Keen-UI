@@ -26,17 +26,17 @@
             disable-transition v-show="loading"
         ></ui-progress-circular>
 
-        <ui-ripple-ink v-if="!hideRippleInk && !disabled" :trigger="$refs.button"></ui-ripple-ink>
+        <ui-ripple-ink v-if="!hideRippleInk && !disabled" :trigger="$el"></ui-ripple-ink>
 
         <ui-menu
-            class="ui-button-dropdown-menu" :trigger="$refs.button" :options="menuOptions"
+            class="ui-button-dropdown-menu" :trigger="$el" :options="menuOptions"
             :show-icons="showMenuIcons" :show-secondary-text="showMenuSecondaryText"
             :open-on="openDropdownOn" @option-selected="menuOptionSelect"
             :dropdown-position="dropdownPosition" v-if="hasDropdownMenu"
         ></ui-menu>
 
         <ui-popover
-            :trigger="$refs.button" :open-on="openDropdownOn" :dropdown-position="dropdownPosition"
+            :trigger="$el" :open-on="openDropdownOn" :dropdown-position="dropdownPosition"
             v-if="hasPopover"
         >
             <slot name="popover"></slot>

@@ -1145,34 +1145,68 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	    props: {
 	        trigger: {
-	            type: Element,
-	            required: true
+	            required: false
 	        }
 	    },
+	
+	    data: function data() {
+	        return {
+	            currentTrigger: null
+	        };
+	    },
+	
 	
 	    watch: {
 	        trigger: function trigger() {
-	            this.initialize();
+	            if (this.trigger) {
+	                this.hook(this.triggerComputed);
+	            }
 	        }
 	    },
 	
-	    ready: function ready() {
-	        this.initialize();
+	    mounted: function mounted() {
+	        if (this.trigger) {
+	            this.hook(this.triggerComputed);
+	        }
 	    },
 	    beforeDestory: function beforeDestory() {
-	        if (this.trigger) {
-	            this.trigger.removeEventListener('mousedown', handleMouseDown);
-	            this.trigger.removeEventListener('touchstart', handleTouchStart);
+	        if (this.currentTrigger) {
+	            this.unhook(this.currentTrigger);
 	        }
 	    },
 	
 	
-	    methods: {
-	        initialize: function initialize() {
-	            if (this.trigger) {
-	                this.trigger.addEventListener('touchstart', handleTouchStart);
-	                this.trigger.addEventListener('mousedown', handleMouseDown);
+	    computed: {
+	        triggerComputed: function triggerComputed() {
+	            if (this.trigger instanceof Function) {
+	                return this.trigger();
+	            } else {
+	                return this.trigger;
 	            }
+	        }
+	    },
+	
+	    methods: {
+	        hook: function hook(el) {
+	            if (el != this.currentTrigger) {
+	                this.unhook(this.currentTrigger);
+	            } else {
+	                return;
+	            }
+	            if (el) {
+	                el.addEventListener('touchstart', handleTouchStart);
+	                el.addEventListener('mousedown', handleMouseDown);
+	            };
+	            this.currentTrigger = el;
+	        },
+	        unhook: function unhook(el) {
+	            if (el) {
+	                el.removeEventListener('mousedown', handleMouseDown);
+	                el.removeEventListener('touchstart', handleTouchStart);
+	            };
+	            if (el === this.currentTrigger) {
+	                this.currentTrigger = null;
+	            };
 	        }
 	    }
 	};
@@ -1933,7 +1967,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = {
 	    props: {
 	        id: String,
-	        trigger: Element,
+	        trigger: {
+	            type: [Element, Function]
+	        },
 	        containFocus: {
 	            type: Boolean,
 	            default: true
@@ -1950,29 +1986,25 @@ return /******/ (function(modules) { // webpackBootstrap
 	    data: function data() {
 	        return {
 	            drop: null,
-	            lastFocussedElement: null
+	            lastFocussedElement: null,
+	            currentTrigger: null
 	        };
 	    },
 	    mounted: function mounted() {
 	        var _this = this;
 	
-	        this.$nextTick(function () {
-	            var _arr = ['open', 'close', 'toggle'];
+	        var _arr = ['open', 'close', 'toggle'];
 	
-	            for (var _i = 0; _i < _arr.length; _i++) {
-	                var event = _arr[_i];
-	                _this.$on('ui-dropdown::' + event, _this['ui-dropdown::' + event]);
-	            }
-	            if (_this.trigger) {
-	                _this.initializeDropdown();
-	            };
+	        for (var _i = 0; _i < _arr.length; _i++) {
+	            var event = _arr[_i];
+	            this.$on('ui-dropdown::' + event, this['ui-dropdown::' + event]);
+	        }
+	        this.$nextTick(function () {
+	            _this.initializeDropdown(_this.triggerComputed);
 	        });
 	    },
 	    beforeDestroy: function beforeDestroy() {
-	        if (this.drop) {
-	            this.drop.remove();
-	            this.drop.destroy();
-	        }
+	        this.destroyDropdown();
 	        var _arr2 = ['open', 'close', 'toggle'];
 	        for (var _i2 = 0; _i2 < _arr2.length; _i2++) {
 	            var event = _arr2[_i2];
@@ -1980,6 +2012,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	        }
 	    },
 	
+	
+	    computed: {
+	        triggerComputed: function triggerComputed() {
+	            if (this.trigger instanceof Function) {
+	                return this.trigger();
+	            } else {
+	                return this.trigger;
+	            }
+	        }
+	    },
 	
 	    methods: {
 	        'ui-dropdown::open': function uiDropdownOpen(id) {
@@ -2003,14 +2045,25 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	            this.toggleDropdown();
 	        },
-	        initializeDropdown: function initializeDropdown() {
+	        initializeDropdown: function initializeDropdown(el) {
+	            if (el !== this.currentTrigger) {
+	                this.destroyDropdown();
+	            } else return;
+	
+	            console.log('initializeDropdown ', el, this.$refs.dropdown);
+	            if (!el || !this.$refs || !this.$refs.dropdown) return;
+	
+	            this.currentTrigger = el;
+	
 	            this.drop = new _tetherDrop2.default({
-	                target: this.trigger,
+	                target: el,
 	                content: this.$refs.dropdown,
 	                position: this.dropdownPosition,
 	                constrainToWindow: true,
 	                openOn: this.openOn
 	            });
+	
+	            console.log(this.drop);
 	
 	            if (this.dropdownPosition !== 'bottom left') {
 	                this.drop.open();
@@ -2022,6 +2075,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	            this.drop.on('open', this.positionDrop);
 	            this.drop.on('open', this.dropdownOpened);
 	            this.drop.on('close', this.dropdownClosed);
+	        },
+	        destroyDropdown: function destroyDropdown() {
+	            if (this.drop) {
+	                this.drop.remove();
+	                this.drop.destroy();
+	            }
+	            this.currentTrigger = null;
 	        },
 	        openDropdown: function openDropdown() {
 	            if (this.drop) {
@@ -4553,26 +4613,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	    name: 'ui-popover',
 	
 	    mounted: function mounted() {
-	        var _this = this;
+	        var _arr = ['opened', 'closed'];
 	
-	        this.$nextTick(function () {
-	            var _arr = ['opened', 'closed'];
-	
-	            for (var _i = 0; _i < _arr.length; _i++) {
-	                var event = _arr[_i];
-	                _this.$on('dropdown-' + event, _this['dropdown-' + event]);
-	            }
-	            if (_this.trigger) {
-	                _this.initializeDropdown();
-	            };
-	        });
+	        for (var _i = 0; _i < _arr.length; _i++) {
+	            var event = _arr[_i];
+	            this.$on('dropdown-' + event, this['dropdown-' + event]);
+	        }
 	    },
 	    beforeDestroy: function beforeDestroy() {
-	        if (this.drop) {
-	            this.drop.remove();
-	            this.drop.destroy();
-	        }
 	        var _arr2 = ['opened', 'closed'];
+	
 	        for (var _i2 = 0; _i2 < _arr2.length; _i2++) {
 	            var event = _arr2[_i2];
 	            this.$off('dropdown-' + event, this['dropdown-' + event]);
@@ -5112,7 +5162,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 79 */
 /***/ function(module, exports) {
 
-	module.exports = "\n<button\n    class=\"ui-icon-button\" :class=\"styleClasses\" :aria-label=\"ariaLabel || tooltip\"\n    :type=\"buttonType\" v-disabled=\"disabled || loading\" ref=\"button\"\n>\n    <ui-icon\n        class=\"ui-icon-button-icon\" :icon=\"icon\" v-show=\"!loading\"\n    ></ui-icon>\n\n    <ui-progress-circular\n        class=\"ui-icon-button-spinner\" :color=\"spinnerColor\" :size=\"24\" :stroke=\"4.5\"\n        disable-transition v-show=\"loading\"\n    ></ui-progress-circular>\n\n    <ui-ripple-ink v-if=\"!hideRippleInk && !disabled\" :trigger=\"$refs.button\"></ui-ripple-ink>\n\n    <ui-tooltip\n        :trigger=\"$refs.button\" :content=\"tooltip\" :position=\"tooltipPosition\" v-if=\"tooltip\"\n        :open-on=\"openTooltipOn\"\n    ></ui-tooltip>\n\n    <ui-menu\n        class=\"ui-button-dropdown-menu\" :trigger=\"$refs.button\" :options=\"menuOptions\"\n        :show-icons=\"showMenuIcons\" :show-secondary-text=\"showMenuSecondaryText\"\n        :open-on=\"openDropdownOn\" @option-selected=\"menuOptionSelect\"\n        :dropdown-position=\"dropdownPosition\" v-if=\"hasDropdownMenu\"\n    ></ui-menu>\n\n    <ui-popover\n        :trigger=\"$refs.button\" :open-on=\"openDropdownOn\" :dropdown-position=\"dropdownPosition\"\n        v-if=\"hasPopover\"\n    >\n        <slot name=\"popover\"></slot>\n    </ui-popover>\n</button>\n";
+	module.exports = "\n<button\n    class=\"ui-icon-button\" :class=\"styleClasses\" :aria-label=\"ariaLabel || tooltip\"\n    :type=\"buttonType\" v-disabled=\"disabled || loading\" ref=\"button\"\n>\n    <ui-icon\n        class=\"ui-icon-button-icon\" :icon=\"icon\" v-show=\"!loading\"\n    ></ui-icon>\n\n    <ui-progress-circular\n        class=\"ui-icon-button-spinner\" :color=\"spinnerColor\" :size=\"24\" :stroke=\"4.5\"\n        disable-transition v-show=\"loading\"\n    ></ui-progress-circular>\n\n    <ui-ripple-ink v-if=\"!hideRippleInk && !disabled\" :trigger=\"$el\"></ui-ripple-ink>\n\n    <ui-tooltip\n        :trigger=\"$el\" :content=\"tooltip\" :position=\"tooltipPosition\" v-if=\"tooltip\"\n        :open-on=\"openTooltipOn\"\n    ></ui-tooltip>\n\n    <ui-menu\n        class=\"ui-button-dropdown-menu\" :trigger=\"$el\" :options=\"menuOptions\"\n        :show-icons=\"showMenuIcons\" :show-secondary-text=\"showMenuSecondaryText\"\n        :open-on=\"openDropdownOn\" @option-selected=\"menuOptionSelect\"\n        :dropdown-position=\"dropdownPosition\" v-if=\"hasDropdownMenu\"\n    ></ui-menu>\n\n    <ui-popover\n        :trigger=\"$el\" :open-on=\"openDropdownOn\" :dropdown-position=\"dropdownPosition\"\n        v-if=\"hasPopover\"\n    >\n        <slot name=\"popover\"></slot>\n    </ui-popover>\n</button>\n";
 
 /***/ },
 /* 80 */
@@ -7658,7 +7708,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 115 */
 /***/ function(module, exports) {
 
-	module.exports = "\n<button\n    class=\"ui-button\" :class=\"styleClasses\" :type=\"buttonType\" v-disabled=\"disabled || loading\"\n    ref=\"button\"\n>\n    <div class=\"ui-button-content\" :class=\"{ 'invisible': loading }\">\n        <ui-icon\n            class=\"ui-button-icon\" :class=\"{ 'position-right': iconRight }\" :icon=\"icon\"\n            v-if=\"showIcon\"\n        ></ui-icon>\n\n        <div class=\"ui-button-text\">\n            <slot>\n                <span v-text=\"text\"></span>\n            </slot>\n        </div>\n\n        <ui-icon\n            class=\"ui-button-dropdown-icon\" icon=\"&#xE5C5;\"\n            v-if=\"!iconRight && showDropdownIcon && (hasDropdownMenu || hasPopover)\"\n        ></ui-icon>\n    </div>\n\n    <ui-progress-circular\n        class=\"ui-button-spinner\" :color=\"spinnerColor\" :size=\"18\" :stroke=\"4.5\"\n        disable-transition v-show=\"loading\"\n    ></ui-progress-circular>\n\n    <ui-ripple-ink v-if=\"!hideRippleInk && !disabled\" :trigger=\"$refs.button\"></ui-ripple-ink>\n\n    <ui-menu\n        class=\"ui-button-dropdown-menu\" :trigger=\"$refs.button\" :options=\"menuOptions\"\n        :show-icons=\"showMenuIcons\" :show-secondary-text=\"showMenuSecondaryText\"\n        :open-on=\"openDropdownOn\" @option-selected=\"menuOptionSelect\"\n        :dropdown-position=\"dropdownPosition\" v-if=\"hasDropdownMenu\"\n    ></ui-menu>\n\n    <ui-popover\n        :trigger=\"$refs.button\" :open-on=\"openDropdownOn\" :dropdown-position=\"dropdownPosition\"\n        v-if=\"hasPopover\"\n    >\n        <slot name=\"popover\"></slot>\n    </ui-popover>\n</button>\n";
+	module.exports = "\n<button\n    class=\"ui-button\" :class=\"styleClasses\" :type=\"buttonType\" v-disabled=\"disabled || loading\"\n    ref=\"button\"\n>\n    <div class=\"ui-button-content\" :class=\"{ 'invisible': loading }\">\n        <ui-icon\n            class=\"ui-button-icon\" :class=\"{ 'position-right': iconRight }\" :icon=\"icon\"\n            v-if=\"showIcon\"\n        ></ui-icon>\n\n        <div class=\"ui-button-text\">\n            <slot>\n                <span v-text=\"text\"></span>\n            </slot>\n        </div>\n\n        <ui-icon\n            class=\"ui-button-dropdown-icon\" icon=\"&#xE5C5;\"\n            v-if=\"!iconRight && showDropdownIcon && (hasDropdownMenu || hasPopover)\"\n        ></ui-icon>\n    </div>\n\n    <ui-progress-circular\n        class=\"ui-button-spinner\" :color=\"spinnerColor\" :size=\"18\" :stroke=\"4.5\"\n        disable-transition v-show=\"loading\"\n    ></ui-progress-circular>\n\n    <ui-ripple-ink v-if=\"!hideRippleInk && !disabled\" :trigger=\"$el\"></ui-ripple-ink>\n\n    <ui-menu\n        class=\"ui-button-dropdown-menu\" :trigger=\"$el\" :options=\"menuOptions\"\n        :show-icons=\"showMenuIcons\" :show-secondary-text=\"showMenuSecondaryText\"\n        :open-on=\"openDropdownOn\" @option-selected=\"menuOptionSelect\"\n        :dropdown-position=\"dropdownPosition\" v-if=\"hasDropdownMenu\"\n    ></ui-menu>\n\n    <ui-popover\n        :trigger=\"$el\" :open-on=\"openDropdownOn\" :dropdown-position=\"dropdownPosition\"\n        v-if=\"hasPopover\"\n    >\n        <slot name=\"popover\"></slot>\n    </ui-popover>\n</button>\n";
 
 /***/ },
 /* 116 */
@@ -7994,6 +8044,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	            if (!this.open) {
 	                body.style.display = 'none';
 	            }
+	        },
+	        button_ref: function button_ref() {
+	            return this.$refs.button;
 	        }
 	    },
 	
@@ -8024,7 +8077,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 123 */
 /***/ function(module, exports) {
 
-	module.exports = "\n<div class=\"ui-collapsible\">\n    <button\n        class=\"ui-collapsible-header\" :class=\"{ 'disabled': disabled }\" :aria-controls=\"id\"\n        :aria-expanded=\"open ? 'true' : 'false'\" @click=\"toggleMenu\" v-disabled=\"disabled\"\n        ref=\"button\"\n    >\n        <div class=\"ui-collapsible-header-content\">\n            <slot name=\"header\">\n                <div v-text=\"header\"></div>\n            </slot>\n        </div>\n\n        <ui-icon class=\"ui-collapsible-header-icon\" :icon=\"icon\" v-if=\"!hideIcon\"></ui-icon>\n\n        <ui-ripple-ink\n            v-if=\"!hideRippleInk && !disabled && isReady\" :trigger=\"$refs.button\"\n        ></ui-ripple-ink>\n    </button>\n\n    <div\n        class=\"ui-collapsible-body-wrapper\" :transition=\"transition\"\n        :style=\"{ 'height': calculatedHeight }\" v-show=\"open\"ref=\"body\"\n    >\n        <div class=\"ui-collapsible-body\" :id=\"id\" :aria-hidden=\"open ? null : 'true'\">\n            <slot></slot>\n        </div>\n    </div>\n</div>\n";
+	module.exports = "\n<div class=\"ui-collapsible\">\n    <button\n        class=\"ui-collapsible-header\" :class=\"{ 'disabled': disabled }\" :aria-controls=\"id\"\n        :aria-expanded=\"open ? 'true' : 'false'\" @click=\"toggleMenu\" v-disabled=\"disabled\"\n        ref=\"button\"\n    >\n        <div class=\"ui-collapsible-header-content\">\n            <slot name=\"header\">\n                <div v-text=\"header\"></div>\n            </slot>\n        </div>\n\n        <ui-icon class=\"ui-collapsible-header-icon\" :icon=\"icon\" v-if=\"!hideIcon\"></ui-icon>\n\n        <ui-ripple-ink\n            v-if=\"!hideRippleInk && !disabled && isReady\" :trigger=\"button_ref\"\n        ></ui-ripple-ink>\n    </button>\n\n    <div\n        class=\"ui-collapsible-body-wrapper\" :transition=\"transition\"\n        :style=\"{ 'height': calculatedHeight }\" v-show=\"open\"ref=\"body\"\n    >\n        <div class=\"ui-collapsible-body\" :id=\"id\" :aria-hidden=\"open ? null : 'true'\">\n            <slot></slot>\n        </div>\n    </div>\n</div>\n";
 
 /***/ },
 /* 124 */
@@ -25604,7 +25657,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 137 */
 /***/ function(module, exports) {
 
-	module.exports = "\n<button\n    class=\"ui-fab\" :class=\"[this.type, this.color]\" :aria-label=\"ariaLabel || tooltip\"\n    v-disabled=\"disabled\" ref=\"button\"\n>\n    <ui-icon class=\"ui-fab-icon\" :icon=\"icon\"></ui-icon>\n\n    <ui-ripple-ink :trigger=\"$refs.button\" v-if=\"!hideRippleInk && !disabled\"></ui-ripple-ink>\n\n    <ui-tooltip\n        :trigger=\"$refs.button\" :content=\"tooltip\" :position=\"tooltipPosition\" v-if=\"tooltip\"\n        :open-on=\"openTooltipOn\"\n    ></ui-tooltip>\n</button>\n";
+	module.exports = "\n<button\n    class=\"ui-fab\" :class=\"[this.type, this.color]\" :aria-label=\"ariaLabel || tooltip\"\n    v-disabled=\"disabled\" ref=\"button\"\n>\n    <ui-icon class=\"ui-fab-icon\" :icon=\"icon\"></ui-icon>\n\n    <ui-ripple-ink :trigger=\"$el\" v-if=\"!hideRippleInk && !disabled\"></ui-ripple-ink>\n\n    <ui-tooltip\n        :trigger=\"$el\" :content=\"tooltip\" :position=\"tooltipPosition\" v-if=\"tooltip\"\n        :open-on=\"openTooltipOn\"\n    ></ui-tooltip>\n</button>\n";
 
 /***/ },
 /* 138 */
@@ -30713,7 +30766,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 211 */
 /***/ function(module, exports) {
 
-	module.exports = "\n<li\n    class=\"ui-tab-header-item\" role=\"tab\"\n    :class=\"['type-' + type, { 'active': active, 'disabled': disabled }]\"\n\n    :tabindex=\"active ? 0 : -1\" :aria-controls=\"id\" :aria-selected=\"active ? 'true' : null\"\n    v-disabled=\"disabled\" ref=\"item\"\n>\n    <div\n        class=\"ui-tab-header-item-icon\" v-if=\"type === 'icon' || type === 'icon-and-text'\"\n    >\n        <ui-icon :icon=\"icon\"></ui-icon>\n    </div>\n\n    <div\n        class=\"ui-tab-header-item-text\" v-text=\"text\"\n        v-if=\"type === 'text' || type === 'icon-and-text'\"\n    ></div>\n\n    <ui-ripple-ink :trigger=\"$refs.item\" v-if=\"!hideRippleInk && !disabled\"></ui-ripple-ink>\n</li>\n";
+	module.exports = "\n<li\n    class=\"ui-tab-header-item\" role=\"tab\"\n    :class=\"['type-' + type, { 'active': active, 'disabled': disabled }]\"\n\n    :tabindex=\"active ? 0 : -1\" :aria-controls=\"id\" :aria-selected=\"active ? 'true' : null\"\n    v-disabled=\"disabled\" ref=\"item\"\n>\n    <div\n        class=\"ui-tab-header-item-icon\" v-if=\"type === 'icon' || type === 'icon-and-text'\"\n    >\n        <ui-icon :icon=\"icon\"></ui-icon>\n    </div>\n\n    <div\n        class=\"ui-tab-header-item-text\" v-text=\"text\"\n        v-if=\"type === 'text' || type === 'icon-and-text'\"\n    ></div>\n\n    <ui-ripple-ink :trigger=\"$el\" v-if=\"!hideRippleInk && !disabled\"></ui-ripple-ink>\n</li>\n";
 
 /***/ },
 /* 212 */
