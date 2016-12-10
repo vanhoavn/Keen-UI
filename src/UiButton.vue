@@ -1,7 +1,7 @@
 <template>
     <button
         class="ui-button" :class="styleClasses" :type="buttonType" v-disabled="disabled || loading"
-        ref="button""
+        ref="button"
     >
         <div class="ui-button-content" :class="{ 'invisible': loading }">
             <ui-icon
