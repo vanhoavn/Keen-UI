@@ -1,8 +1,8 @@
 <template>
     <div class="ui-tabs" :class="styleClasses">
-        <div class="ui-tabs-header" :class="[backgroundColor]">
+        <div class="ui-tabs-header" :class="[backgroundColorComputed]">
             <ul
-                class="ui-tabs-header-items" :class="[textColor, textColorActive]" role="tablist"
+                class="ui-tabs-header-items" :class="[textColorComputed, textColorActiveComputed]" role="tablist"
                 ref="tabs-container"
             >
                 <ui-tab-header-item
@@ -18,7 +18,7 @@
             </ul>
 
             <div
-                class="ui-tabs-active-tab-indicator" :class="[indicatorColor]"
+                class="ui-tabs-active-tab-indicator" :class="[indicatorColorComputed]"
                 :style="{ 'left': indicatorLeft, 'right': indicatorRight }"
             ></div>
         </div>
@@ -49,30 +49,18 @@ export default {
         backgroundColor: {
             type: String,
             default: 'default', // 'default', 'primary', 'accent', or 'clear'
-            coerce(color) {
-                return 'background-color-' + color;
-            }
         },
         textColor: {
             type: String,
             default: 'black', // 'black', or 'white'
-            coerce(color) {
-                return 'text-color-' + color;
-            }
         },
         textColorActive: {
             type: String,
             default: 'primary', // 'primary', 'accent', or 'white'
-            coerce(color) {
-                return 'text-color-active-' + color;
-            }
         },
         indicatorColor: {
             type: String,
             default: 'primary', // 'primary', 'accent', or 'white'
-            coerce(color) {
-                return 'color-' + color;
-            }
         },
         fullwidth: {
             type: Boolean,
@@ -95,6 +83,18 @@ export default {
     },
 
     computed: {
+        backgroundColorComputed() {
+            return 'background-color-' + this.backgroundColor;
+        },
+        textColorComputed() {
+            return 'text-color-' + this.textColor;
+        },
+        textColorActiveComputed() {
+            return 'text-color-active-' + this.textColorActive;
+        },
+        indicatorColorComputed() {
+            return 'color-' + this.indicatorColor;
+        },
         styleClasses() {
             let classes = ['ui-tabs-type-' + this.type];
 

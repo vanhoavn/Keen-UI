@@ -1,6 +1,6 @@
 <template>
     <div
-        class="ui-modal ui-modal-mask" v-show="show" :transition="transition" :class="['ui-modal-' + type]"
+        class="ui-modal ui-modal-mask" v-show="show" :transition="transition" :class="[typeComputed]"
         :role="role" @transitionend="transitionEnd"
     >
         <div class="ui-modal-wrapper" @click="close" ref="modal-mask">
@@ -52,9 +52,6 @@ export default {
         type: {
             type: String,
             default: 'normal', // 'small', 'normal', or 'large'
-            coerce(type) {
-                return 'ui-modal-' + type;
-            }
         },
         header: {
             type: String,
@@ -106,6 +103,12 @@ export default {
                     this.closed();
                 }
             });
+        }
+    },
+
+    computed: {
+        typeComputed() {
+            return 'ui-modal-' + this.type;
         }
     },
 

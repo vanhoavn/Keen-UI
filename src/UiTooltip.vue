@@ -1,5 +1,5 @@
 <template>
-    <div class="ui-tooltip" v-text="content" ref="tooltip"></div>
+    <div class="ui-tooltip" v-text="content"></div>
 </template>
 
 <script>
@@ -11,8 +11,8 @@ export default {
     props: {
         content: String,
         trigger: {
-            type: Element,
-            required: true
+            type: [Element, Function],
+            required: false
         },
         position: {
             type: String,
@@ -26,23 +26,33 @@ export default {
 
     data() {
         return {
-            tooltip: null
+            tooltip: null,
+            currentTrigger: null,
         };
     },
 
-    watch: {
-        trigger() {
-            if (!this.tooltip) {
-                this.initialize();
+    computed: {
+        triggerComputed() {
+            if(this.trigger instanceof Function){
+                return this.trigger();
+            } else {
+                return this.trigger;
             }
         }
     },
 
-    ready() {
-        this.initialize();
+    watch: {
+        trigger() {
+            this.initialize(this.triggerComputed);
+        }
     },
 
-    beforeDestory() {
+    mounted() {
+        this.initialize(this.triggerComputed);
+    },
+
+    beforeDestroy() {
+        this.destroyCurrentTooltip();
         if (this.tooltip) {
             this.tooltip.remove();
             this.tooltip.destroy();
@@ -50,17 +60,28 @@ export default {
     },
 
     methods: {
-        initialize() {
-            if (this.trigger) {
+        initialize(el) {
+            if (el !== this.currentTrigger) {
+                this.destroyCurrentTooltip();
+            } else return;
+
+            if (el) {
                 this.tooltip = new Tooltip({
-                    target: this.trigger,
-                    content: this.$refs.tooltip,
+                    target: el,
+                    content: this.$el,
                     classes: 'ui-tooltip-theme',
                     position: this.position,
                     openOn: 'hover focus'
                 });
             }
-        }
+        },
+        destroyCurrentTooltip() {
+            if (this.tooltip) {
+                this.tooltip.remove();
+                this.tooltip.destroy();
+            };
+            this.currentTrigger = null;
+        },
     }
 };
 </script>

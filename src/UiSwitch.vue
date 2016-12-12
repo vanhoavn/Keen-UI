@@ -1,11 +1,11 @@
 <template>
     <label
         class="ui-switch"
-        :class="{ 'checked': value, 'disabled': disabled, 'label-left': labelLeft }"
+        :class="{ 'checked': currentValue, 'disabled': disabled, 'label-left': labelLeft }"
     >
         <div class="ui-switch-container">
             <input
-                class="ui-switch-input" type="checkbox" :name="name" :id="id" v-model="value"
+                class="ui-switch-input" type="checkbox" :name="name" :id="id" v-model="currentValue"
                 v-disabled="disabled"
             >
 
@@ -54,7 +54,8 @@ export default {
 
     data() {
         return {
-            initialValue: false
+            initialValue: false,
+            currentValue: this.value,
         };
     },
 
@@ -75,6 +76,19 @@ export default {
         for(let event of ['reset']){
             this.$off('ui-input::'+event, this['ui-input::'+event]);
         }
+    },
+
+    watch: {
+        currentValue() {
+            if(this.currentValue !== this.value){
+                this.$emit('input', this.currentValue);
+            }
+        },
+        value() {
+            if(this.currentValue !== this.value){
+                this.currentValue = this.value;
+            }
+        },
     },
 
     methods: {

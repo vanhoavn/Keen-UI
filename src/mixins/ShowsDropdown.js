@@ -49,10 +49,16 @@ export default {
     
     computed: {
         triggerComputed() {
+            let result;
             if(this.trigger instanceof Function){
-                return this.trigger();
+                result = this.trigger();
             } else {
-                return this.trigger;
+                result = this.trigger;
+            }
+            if(result && result.$el){
+                return result.$el;
+            } else {
+                return result;
             }
         }
     },

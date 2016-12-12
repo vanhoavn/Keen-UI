@@ -63,9 +63,6 @@ export default {
         type: {
             type: String,
             default: 'normal', // 'normal' or 'flat'
-            coerce(type) {
-                return 'ui-button-' + type;
-            }
         },
         buttonType: {
             type: String,
@@ -74,9 +71,6 @@ export default {
         color: {
             type: String,
             default: 'default', // 'default', 'primary', 'accent', 'success', 'warning', or 'danger'
-            coerce(color) {
-                return 'color-' + color;
-            }
         },
         raised: {
             type: Boolean,
@@ -103,8 +97,16 @@ export default {
     },
 
     computed: {
+        colorComputed() {
+            return 'color-' + this.color;
+        },
+
+        typeComputed() {
+            return 'ui-button-' + this.type;
+        },
+
         styleClasses() {
-            let classes = [this.type, this.color];
+            let classes = [this.typeComputed, this.colorComputed];
 
             if (this.raised) {
                 classes.push('ui-button-raised');
@@ -118,7 +120,7 @@ export default {
         },
 
         spinnerColor() {
-            if (this.color === 'color-default' || this.type === 'ui-button-flat') {
+            if (this.colorComputed === 'color-default' || this.type === 'ui-button-flat') {
                 return 'black';
             }
 

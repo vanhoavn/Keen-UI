@@ -90,6 +90,8 @@ import UiProgressCircular from './UiProgressCircular.vue';
 import HasTextInput from './mixins/HasTextInput';
 import ValidatesInput from './mixins/ValidatesInput';
 
+import _ from 'lodash';
+
 export default {
     name: 'ui-select',
 
@@ -200,9 +202,11 @@ export default {
     },
 
     watch: {
-        filteredOptions() {
-            this.highlightedIndex = 0;
-            resetScroll(this.$refs['options-list']);
+        filteredOptions(newValue, oldValue) {
+            if(!_.isEqual(newValue, oldValue)){
+                this.highlightedIndex = 0;
+                resetScroll(this.$refs['options-list']);
+            }
         },
 
         showDropdown() {
@@ -226,7 +230,7 @@ export default {
         },
 
         currentValue() {
-            this.$emit('change', this.currentValue);
+            this.$emit('input', this.currentValue);
         },
     },
 
@@ -356,7 +360,10 @@ export default {
         },
 
         deselect(option) {
-            this.currentValue.$remove(option);
+            let idx = this.currentValue.indexOf(idx);
+            if (idx>=0) {
+                this.currentValue.splice(idx,1);
+            }
         },
 
         isSelected(option) {

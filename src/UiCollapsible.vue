@@ -20,9 +20,9 @@
 
         <div
             class="ui-collapsible-body-wrapper" :transition="transition"
-            :style="{ 'height': calculatedHeight }" v-show="open"ref="body"
+            :style="{ 'height': calculatedHeight }" v-show="currentOpen"ref="body"
         >
-            <div class="ui-collapsible-body" :id="id" :aria-hidden="open ? null : 'true'">
+            <div class="ui-collapsible-body" :id="rid" :aria-hidden="currentOpen ? null : 'true'">
                 <slot></slot>
             </div>
         </div>
@@ -65,7 +65,9 @@ export default {
     data() {
         return {
             height: 0,
-            isReady: false
+            isReady: false,
+            rid: this.id,
+            currentOpen: this.open,
         };
     },
 
@@ -83,9 +85,20 @@ export default {
         }
     },
 
+    watch: {
+        currentOpen() {
+            this.$emit('toggled', this.currentOpen);
+        },
+        open() {
+            if(this.open != this.currentOpen){
+                this.currentOpen = this.open;
+            }
+        },
+    },
+
     created() {
         // Set default ID
-        this.id = this.id || UUID.short('ui-collapsible-');
+        this.rid = this.id || UUID.short('ui-collapsible-');
     },
 
     ready() {
@@ -122,7 +135,7 @@ export default {
                 return;
             }
 
-            this.open = !this.open;
+            this.currentOpen = !this.currentOpen;
         },
 
         setHeight() {
@@ -131,7 +144,7 @@ export default {
             body.style.display = 'block';
             this.height = body.scrollHeight;
 
-            if (!this.open) {
+            if (!this.currentOpen) {
                 body.style.display = 'none';
             }
         },

@@ -4,7 +4,7 @@
         :class="{ 'divider': isDivider, 'disabled' : disabled }"
     >
         <div class="ui-menu-option-content" :class="[partial]">
-            <partial :name="partial"></partial>
+            <component :is="partial" :icon="icon" :show-icon="showIcon" :is-divider="isDivider" :text="text" :secondary-text="secondaryText" :show-secondary-text="showSecondaryText"></component>
         </div>
 
         <ui-ripple-ink
@@ -52,22 +52,24 @@ export default {
     },
 
     components: {
-        UiIcon
-    },
+        UiIcon,
+        'ui-menu-default': {
+            props: ['icon', 'showIcon', 'showSecondaryText', 'isDivider', 'text', 'secondaryText'],
+            template : `
+            <div class="menu-item-container">
+                <ui-icon
+                    class="ui-menu-option-icon" :icon="icon" v-if="showIcon && !isDivider && icon"
+                ></ui-icon>
 
-    partials: {
-        'ui-menu-default': `
-            <ui-icon
-                class="ui-menu-option-icon" :icon="icon" v-if="showIcon && !isDivider && icon"
-            ></ui-icon>
+                <div class="ui-menu-option-text" v-text="text" v-if="!isDivider"></div>
 
-            <div class="ui-menu-option-text" v-text="text" v-if="!isDivider"></div>
-
-            <div
-                class="ui-menu-option-secondary-text" v-text="secondaryText"
-                v-if="showSecondaryText && !isDivider && secondaryText"
-            ></div>
-        `
+                <div
+                    class="ui-menu-option-secondary-text" v-text="secondaryText"
+                    v-if="showSecondaryText && !isDivider && secondaryText"
+                ></div>
+            </template>
+            `
+        }
     },
 
     mixins: [

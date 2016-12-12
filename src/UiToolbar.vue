@@ -43,16 +43,10 @@ export default {
         type: {
             type: String,
             default: 'default', // 'default' or 'colored' - colored is brand primary color
-            coerce(type) {
-                return 'ui-toolbar-' + type;
-            }
         },
         textColor: {
             type: String,
             default: 'black', // 'black' or 'white'
-            coerce(color) {
-                return 'text-color-' + color;
-            }
         },
         title: String,
         brand: String,
@@ -87,6 +81,12 @@ export default {
     },
 
     computed: {
+        typeComputed() {
+            return 'ui-toolbar-' + this.type;
+        },
+        textColorComputed() {
+            return 'text-color-' + this.textColor;
+        },
         styleClasses() {
             var classes = [this.type, this.textColor];
 

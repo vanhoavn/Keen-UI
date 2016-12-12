@@ -6,7 +6,7 @@
         <div class="ui-radio-input-wrapper">
             <input
                 class="ui-radio-input" type="radio" :id="id" :name="name" :value="value"
-                :checked="checked" @focus="focus" @blur="blur" v-model="model" v-disabled="disabled"
+                :checked="checked" @focus="focus" @blur="blur" v-model="currentModel" v-disabled="disabled"
             >
 
             <span class="ui-radio-border"></span>
@@ -54,9 +54,19 @@ export default {
         }
     },
 
+    watches: {
+        model() {
+            this.currentModel = this.model;
+        },
+        currentModel() {
+            this.$emit('input',this.currentModel);
+        },
+    },
+
     data() {
         return {
-            active: false
+            active: false,
+            currentModel: this.model
         };
     },
 

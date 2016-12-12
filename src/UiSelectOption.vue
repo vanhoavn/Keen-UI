@@ -1,8 +1,8 @@
 <template>
     <li
         class="ui-select-option" :class="{ highlighted: highlighted, selected: selected }"
-        @click="$emit('click',$event)"
-        @mouseover="$emit('mouseover',$event)"
+        @click="function(e){$emit('click',e);}"
+        @mouseover="function(e){$emit('mouseover',e);}"
     >
         <div class="ui-select-option-content" :class="[partial]">
             <component :is="partial" :option="option" :keys="keys"></component>

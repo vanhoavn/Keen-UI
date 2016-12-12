@@ -1,5 +1,5 @@
 <template>
-    <div class="ui-snackbar-container" :class="[position]">
+    <div class="ui-snackbar-container" :class="[positionComputed]">
         <ui-snackbar
             :duration="s.duration" :show.sync="s.show" :action="s.action"
             :action-color="s.actionColor" :persistent="s.persistent" :id="s.id" auto-hide
@@ -34,9 +34,6 @@ export default {
         position: {
             type: String,
             default: 'left', // 'left', 'center', 'right'
-            coerce(position) {
-                return 'position-' + position;
-            }
         }
     },
 
@@ -61,6 +58,12 @@ export default {
         }
         if (this.draggable) {
             this.draggable.destroy();
+        }
+    },
+
+    computed: {
+        positionComputed() {
+            return 'position-' + this.position;
         }
     },
 

@@ -630,20 +630,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	    props: {
 	        type: {
 	            type: String,
-	            default: 'normal', coerce: function coerce(type) {
-	                return 'ui-icon-button-' + type;
-	            }
-	        },
+	            default: 'normal' },
 	        buttonType: {
 	            type: String,
 	            default: 'button'
 	        },
 	        color: {
 	            type: String,
-	            default: 'default', coerce: function coerce(color) {
-	                return 'color-' + color;
-	            }
-	        },
+	            default: 'default' },
 	        icon: {
 	            type: String,
 	            required: true
@@ -660,8 +654,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	    },
 	
 	    computed: {
+	        typeComputed: function typeComputed() {
+	            return 'ui-icon-button-' + this.type;
+	        },
+	        colorComputed: function colorComputed() {
+	            return 'color-' + this.color;
+	        },
 	        styleClasses: function styleClasses() {
-	            var classes = [this.type, this.color];
+	            var classes = [this.typeComputed, this.colorComputed];
 	
 	            if (this.hasDropdown) {
 	                classes.push('ui-dropdown');
@@ -956,11 +956,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	    },
 	
 	    components: {
-	        UiIcon: _UiIcon2.default
-	    },
-	
-	    partials: {
-	        'ui-menu-default': '\n            <ui-icon\n                class="ui-menu-option-icon" :icon="icon" v-if="showIcon && !isDivider && icon"\n            ></ui-icon>\n\n            <div class="ui-menu-option-text" v-text="text" v-if="!isDivider"></div>\n\n            <div\n                class="ui-menu-option-secondary-text" v-text="secondaryText"\n                v-if="showSecondaryText && !isDivider && secondaryText"\n            ></div>\n        '
+	        UiIcon: _UiIcon2.default,
+	        'ui-menu-default': {
+	            props: ['icon', 'showIcon', 'showSecondaryText', 'isDivider', 'text', 'secondaryText'],
+	            template: '\n            <div class="menu-item-container">\n                <ui-icon\n                    class="ui-menu-option-icon" :icon="icon" v-if="showIcon && !isDivider && icon"\n                ></ui-icon>\n\n                <div class="ui-menu-option-text" v-text="text" v-if="!isDivider"></div>\n\n                <div\n                    class="ui-menu-option-secondary-text" v-text="secondaryText"\n                    v-if="showSecondaryText && !isDivider && secondaryText"\n                ></div>\n            </template>\n            '
+	        }
 	    },
 	
 	    mixins: [_ShowsRippleInk2.default]
@@ -1169,7 +1169,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            this.hook(this.triggerComputed);
 	        }
 	    },
-	    beforeDestory: function beforeDestory() {
+	    beforeDestroy: function beforeDestroy() {
 	        if (this.currentTrigger) {
 	            this.unhook(this.currentTrigger);
 	        }
@@ -1938,7 +1938,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 57 */
 /***/ function(module, exports) {
 
-	module.exports = "\n<a\n    class=\"ui-menu-option\" role=\"menu-item\" :tabindex=\"(isDivider || disabled) ? null : '0'\"\n    :class=\"{ 'divider': isDivider, 'disabled' : disabled }\"\n>\n    <div class=\"ui-menu-option-content\" :class=\"[partial]\">\n        <partial :name=\"partial\"></partial>\n    </div>\n\n    <ui-ripple-ink\n        :trigger=\"$el\" v-if=\"!hideRippleInk && !disabled && !isDivider\"\n    ></ui-ripple-ink>\n</a>\n";
+	module.exports = "\n<a\n    class=\"ui-menu-option\" role=\"menu-item\" :tabindex=\"(isDivider || disabled) ? null : '0'\"\n    :class=\"{ 'divider': isDivider, 'disabled' : disabled }\"\n>\n    <div class=\"ui-menu-option-content\" :class=\"[partial]\">\n        <component :is=\"partial\" :icon=\"icon\" :show-icon=\"showIcon\" :is-divider=\"isDivider\" :text=\"text\" :secondary-text=\"secondaryText\" :show-secondary-text=\"showSecondaryText\"></component>\n    </div>\n\n    <ui-ripple-ink\n        :trigger=\"$el\" v-if=\"!hideRippleInk && !disabled && !isDivider\"\n    ></ui-ripple-ink>\n</a>\n";
 
 /***/ },
 /* 58 */
@@ -2015,10 +2015,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	    computed: {
 	        triggerComputed: function triggerComputed() {
+	            var result = void 0;
 	            if (this.trigger instanceof Function) {
-	                return this.trigger();
+	                result = this.trigger();
 	            } else {
-	                return this.trigger;
+	                result = this.trigger;
+	            }
+	            if (result && result.$el) {
+	                return result.$el;
+	            } else {
+	                return result;
 	            }
 	        }
 	    },
@@ -4739,7 +4745,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            type: Number,
 	            default: 32
 	        },
-	        stroke: Number,
+	        inputStroke: Number,
 	        autoStroke: {
 	            type: Boolean,
 	            default: true
@@ -4764,18 +4770,18 @@ return /******/ (function(modules) { // webpackBootstrap
 	        },
 	        radius: function radius() {
 	            return (this.size - this.stroke) / 2;
-	        }
-	    },
-	
-	    created: function created() {
-	        if (!this.stroke) {
+	        },
+	        stroke: function stroke() {
+	            if (this.inputStroke) return this.inputStroke;
 	            if (this.autoStroke) {
-	                this.stroke = parseInt(this.size / 8, 10);
+	                return parseInt(this.size / 8, 10);
 	            } else {
-	                this.stroke = 4;
+	                return 4;
 	            }
 	        }
 	    },
+	
+	    created: function created() {},
 	
 	
 	    methods: {
@@ -4951,8 +4957,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    props: {
 	        content: String,
 	        trigger: {
-	            type: Element,
-	            required: true
+	            type: [Element, Function],
+	            required: false
 	        },
 	        position: {
 	            type: String,
@@ -4966,23 +4972,33 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	    data: function data() {
 	        return {
-	            tooltip: null
+	            tooltip: null,
+	            currentTrigger: null
 	        };
 	    },
 	
 	
-	    watch: {
-	        trigger: function trigger() {
-	            if (!this.tooltip) {
-	                this.initialize();
+	    computed: {
+	        triggerComputed: function triggerComputed() {
+	            if (this.trigger instanceof Function) {
+	                return this.trigger();
+	            } else {
+	                return this.trigger;
 	            }
 	        }
 	    },
 	
-	    ready: function ready() {
-	        this.initialize();
+	    watch: {
+	        trigger: function trigger() {
+	            this.initialize(this.triggerComputed);
+	        }
 	    },
-	    beforeDestory: function beforeDestory() {
+	
+	    mounted: function mounted() {
+	        this.initialize(this.triggerComputed);
+	    },
+	    beforeDestroy: function beforeDestroy() {
+	        this.destroyCurrentTooltip();
 	        if (this.tooltip) {
 	            this.tooltip.remove();
 	            this.tooltip.destroy();
@@ -4991,16 +5007,27 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	
 	    methods: {
-	        initialize: function initialize() {
-	            if (this.trigger) {
+	        initialize: function initialize(el) {
+	            if (el !== this.currentTrigger) {
+	                this.destroyCurrentTooltip();
+	            } else return;
+	
+	            if (el) {
 	                this.tooltip = new _tetherTooltip2.default({
-	                    target: this.trigger,
-	                    content: this.$refs.tooltip,
+	                    target: el,
+	                    content: this.$el,
 	                    classes: 'ui-tooltip-theme',
 	                    position: this.position,
 	                    openOn: 'hover focus'
 	                });
 	            }
+	        },
+	        destroyCurrentTooltip: function destroyCurrentTooltip() {
+	            if (this.tooltip) {
+	                this.tooltip.remove();
+	                this.tooltip.destroy();
+	            };
+	            this.currentTrigger = null;
 	        }
 	    }
 	};
@@ -5153,7 +5180,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 78 */
 /***/ function(module, exports) {
 
-	module.exports = "\n<div class=\"ui-tooltip\" v-text=\"content\" ref=\"tooltip\"></div>\n";
+	module.exports = "\n<div class=\"ui-tooltip\" v-text=\"content\"></div>\n";
 
 /***/ },
 /* 79 */
@@ -7615,19 +7642,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	    props: {
 	        type: {
 	            type: String,
-	            default: 'normal', coerce: function coerce(type) {
-	                return 'ui-button-' + type;
-	            }
-	        },
+	            default: 'normal' },
 	        buttonType: {
 	            type: String,
 	            default: 'submit' },
 	        color: {
 	            type: String,
-	            default: 'default', coerce: function coerce(color) {
-	                return 'color-' + color;
-	            }
-	        },
+	            default: 'default' },
 	        raised: {
 	            type: Boolean,
 	            default: false
@@ -7653,8 +7674,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	    },
 	
 	    computed: {
+	        colorComputed: function colorComputed() {
+	            return 'color-' + this.color;
+	        },
+	        typeComputed: function typeComputed() {
+	            return 'ui-button-' + this.type;
+	        },
 	        styleClasses: function styleClasses() {
-	            var classes = [this.type, this.color];
+	            var classes = [this.typeComputed, this.colorComputed];
 	
 	            if (this.raised) {
 	                classes.push('ui-button-raised');
@@ -7667,7 +7694,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            return classes;
 	        },
 	        spinnerColor: function spinnerColor() {
-	            if (this.color === 'color-default' || this.type === 'ui-button-flat') {
+	            if (this.colorComputed === 'color-default' || this.type === 'ui-button-flat') {
 	                return 'black';
 	            }
 	
@@ -7959,7 +7986,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	    data: function data() {
 	        return {
 	            height: 0,
-	            isReady: false
+	            isReady: false,
+	            rid: this.id,
+	            currentOpen: this.open
 	        };
 	    },
 	
@@ -7977,8 +8006,19 @@ return /******/ (function(modules) { // webpackBootstrap
 	        }
 	    },
 	
+	    watch: {
+	        currentOpen: function currentOpen() {
+	            this.$emit('toggled', this.currentOpen);
+	        },
+	        open: function open() {
+	            if (this.open != this.currentOpen) {
+	                this.currentOpen = this.open;
+	            }
+	        }
+	    },
+	
 	    created: function created() {
-	        this.id = this.id || _uuid2.default.short('ui-collapsible-');
+	        this.rid = this.id || _uuid2.default.short('ui-collapsible-');
 	    },
 	    ready: function ready() {
 	        this.isReady = true;
@@ -8020,7 +8060,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                return;
 	            }
 	
-	            this.open = !this.open;
+	            this.currentOpen = !this.currentOpen;
 	        },
 	        setHeight: function setHeight() {
 	            var body = this.$refs.body;
@@ -8028,7 +8068,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            body.style.display = 'block';
 	            this.height = body.scrollHeight;
 	
-	            if (!this.open) {
+	            if (!this.currentOpen) {
 	                body.style.display = 'none';
 	            }
 	        },
@@ -8064,7 +8104,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 123 */
 /***/ function(module, exports) {
 
-	module.exports = "\n<div class=\"ui-collapsible\">\n    <button\n        class=\"ui-collapsible-header\" :class=\"{ 'disabled': disabled }\" :aria-controls=\"id\"\n        :aria-expanded=\"open ? 'true' : 'false'\" @click=\"toggleMenu\" v-disabled=\"disabled\"\n        ref=\"button\"\n    >\n        <div class=\"ui-collapsible-header-content\">\n            <slot name=\"header\">\n                <div v-text=\"header\"></div>\n            </slot>\n        </div>\n\n        <ui-icon class=\"ui-collapsible-header-icon\" :icon=\"icon\" v-if=\"!hideIcon\"></ui-icon>\n\n        <ui-ripple-ink\n            v-if=\"!hideRippleInk && !disabled && isReady\" :trigger=\"button_ref\"\n        ></ui-ripple-ink>\n    </button>\n\n    <div\n        class=\"ui-collapsible-body-wrapper\" :transition=\"transition\"\n        :style=\"{ 'height': calculatedHeight }\" v-show=\"open\"ref=\"body\"\n    >\n        <div class=\"ui-collapsible-body\" :id=\"id\" :aria-hidden=\"open ? null : 'true'\">\n            <slot></slot>\n        </div>\n    </div>\n</div>\n";
+	module.exports = "\n<div class=\"ui-collapsible\">\n    <button\n        class=\"ui-collapsible-header\" :class=\"{ 'disabled': disabled }\" :aria-controls=\"id\"\n        :aria-expanded=\"open ? 'true' : 'false'\" @click=\"toggleMenu\" v-disabled=\"disabled\"\n        ref=\"button\"\n    >\n        <div class=\"ui-collapsible-header-content\">\n            <slot name=\"header\">\n                <div v-text=\"header\"></div>\n            </slot>\n        </div>\n\n        <ui-icon class=\"ui-collapsible-header-icon\" :icon=\"icon\" v-if=\"!hideIcon\"></ui-icon>\n\n        <ui-ripple-ink\n            v-if=\"!hideRippleInk && !disabled && isReady\" :trigger=\"button_ref\"\n        ></ui-ripple-ink>\n    </button>\n\n    <div\n        class=\"ui-collapsible-body-wrapper\" :transition=\"transition\"\n        :style=\"{ 'height': calculatedHeight }\" v-show=\"currentOpen\"ref=\"body\"\n    >\n        <div class=\"ui-collapsible-body\" :id=\"rid\" :aria-hidden=\"currentOpen ? null : 'true'\">\n            <slot></slot>\n        </div>\n    </div>\n</div>\n";
 
 /***/ },
 /* 124 */
@@ -8303,10 +8343,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    props: {
 	        type: {
 	            type: String,
-	            default: 'normal', coerce: function coerce(type) {
-	                return 'ui-modal-' + type;
-	            }
-	        },
+	            default: 'normal' },
 	        header: {
 	            type: String,
 	            default: 'UiModal Header'
@@ -8358,6 +8395,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	                    _this.closed();
 	                }
 	            });
+	        }
+	    },
+	
+	    computed: {
+	        typeComputed: function typeComputed() {
+	            return 'ui-modal-' + this.type;
 	        }
 	    },
 	
@@ -25522,7 +25565,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 132 */
 /***/ function(module, exports) {
 
-	module.exports = "\n<div\n    class=\"ui-modal ui-modal-mask\" v-show=\"show\" :transition=\"transition\" :class=\"['ui-modal-' + type]\"\n    :role=\"role\" @transitionend=\"transitionEnd\"\n>\n    <div class=\"ui-modal-wrapper\" @click=\"close\" ref=\"modal-mask\">\n        <div\n            class=\"ui-modal-container\" tabindex=\"-1\" @keydown.esc=\"close\"\n            ref=\"modal-container\"\n        >\n            <div class=\"ui-modal-header\">\n                <slot name=\"header\">\n                    <h1 v-text=\"header\" class=\"ui-modal-header-text\"></h1>\n                </slot>\n\n                <ui-icon-button\n                    type=\"clear\" :icon=\"'\\ue5cd'\" class=\"ui-modal-close-button\" @click=\"close\"\n                    :disabled=\"!dismissible\" v-if=\"showCloseButton\" ref=\"close-button\"\n                ></ui-icon-button>\n            </div>\n\n            <div class=\"ui-modal-body\">\n                <slot>\n                    <div v-text=\"body\"></div>\n                </slot>\n            </div>\n\n            <div class=\"ui-modal-footer\" v-if=\"!hideFooter\">\n                <slot name=\"footer\">\n                    <ui-button @click=\"close\" v-if=\"dismissible\">Close</ui-button>\n                </slot>\n            </div>\n\n            <div class=\"focus-redirector\" @focus=\"redirectFocus\" tabindex=\"0\"></div>\n        </div>\n    </div>\n</div>\n";
+	module.exports = "\n<div\n    class=\"ui-modal ui-modal-mask\" v-show=\"show\" :transition=\"transition\" :class=\"[typeComputed]\"\n    :role=\"role\" @transitionend=\"transitionEnd\"\n>\n    <div class=\"ui-modal-wrapper\" @click=\"close\" ref=\"modal-mask\">\n        <div\n            class=\"ui-modal-container\" tabindex=\"-1\" @keydown.esc=\"close\"\n            ref=\"modal-container\"\n        >\n            <div class=\"ui-modal-header\">\n                <slot name=\"header\">\n                    <h1 v-text=\"header\" class=\"ui-modal-header-text\"></h1>\n                </slot>\n\n                <ui-icon-button\n                    type=\"clear\" :icon=\"'\\ue5cd'\" class=\"ui-modal-close-button\" @click=\"close\"\n                    :disabled=\"!dismissible\" v-if=\"showCloseButton\" ref=\"close-button\"\n                ></ui-icon-button>\n            </div>\n\n            <div class=\"ui-modal-body\">\n                <slot>\n                    <div v-text=\"body\"></div>\n                </slot>\n            </div>\n\n            <div class=\"ui-modal-footer\" v-if=\"!hideFooter\">\n                <slot name=\"footer\">\n                    <ui-button @click=\"close\" v-if=\"dismissible\">Close</ui-button>\n                </slot>\n            </div>\n\n            <div class=\"focus-redirector\" @focus=\"redirectFocus\" tabindex=\"0\"></div>\n        </div>\n    </div>\n</div>\n";
 
 /***/ },
 /* 133 */
@@ -25606,17 +25649,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	    props: {
 	        type: {
 	            type: String,
-	            default: 'normal',
-	            coerce: function coerce(type) {
-	                return 'ui-fab-' + type;
-	            }
+	            default: 'normal'
 	        },
 	        color: {
 	            type: String,
-	            default: 'default', coerce: function coerce(color) {
-	                return 'color-' + color;
-	            }
-	        },
+	            default: 'default' },
 	        icon: {
 	            type: String,
 	            required: true
@@ -25625,6 +25662,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	        disabled: {
 	            type: Boolean,
 	            default: false
+	        }
+	    },
+	
+	    computed: {
+	        typeComputed: function typeComputed() {
+	            return 'ui-fab-' + this.type;
+	        },
+	        colorComputed: function colorComputed() {
+	            return 'color-' + this.color;
 	        }
 	    },
 	
@@ -25643,7 +25689,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 137 */
 /***/ function(module, exports) {
 
-	module.exports = "\n<button\n    class=\"ui-fab\" :class=\"[this.type, this.color]\" :aria-label=\"ariaLabel || tooltip\"\n    v-disabled=\"disabled\" ref=\"button\"\n>\n    <ui-icon class=\"ui-fab-icon\" :icon=\"icon\"></ui-icon>\n\n    <ui-ripple-ink :trigger=\"$el\" v-if=\"!hideRippleInk && !disabled\"></ui-ripple-ink>\n\n    <ui-tooltip\n        :trigger=\"$el\" :content=\"tooltip\" :position=\"tooltipPosition\" v-if=\"tooltip\"\n        :open-on=\"openTooltipOn\"\n    ></ui-tooltip>\n</button>\n";
+	module.exports = "\n<button  @click=\"$emit('click', $event)\"\n    class=\"ui-fab\" :class=\"[this.typeComputed, this.colorComputed]\" :aria-label=\"ariaLabel || tooltip\"\n    v-disabled=\"disabled\" ref=\"button\"\n>\n    <ui-icon class=\"ui-fab-icon\" :icon=\"icon\"></ui-icon>\n\n    <ui-ripple-ink :trigger=\"$el\" v-if=\"!hideRippleInk && !disabled\"></ui-ripple-ink>\n\n    <ui-tooltip\n        :trigger=\"$el\" :content=\"tooltip\" :position=\"tooltipPosition\" v-if=\"tooltip\"\n        :open-on=\"openTooltipOn\"\n    ></ui-tooltip>\n</button>\n";
 
 /***/ },
 /* 138 */
@@ -25777,18 +25823,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	            default: 'indeterminate' },
 	        color: {
 	            type: String,
-	            default: 'primary', coerce: function coerce(color) {
-	                return 'color-' + color;
-	            }
-	        },
+	            default: 'primary' },
 	        value: {
 	            type: Number,
-	            coerce: Number,
 	            default: 0
 	        }
 	    },
 	
 	    computed: {
+	        colorComputed: function colorComputed() {
+	            return 'color-' + this.color;
+	        },
 	        progress: function progress() {
 	            if (this.value < 0) {
 	                return 0;
@@ -25807,7 +25852,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 145 */
 /***/ function(module, exports) {
 
-	module.exports = "\n<div\n    class=\"ui-progress-linear\" :class=\"[color]\" v-show=\"show\"\n    transition=\"ui-progress-linear-toggle\"\n>\n    <div\n        class=\"ui-progress-linear-determinate\" :style=\"{ 'width': progress + '%' }\"\n        role=\"progressbar\" :aria-valuemin=\"0\" :aria-valuemax=\"100\" :aria-valuenow=\"value\"\n        v-if=\"type === 'determinate'\"\n    ></div>\n\n    <div\n        class=\"ui-progress-linear-indeterminate\" role=\"progressbar\" :aria-valuemin=\"0\"\n        :aria-valuemax=\"100\" v-else\n    ></div>\n</div>\n";
+	module.exports = "\n<div\n    class=\"ui-progress-linear\" :class=\"[colorComputed]\" v-show=\"show\"\n    transition=\"ui-progress-linear-toggle\"\n>\n    <div\n        class=\"ui-progress-linear-determinate\" :style=\"{ 'width': progress + '%' }\"\n        role=\"progressbar\" :aria-valuemin=\"0\" :aria-valuemax=\"100\" :aria-valuenow=\"value\"\n        v-if=\"type === 'determinate'\"\n    ></div>\n\n    <div\n        class=\"ui-progress-linear-indeterminate\" role=\"progressbar\" :aria-valuemin=\"0\"\n        :aria-valuemax=\"100\" v-else\n    ></div>\n</div>\n";
 
 /***/ },
 /* 146 */
@@ -25897,9 +25942,19 @@ return /******/ (function(modules) { // webpackBootstrap
 	        }
 	    },
 	
+	    watches: {
+	        model: function model() {
+	            this.currentModel = this.model;
+	        },
+	        currentModel: function currentModel() {
+	            this.$emit('input', this.currentModel);
+	        }
+	    },
+	
 	    data: function data() {
 	        return {
-	            active: false
+	            active: false,
+	            currentModel: this.model
 	        };
 	    },
 	
@@ -25926,7 +25981,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 149 */
 /***/ function(module, exports) {
 
-	module.exports = "\n<label\n    class=\"ui-radio\"\n    :class=\"{ 'disabled': disabled, 'checked': active, 'label-left': labelLeft }\"\n>\n    <div class=\"ui-radio-input-wrapper\">\n        <input\n            class=\"ui-radio-input\" type=\"radio\" :id=\"id\" :name=\"name\" :value=\"value\"\n            :checked=\"checked\" @focus=\"focus\" @blur=\"blur\" v-model=\"model\" v-disabled=\"disabled\"\n        >\n\n        <span class=\"ui-radio-border\"></span>\n        <span class=\"ui-radio-inner-dot\"></span>\n    </div>\n\n    <div class=\"ui-radio-label-text\" v-if=\"!hideLabel\">\n        <slot>\n            <span v-text=\"label\"></span>\n        </slot>\n    </div>\n</label>\n";
+	module.exports = "\n<label\n    class=\"ui-radio\"\n    :class=\"{ 'disabled': disabled, 'checked': active, 'label-left': labelLeft }\"\n>\n    <div class=\"ui-radio-input-wrapper\">\n        <input\n            class=\"ui-radio-input\" type=\"radio\" :id=\"id\" :name=\"name\" :value=\"value\"\n            :checked=\"checked\" @focus=\"focus\" @blur=\"blur\" v-model=\"currentModel\" v-disabled=\"disabled\"\n        >\n\n        <span class=\"ui-radio-border\"></span>\n        <span class=\"ui-radio-inner-dot\"></span>\n    </div>\n\n    <div class=\"ui-radio-label-text\" v-if=\"!hideLabel\">\n        <slot>\n            <span v-text=\"label\"></span>\n        </slot>\n    </div>\n</label>\n";
 
 /***/ },
 /* 150 */
@@ -26170,12 +26225,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	            default: 'star' },
 	        value: {
 	            type: Number,
-	            coerce: Number,
 	            required: true
 	        },
 	        total: {
 	            type: Number,
-	            coerce: Number,
 	            required: true
 	        },
 	        label: String,
@@ -26492,12 +26545,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	            default: 'star' },
 	        value: {
 	            type: Number,
-	            coerce: Number,
 	            required: true
 	        },
 	        total: {
 	            type: Number,
-	            coerce: Number,
 	            required: true
 	        }
 	    },
@@ -26600,6 +26651,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	var _ValidatesInput = __webpack_require__(95);
 	
 	var _ValidatesInput2 = _interopRequireDefault(_ValidatesInput);
+	
+	var _lodash = __webpack_require__(130);
+	
+	var _lodash2 = _interopRequireDefault(_lodash);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -26714,9 +26769,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	    },
 	
 	    watch: {
-	        filteredOptions: function filteredOptions() {
-	            this.highlightedIndex = 0;
-	            (0, _elementScroll.resetScroll)(this.$refs['options-list']);
+	        filteredOptions: function filteredOptions(newValue, oldValue) {
+	            if (!_lodash2.default.isEqual(newValue, oldValue)) {
+	                this.highlightedIndex = 0;
+	                (0, _elementScroll.resetScroll)(this.$refs['options-list']);
+	            }
 	        },
 	        showDropdown: function showDropdown() {
 	            if (this.showDropdown) {
@@ -26736,7 +26793,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            this.currentValue = this.value;
 	        },
 	        currentValue: function currentValue() {
-	            this.$emit('change', this.currentValue);
+	            this.$emit('input', this.currentValue);
 	        }
 	    },
 	
@@ -26865,7 +26922,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	        }
 	    },
 	    deselect: function deselect(option) {
-	        this.currentValue.$remove(option);
+	        var idx = this.currentValue.indexOf(idx);
+	        if (idx >= 0) {
+	            this.currentValue.splice(idx, 1);
+	        }
 	    },
 	    isSelected: function isSelected(option) {
 	        if (this.multiple) {
@@ -27333,7 +27393,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 175 */
 /***/ function(module, exports) {
 
-	module.exports = "\n<li\n    class=\"ui-select-option\" :class=\"{ highlighted: highlighted, selected: selected }\"\n    @click=\"$emit('click',$event)\"\n    @mouseover=\"$emit('mouseover',$event)\"\n>\n    <div class=\"ui-select-option-content\" :class=\"[partial]\">\n        <component :is=\"partial\" :option=\"option\" :keys=\"keys\"></component>\n    </div>\n\n    <ui-icon\n        class=\"ui-select-option-checkbox\" :icon=\"icon\" v-if=\"showCheckbox\"\n    ></ui-icon>\n</li>\n";
+	module.exports = "\n<li\n    class=\"ui-select-option\" :class=\"{ highlighted: highlighted, selected: selected }\"\n    @click=\"function(e){$emit('click',e);}\"\n    @mouseover=\"function(e){$emit('mouseover',e);}\"\n>\n    <div class=\"ui-select-option-content\" :class=\"[partial]\">\n        <component :is=\"partial\" :option=\"option\" :keys=\"keys\"></component>\n    </div>\n\n    <ui-icon\n        class=\"ui-select-option-checkbox\" :icon=\"icon\" v-if=\"showCheckbox\"\n    ></ui-icon>\n</li>\n";
 
 /***/ },
 /* 176 */
@@ -30048,10 +30108,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        },
 	        position: {
 	            type: String,
-	            default: 'left', coerce: function coerce(position) {
-	                return 'position-' + position;
-	            }
-	        }
+	            default: 'left' }
 	    },
 	
 	    data: function data() {
@@ -30082,6 +30139,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	        }
 	    },
 	
+	
+	    computed: {
+	        positionComputed: function positionComputed() {
+	            return 'position-' + this.position;
+	        }
+	    },
 	
 	    methods: {
 	        'ui-snackbar::create': function uiSnackbarCreate(snackbar) {
@@ -30140,7 +30203,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 196 */
 /***/ function(module, exports) {
 
-	module.exports = "\n<div class=\"ui-snackbar-container\" :class=\"[position]\">\n    <ui-snackbar\n        :duration=\"s.duration\" :show.sync=\"s.show\" :action=\"s.action\"\n        :action-color=\"s.actionColor\" :persistent=\"s.persistent\" :id=\"s.id\" auto-hide\n\n        @shown=\"shown(s)\" @hidden=\"hidden(s)\" @clicked=\"clicked(s)\"\n        @action-clicked=\"actionClicked(s)\"\n\n        v-for=\"s in queue\"\n    >\n        <div v-html=\"s.message\" v-if=\"s.allowHtml\"></div>\n        <span v-text=\"s.message\" v-else></span>\n    </ui-snackbar>\n</div>\n";
+	module.exports = "\n<div class=\"ui-snackbar-container\" :class=\"[positionComputed]\">\n    <ui-snackbar\n        :duration=\"s.duration\" :show.sync=\"s.show\" :action=\"s.action\"\n        :action-color=\"s.actionColor\" :persistent=\"s.persistent\" :id=\"s.id\" auto-hide\n\n        @shown=\"shown(s)\" @hidden=\"hidden(s)\" @clicked=\"clicked(s)\"\n        @action-clicked=\"actionClicked(s)\"\n\n        v-for=\"s in queue\"\n    >\n        <div v-html=\"s.message\" v-if=\"s.allowHtml\"></div>\n        <span v-text=\"s.message\" v-else></span>\n    </ui-snackbar>\n</div>\n";
 
 /***/ },
 /* 197 */
@@ -30230,7 +30293,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	    data: function data() {
 	        return {
-	            initialValue: false
+	            initialValue: false,
+	            currentValue: this.value
 	        };
 	    },
 	    created: function created() {
@@ -30258,6 +30322,19 @@ return /******/ (function(modules) { // webpackBootstrap
 	    },
 	
 	
+	    watch: {
+	        currentValue: function currentValue() {
+	            if (this.currentValue !== this.value) {
+	                this.$emit('input', this.currentValue);
+	            }
+	        },
+	        value: function value() {
+	            if (this.currentValue !== this.value) {
+	                this.currentValue = this.value;
+	            }
+	        }
+	    },
+	
 	    methods: {
 	        'ui-input::reset': function uiInputReset(id) {
 	            if (!this.eventTargetsComponent(id)) {
@@ -30279,7 +30356,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 200 */
 /***/ function(module, exports) {
 
-	module.exports = "\n<label\n    class=\"ui-switch\"\n    :class=\"{ 'checked': value, 'disabled': disabled, 'label-left': labelLeft }\"\n>\n    <div class=\"ui-switch-container\">\n        <input\n            class=\"ui-switch-input\" type=\"checkbox\" :name=\"name\" :id=\"id\" v-model=\"value\"\n            v-disabled=\"disabled\"\n        >\n\n        <div class=\"ui-switch-track\"></div>\n        <div class=\"ui-switch-thumb\"></div>\n\n        <div class=\"ui-switch-focus-ring\"></div>\n    </div>\n\n    <div class=\"ui-switch-label-text\" v-if=\"!hideLabel\">\n        <slot>\n            <span v-text=\"label\"></span>\n        </slot>\n    </div>\n</label>\n";
+	module.exports = "\n<label\n    class=\"ui-switch\"\n    :class=\"{ 'checked': currentValue, 'disabled': disabled, 'label-left': labelLeft }\"\n>\n    <div class=\"ui-switch-container\">\n        <input\n            class=\"ui-switch-input\" type=\"checkbox\" :name=\"name\" :id=\"id\" v-model=\"currentValue\"\n            v-disabled=\"disabled\"\n        >\n\n        <div class=\"ui-switch-track\"></div>\n        <div class=\"ui-switch-thumb\"></div>\n\n        <div class=\"ui-switch-focus-ring\"></div>\n    </div>\n\n    <div class=\"ui-switch-label-text\" v-if=\"!hideLabel\">\n        <slot>\n            <span v-text=\"label\"></span>\n        </slot>\n    </div>\n</label>\n";
 
 /***/ },
 /* 201 */
@@ -30448,28 +30525,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	        activeTab: String,
 	        backgroundColor: {
 	            type: String,
-	            default: 'default', coerce: function coerce(color) {
-	                return 'background-color-' + color;
-	            }
-	        },
+	            default: 'default' },
 	        textColor: {
 	            type: String,
-	            default: 'black', coerce: function coerce(color) {
-	                return 'text-color-' + color;
-	            }
-	        },
+	            default: 'black' },
 	        textColorActive: {
 	            type: String,
-	            default: 'primary', coerce: function coerce(color) {
-	                return 'text-color-active-' + color;
-	            }
-	        },
+	            default: 'primary' },
 	        indicatorColor: {
 	            type: String,
-	            default: 'primary', coerce: function coerce(color) {
-	                return 'color-' + color;
-	            }
-	        },
+	            default: 'primary' },
 	        fullwidth: {
 	            type: Boolean,
 	            default: false
@@ -30492,6 +30557,18 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	
 	    computed: {
+	        backgroundColorComputed: function backgroundColorComputed() {
+	            return 'background-color-' + this.backgroundColor;
+	        },
+	        textColorComputed: function textColorComputed() {
+	            return 'text-color-' + this.textColor;
+	        },
+	        textColorActiveComputed: function textColorActiveComputed() {
+	            return 'text-color-active-' + this.textColorActive;
+	        },
+	        indicatorColorComputed: function indicatorColorComputed() {
+	            return 'color-' + this.indicatorColor;
+	        },
 	        styleClasses: function styleClasses() {
 	            var classes = ['ui-tabs-type-' + this.type];
 	
@@ -30762,7 +30839,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 212 */
 /***/ function(module, exports) {
 
-	module.exports = "\n<div class=\"ui-tabs\" :class=\"styleClasses\">\n    <div class=\"ui-tabs-header\" :class=\"[backgroundColor]\">\n        <ul\n            class=\"ui-tabs-header-items\" :class=\"[textColor, textColorActive]\" role=\"tablist\"\n            ref=\"tabs-container\"\n        >\n            <ui-tab-header-item\n                :type=\"type\" :id=\"tab.id\" :icon=\"tab.icon\" :text=\"tab.header\"\n                :active=\"activeTab === tab.id\" :disabled=\"tab.disabled\"\n                :hide-ripple-ink=\"hideRippleInk\"\n\n                @click=\"select($event, tab)\" @keydown.left=\"selectPrev(index)\"\n                @keydown.right=\"selectNext($index)\"\n\n                v-for=\"(index, tab) in $children\" v-ref:tab-elements\n            ></ui-tab-header-item>\n        </ul>\n\n        <div\n            class=\"ui-tabs-active-tab-indicator\" :class=\"[indicatorColor]\"\n            :style=\"{ 'left': indicatorLeft, 'right': indicatorRight }\"\n        ></div>\n    </div>\n\n    <div class=\"ui-tabs-body\">\n        <slot></slot>\n    </div>\n</div>\n";
+	module.exports = "\n<div class=\"ui-tabs\" :class=\"styleClasses\">\n    <div class=\"ui-tabs-header\" :class=\"[backgroundColorComputed]\">\n        <ul\n            class=\"ui-tabs-header-items\" :class=\"[textColorComputed, textColorActiveComputed]\" role=\"tablist\"\n            ref=\"tabs-container\"\n        >\n            <ui-tab-header-item\n                :type=\"type\" :id=\"tab.id\" :icon=\"tab.icon\" :text=\"tab.header\"\n                :active=\"activeTab === tab.id\" :disabled=\"tab.disabled\"\n                :hide-ripple-ink=\"hideRippleInk\"\n\n                @click=\"select($event, tab)\" @keydown.left=\"selectPrev(index)\"\n                @keydown.right=\"selectNext($index)\"\n\n                v-for=\"(index, tab) in $children\" v-ref:tab-elements\n            ></ui-tab-header-item>\n        </ul>\n\n        <div\n            class=\"ui-tabs-active-tab-indicator\" :class=\"[indicatorColorComputed]\"\n            :style=\"{ 'left': indicatorLeft, 'right': indicatorRight }\"\n        ></div>\n    </div>\n\n    <div class=\"ui-tabs-body\">\n        <slot></slot>\n    </div>\n</div>\n";
 
 /***/ },
 /* 213 */
@@ -30868,8 +30945,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        max: Number,
 	        step: {
 	            type: String,
-	            default: 'any',
-	            coerce: String
+	            default: 'any'
 	        }
 	    },
 	
@@ -31107,16 +31183,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	    props: {
 	        type: {
 	            type: String,
-	            default: 'default', coerce: function coerce(type) {
-	                return 'ui-toolbar-' + type;
-	            }
-	        },
+	            default: 'default' },
 	        textColor: {
 	            type: String,
-	            default: 'black', coerce: function coerce(color) {
-	                return 'text-color-' + color;
-	            }
-	        },
+	            default: 'black' },
 	        title: String,
 	        brand: String,
 	        showBrand: {
@@ -31150,6 +31220,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	    },
 	
 	    computed: {
+	        typeComputed: function typeComputed() {
+	            return 'ui-toolbar-' + this.type;
+	        },
+	        textColorComputed: function textColorComputed() {
+	            return 'text-color-' + this.textColor;
+	        },
 	        styleClasses: function styleClasses() {
 	            var classes = [this.type, this.textColor];
 	

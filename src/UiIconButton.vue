@@ -55,9 +55,6 @@ export default {
         type: {
             type: String,
             default: 'normal', // 'normal' or 'flat' or 'clear'
-            coerce(type) {
-                return 'ui-icon-button-' + type;
-            }
         },
         buttonType: {
             type: String,
@@ -66,9 +63,6 @@ export default {
         color: {
             type: String,
             default: 'default', // 'default', 'primary', 'accent', 'success', 'warning', or 'danger'
-            coerce(color) {
-                return 'color-' + color;
-            }
         },
         icon: {
             type: String,
@@ -86,8 +80,14 @@ export default {
     },
 
     computed: {
+        typeComputed() {
+            return 'ui-icon-button-' + this.type;
+        },
+        colorComputed() {
+            return 'color-' + this.color;
+        },
         styleClasses() {
-            let classes = [this.type, this.color];
+            let classes = [this.typeComputed, this.colorComputed];
 
             if (this.hasDropdown) {
                 classes.push('ui-dropdown');

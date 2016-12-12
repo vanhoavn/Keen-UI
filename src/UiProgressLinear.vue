@@ -1,6 +1,6 @@
 <template>
     <div
-        class="ui-progress-linear" :class="[color]" v-show="show"
+        class="ui-progress-linear" :class="[colorComputed]" v-show="show"
         transition="ui-progress-linear-toggle"
     >
         <div
@@ -32,18 +32,18 @@ export default {
         color: {
             type: String,
             default: 'primary', // 'primary', 'accent', 'black' or 'white'
-            coerce(color) {
-                return 'color-' + color;
-            }
         },
         value: {
             type: Number,
-            coerce: Number,
             default: 0
         }
     },
 
     computed: {
+        colorComputed() {
+            return 'color-' + this.color;
+        },
+        
         progress() {
             if (this.value < 0) {
                 return 0;

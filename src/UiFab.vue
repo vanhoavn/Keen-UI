@@ -1,6 +1,6 @@
 <template>
-    <button
-        class="ui-fab" :class="[this.type, this.color]" :aria-label="ariaLabel || tooltip"
+    <button  @click="$emit('click', $event)"
+        class="ui-fab" :class="[this.typeComputed, this.colorComputed]" :aria-label="ariaLabel || tooltip"
         v-disabled="disabled" ref="button"
     >
         <ui-icon class="ui-fab-icon" :icon="icon"></ui-icon>
@@ -29,16 +29,10 @@ export default {
         type: {
             type: String,
             default: 'normal',
-            coerce(type) {
-                return 'ui-fab-' + type;
-            }
         },
         color: {
             type: String,
             default: 'default', // 'default', primary', or 'accent'
-            coerce(color) {
-                return 'color-' + color;
-            }
         },
         icon: {
             type: String,
@@ -51,6 +45,15 @@ export default {
         }
     },
 
+    computed: {
+        typeComputed() {
+                return 'ui-fab-' + this.type;
+        },
+        colorComputed() {
+                return 'color-' + this.color;
+        },
+    },
+    
     components: {
         UiIcon
     },

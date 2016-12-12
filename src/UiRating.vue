@@ -43,12 +43,10 @@ export default {
         },
         value: {
             type: Number,
-            coerce: Number,
             required: true
         },
         total: {
             type: Number,
-            coerce: Number,
             required: true
         },
         label: String,

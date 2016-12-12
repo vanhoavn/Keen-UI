@@ -54,7 +54,7 @@ export default {
             type: Number,
             default: 32
         },
-        stroke: Number,
+        inputStroke: Number,
         autoStroke: {
             type: Boolean,
             default: true
@@ -82,17 +82,19 @@ export default {
 
         radius() {
             return (this.size - this.stroke) / 2;
+        },
+
+        stroke() {
+            if(this.inputStroke) return this.inputStroke;
+            if (this.autoStroke) {
+                return parseInt(this.size / 8, 10);
+            } else {
+                return 4;
+            }
         }
     },
 
     created() {
-        if (!this.stroke) {
-            if (this.autoStroke) {
-                this.stroke = parseInt(this.size / 8, 10);
-            } else {
-                this.stroke = 4;
-            }
-        }
     },
 
     methods: {

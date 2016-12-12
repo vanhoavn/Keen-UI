@@ -137,7 +137,7 @@ export default {
         }
     },
 
-    beforeDestory() {
+    beforeDestroy() {
         if (this.currentTrigger) {
             this.unhook(this.currentTrigger)
         }
