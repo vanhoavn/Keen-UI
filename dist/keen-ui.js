@@ -27432,10 +27432,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	            type: String,
 	            default: ''
 	        },
-	        checked: {
-	            type: Boolean,
-	            default: false
-	        },
 	        value: String,
 	        label: String,
 	        hideLabel: {
@@ -27519,7 +27515,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	    },
 	    domProps: {
 	      "value": _vm.value,
-	      "checked": _vm.checked,
 	      "checked": _vm._q(_vm.currentModel, _vm.value)
 	    },
 	    on: {

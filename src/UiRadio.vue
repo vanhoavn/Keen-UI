@@ -6,7 +6,7 @@
         <div class="ui-radio-input-wrapper">
             <input
                 class="ui-radio-input" type="radio" :id="id" :name="name" :value="value"
-                :checked="checked" @focus="focus" @blur="blur" v-model="currentModel" v-disabled="disabled"
+                @focus="focus" @blur="blur" v-model="currentModel" v-disabled="disabled"
             >
 
             <span class="ui-radio-border"></span>
@@ -33,10 +33,6 @@ export default {
         model: {
             type: String,
             default: ''
-        },
-        checked: {
-            type: Boolean,
-            default: false
         },
         value: String,
         label: String,
