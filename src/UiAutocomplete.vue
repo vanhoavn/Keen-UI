@@ -35,7 +35,7 @@
                         :highlighted="highlightedItem === index" :item="item" :partial="partial"
                         :keys="keys"
 
-                        v-for="(index, item) in suggestions | filterBy search | limitBy limit"
+                        v-for="(item, index) in computedSuggestions"
                         v-ref:items @click="select(item)"
                     ></ui-autocomplete-suggestion>
                 </ul>
@@ -50,7 +50,7 @@
 
                 <div
                     class="ui-autocomplete-help-text" transition="ui-autocomplete-feedback-toggle"
-                    v-text="helpText" v-else
+                    v-text="helpText" v-show="hideValidationErrors || valid"
                 ></div>
             </div>
         </div>
@@ -130,6 +130,16 @@ export default {
     },
 
     computed: {
+        computedSuggestions() {
+            let data = [];
+            for(let item of this.suggestions) {
+                if (item.indexOf(this.search)>=0) {
+                    data.push(item);
+                    if (data.length >= limit) break;
+                };
+            };
+            return data;
+        },
         showIcon() {
             return Boolean(this.icon);
         }

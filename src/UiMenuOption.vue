@@ -1,14 +1,12 @@
 <template>
-    <a
+    <a @click="$emit('click',$event)" @keydown="$emit('keydown',$event)"
         class="ui-menu-option" role="menu-item" :tabindex="(isDivider || disabled) ? null : '0'"
         :class="{ 'divider': isDivider, 'disabled' : disabled }"
     >
-        <div class="ui-menu-option-content" :class="[partial]">
-            <component :is="partial" :icon="icon" :show-icon="showIcon" :is-divider="isDivider" :text="text" :secondary-text="secondaryText" :show-secondary-text="showSecondaryText"></component>
-        </div>
+        <component :is="partial" :icon="icon" :show-icon="showIcon" :is-divider="isDivider" :text="text" :secondary-text="secondaryText" :show-secondary-text="showSecondaryText" :partial-class="[partial]"></component>
 
         <ui-ripple-ink
-            :trigger="$el" v-if="!hideRippleInk && !disabled && !isDivider"
+            :trigger="() => $el" v-if="!hideRippleInk && !disabled && !isDivider"
         ></ui-ripple-ink>
     </a>
 </template>
@@ -54,9 +52,9 @@ export default {
     components: {
         UiIcon,
         'ui-menu-default': {
-            props: ['icon', 'showIcon', 'showSecondaryText', 'isDivider', 'text', 'secondaryText'],
+            props: ['icon', 'showIcon', 'showSecondaryText', 'isDivider', 'text', 'secondaryText', 'partialClass'],
             template : `
-            <div class="menu-item-container">
+            <div :class="['ui-menu-option-content',partialClass]">
                 <ui-icon
                     class="ui-menu-option-icon" :icon="icon" v-if="showIcon && !isDivider && icon"
                 ></ui-icon>
@@ -67,7 +65,7 @@ export default {
                     class="ui-menu-option-secondary-text" v-text="secondaryText"
                     v-if="showSecondaryText && !isDivider && secondaryText"
                 ></div>
-            </template>
+            </div>
             `
         }
     },

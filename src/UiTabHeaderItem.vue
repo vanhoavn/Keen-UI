@@ -17,7 +17,7 @@
             v-if="type === 'text' || type === 'icon-and-text'"
         ></div>
 
-        <ui-ripple-ink :trigger="$el" v-if="!hideRippleInk && !disabled"></ui-ripple-ink>
+        <ui-ripple-ink :trigger="() => $el" v-if="!hideRippleInk && !disabled"></ui-ripple-ink>
     </li>
 </template>
 

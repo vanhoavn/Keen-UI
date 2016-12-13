@@ -53,10 +53,6 @@ export default {
 
     beforeDestroy() {
         this.destroyCurrentTooltip();
-        if (this.tooltip) {
-            this.tooltip.remove();
-            this.tooltip.destroy();
-        }
     },
 
     methods: {
@@ -79,6 +75,7 @@ export default {
             if (this.tooltip) {
                 this.tooltip.remove();
                 this.tooltip.destroy();
+                this.tooltip = null;
             };
             this.currentTrigger = null;
         },

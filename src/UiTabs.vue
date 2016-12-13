@@ -13,7 +13,7 @@
                     @click="select($event, tab)" @keydown.left="selectPrev(index)"
                     @keydown.right="selectNext($index)"
 
-                    v-for="(index, tab) in $children" v-ref:tab-elements
+                    v-for="(tab, index) in $children" v-ref:tab-elements
                 ></ui-tab-header-item>
             </ul>
 

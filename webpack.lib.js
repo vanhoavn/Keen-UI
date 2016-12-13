@@ -54,11 +54,11 @@ config.plugins = [
         }
     }),
 
-    new webpack.optimize.UglifyJsPlugin({
-        compress: {
-            warnings: false
-        }
-    }),
+    // new webpack.optimize.UglifyJsPlugin({
+    //     compress: {
+    //         warnings: false
+    //     }
+    // }),
 
     new webpack.optimize.OccurenceOrderPlugin()
 ];

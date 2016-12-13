@@ -3,12 +3,12 @@
  * (c) 2016 Josephus Paye II
  * Released under the MIT License.
  */
+
 .ui-alert {
   font-family: Roboto, -apple-system, BlinkMacSystemFont, "Segoe UI", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
   font-size: 15px;
   line-height: 1.4em;
   overflow: hidden;
-  display: -ms-flexbox;
   display: flex;
   width: 100%;
 }
@@ -20,8 +20,7 @@
   text-decoration: underline;
 }
 .ui-alert .ui-alert-close-button {
-  -ms-flex-negative: 0;
-      flex-shrink: 0;
+  flex-shrink: 0;
   width: 32px;
   height: 32px;
   margin-right: -8px;
@@ -42,12 +41,9 @@ body[modality="keyboard"] .ui-alert .ui-alert-close-button:focus {
   width: 100%;
   min-height: 52px;
   padding: 12px 16px;
-  display: -ms-flexbox;
   display: flex;
-  -ms-flex-direction: row;
-      flex-direction: row;
-  -ms-flex-align: center;
-      align-items: center;
+  flex-direction: row;
+  align-items: center;
 }
 .ui-alert-body.error {
   background-color: rgba(244,67,54,0.12);
@@ -86,13 +82,11 @@ body[modality="keyboard"] .ui-alert .ui-alert-close-button:focus {
   color: #ff9800;
 }
 .ui-alert-icon {
-  -ms-flex-negative: 0;
-      flex-shrink: 0;
+  flex-shrink: 0;
   margin-right: 12px;
 }
 .ui-alert-text {
-  -ms-flex-positive: 1;
-      flex-grow: 1;
+  flex-grow: 1;
   color: rgba(0,0,0,0.75);
 }
 .ui-alert-toggle-transition {
@@ -106,6 +100,7 @@ body[modality="keyboard"] .ui-alert .ui-alert-close-button:focus {
   opacity: 0;
   margin-bottom: 0;
 }
+
 .ui-icon {
   font-size: 24px;
   width: 1em;
@@ -114,6 +109,7 @@ body[modality="keyboard"] .ui-alert .ui-alert-close-button:focus {
   cursor: inherit;
   vertical-align: middle;
 }
+
 .drop-element {
   position: absolute;
   display: none;
@@ -144,12 +140,9 @@ body[modality="keyboard"] .ui-alert .ui-alert-close-button:focus {
   position: relative;
   overflow: hidden;
   -webkit-mask-image: -webkit-radial-gradient(circle, #fff, #000);
-  display: -ms-inline-flexbox;
   display: inline-flex;
-  -ms-flex-align: center;
-      align-items: center;
-  -ms-flex-pack: center;
-      justify-content: center;
+  align-items: center;
+  justify-content: center;
   width: 40px;
   height: 40px;
   border-radius: 50%;
@@ -344,6 +337,7 @@ body[modality="keyboard"] .ui-icon-button-clear.color-black:focus {
   width: 100%;
   height: initial;
 }
+
 .ui-menu {
   font-family: Roboto, -apple-system, BlinkMacSystemFont, "Segoe UI", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
   margin: 0;
@@ -362,11 +356,10 @@ body[modality="keyboard"] .ui-icon-button-clear.color-black:focus {
   min-width: 208px;
   max-width: 304px;
 }
+
 .ui-menu-option {
   -webkit-user-select: none;
-  -moz-user-select: none;
-   -ms-user-select: none;
-       user-select: none;
+  user-select: none;
   cursor: default;
 }
 .ui-menu-option-text {
@@ -413,10 +406,8 @@ body[modality="keyboard"] .ui-menu-option:not(.divider):focus {
   cursor: pointer;
 }
 .ui-menu-option-content.ui-menu-default {
-  display: -ms-flexbox;
   display: flex;
-  -ms-flex-align: center;
-      align-items: center;
+  align-items: center;
   padding: 8px 16px;
 }
 .ui-menu-option-icon {
@@ -425,16 +416,15 @@ body[modality="keyboard"] .ui-menu-option:not(.divider):focus {
   color: rgba(0,0,0,0.54);
 }
 .ui-menu-option-text {
-  -ms-flex-positive: 1;
-      flex-grow: 1;
+  flex-grow: 1;
 }
 .ui-menu-option-secondary-text {
-  -ms-flex-negative: 0;
-      flex-shrink: 0;
+  flex-shrink: 0;
   margin-left: 4px;
   font-size: 13px;
   color: rgba(0,0,0,0.38);
 }
+
 .ui-ripple-ink {
   display: block;
   overflow: hidden;
@@ -451,38 +441,34 @@ body[modality="keyboard"] .ui-menu-option:not(.divider):focus {
   width: 0;
   height: 0;
   pointer-events: none;
-  -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
+  user-select: none;
   border-radius: 50%;
   background-color: currentColor;
   background-clip: padding-box;
   opacity: 0.2;
-  -ms-transform: scale(0);
-      transform: scale(0);
+  transform: scale(0);
   transition: transform 0.4s ease-out, opacity 0.4s ease-out;
 }
 .ui-ripple-ink .ripple.held {
   opacity: 0.4;
-  -ms-transform: scale(1);
-      transform: scale(1);
+  transform: scale(1);
 }
 .ui-ripple-ink .ripple.done {
   opacity: 0 !important;
 }
+
 .ui-popover {
   padding: 16px;
   outline: none;
   background-color: #fff;
   box-shadow: 0 2px 4px -1px rgba(0,0,0,0.3), 0 4px 5px 0 rgba(0,0,0,0.15), 0 1px 10px 0 rgba(0,0,0,0.13);
 }
+
 .ui-progress-circular {
   position: relative;
 }
 .ui-progress-circular .ui-progress-circular-determinate {
-  -ms-transform: rotate(270deg);
-      transform: rotate(270deg);
+  transform: rotate(270deg);
 }
 .ui-progress-circular .ui-progress-circular-determinate .ui-progress-circular-determinate-path {
   stroke-dashoffset: 0;
@@ -503,8 +489,7 @@ body[modality="keyboard"] .ui-menu-option:not(.divider):focus {
 }
 .ui-progress-circular .ui-progress-circular-indeterminate {
   animation: ui-progress-circular-rotate 1.4s linear infinite;
-  -ms-transform-origin: center center;
-      transform-origin: center center;
+  transform-origin: center center;
   width: 100%;
   height: 100%;
   margin: auto;
@@ -537,8 +522,7 @@ body[modality="keyboard"] .ui-menu-option:not(.divider):focus {
 }
 .ui-progress-circular-toggle-transition {
   opacity: 1;
-  -ms-transform: scale(1);
-      transform: scale(1);
+  transform: scale(1);
   transition-duration: 0.3s;
   transition-timing-function: ease;
   transition-property: transform, opacity;
@@ -546,42 +530,141 @@ body[modality="keyboard"] .ui-menu-option:not(.divider):focus {
 .ui-progress-circular-toggle-enter,
 .ui-progress-circular-toggle-leave {
   opacity: 0;
-  -ms-transform: scale(0);
-      transform: scale(0);
+  transform: scale(0);
+}
+@-moz-keyframes ui-progress-circular-rotate {
+100% {
+    transform: rotate(360deg);
+}
+}
+@-webkit-keyframes ui-progress-circular-rotate {
+100% {
+    transform: rotate(360deg);
+}
+}
+@-o-keyframes ui-progress-circular-rotate {
+100% {
+    transform: rotate(360deg);
+}
 }
 @keyframes ui-progress-circular-rotate {
-  100% {
+100% {
     transform: rotate(360deg);
-  }
 }
-@keyframes ui-progress-circular-dash {
-  0% {
+}
+@-moz-keyframes ui-progress-circular-dash {
+0% {
     stroke-dasharray: 1, 200;
     stroke-dashoffset: 0;
-  }
-  50% {
+}
+50% {
     stroke-dasharray: 89, 200;
     stroke-dashoffset: -35px;
-  }
-  100% {
+}
+100% {
     stroke-dasharray: 89, 200;
     stroke-dashoffset: -124px;
-  }
+}
+}
+@-webkit-keyframes ui-progress-circular-dash {
+0% {
+    stroke-dasharray: 1, 200;
+    stroke-dashoffset: 0;
+}
+50% {
+    stroke-dasharray: 89, 200;
+    stroke-dashoffset: -35px;
+}
+100% {
+    stroke-dasharray: 89, 200;
+    stroke-dashoffset: -124px;
+}
+}
+@-o-keyframes ui-progress-circular-dash {
+0% {
+    stroke-dasharray: 1, 200;
+    stroke-dashoffset: 0;
+}
+50% {
+    stroke-dasharray: 89, 200;
+    stroke-dashoffset: -35px;
+}
+100% {
+    stroke-dasharray: 89, 200;
+    stroke-dashoffset: -124px;
+}
+}
+@keyframes ui-progress-circular-dash {
+0% {
+    stroke-dasharray: 1, 200;
+    stroke-dashoffset: 0;
+}
+50% {
+    stroke-dasharray: 89, 200;
+    stroke-dashoffset: -35px;
+}
+100% {
+    stroke-dasharray: 89, 200;
+    stroke-dashoffset: -124px;
+}
+}
+@-moz-keyframes ui-progress-circular-color {
+100%, 0% {
+    stroke: #f44336;
+}
+40% {
+    stroke: #2196f3;
+}
+66% {
+    stroke: #4caf50;
+}
+80%, 90% {
+    stroke: #ff9800;
+}
+}
+@-webkit-keyframes ui-progress-circular-color {
+100%, 0% {
+    stroke: #f44336;
+}
+40% {
+    stroke: #2196f3;
+}
+66% {
+    stroke: #4caf50;
+}
+80%, 90% {
+    stroke: #ff9800;
+}
+}
+@-o-keyframes ui-progress-circular-color {
+100%, 0% {
+    stroke: #f44336;
+}
+40% {
+    stroke: #2196f3;
+}
+66% {
+    stroke: #4caf50;
+}
+80%, 90% {
+    stroke: #ff9800;
+}
 }
 @keyframes ui-progress-circular-color {
-  100%, 0% {
+100%, 0% {
     stroke: #f44336;
-  }
-  40% {
-    stroke: #2196f3;
-  }
-  66% {
-    stroke: #4caf50;
-  }
-  80%, 90% {
-    stroke: #ff9800;
-  }
 }
+40% {
+    stroke: #2196f3;
+}
+66% {
+    stroke: #4caf50;
+}
+80%, 90% {
+    stroke: #ff9800;
+}
+}
+
 .tooltip-element,
 .tooltip-element:after,
 .tooltip-element:before,
@@ -610,10 +693,8 @@ body[modality="keyboard"] .ui-menu-option:not(.divider):focus {
   z-index: 70;
 }
 .tooltip-element.ui-tooltip-theme .tooltip-content {
-  display: -ms-flexbox;
   display: flex;
-  -ms-flex-align: center;
-      align-items: center;
+  align-items: center;
   position: relative;
   border-radius: 2px;
   padding: 0 8px;
@@ -661,14 +742,13 @@ body[modality="keyboard"] .ui-menu-option:not(.divider):focus {
 .tooltip-element.ui-tooltip-theme.tooltip-element-attached-bottom.tooltip-element-attached-left.tooltip-target-attached-right .tooltip-content {
   margin-left: 4px;
 }
+
 .ui-autocomplete {
   font-family: Roboto, -apple-system, BlinkMacSystemFont, "Segoe UI", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
-  display: -ms-flexbox;
   display: flex;
   position: relative;
   margin-bottom: 12px;
-  -ms-flex-align: start;
-      align-items: flex-start;
+  align-items: flex-start;
 }
 .ui-autocomplete:hover:not(.disabled) .ui-autocomplete-label-text {
   color: rgba(0,0,0,0.65);
@@ -691,8 +771,7 @@ body[modality="keyboard"] .ui-menu-option:not(.divider):focus {
   top: 22px;
 }
 .ui-autocomplete.icon-right .ui-autocomplete-icon-wrapper {
-  -ms-flex-order: 1;
-      order: 1;
+  order: 1;
   margin-left: 8px;
   margin-right: 0;
 }
@@ -722,8 +801,7 @@ body[modality="keyboard"] .ui-menu-option:not(.divider):focus {
 }
 .ui-autocomplete-icon-wrapper {
   height: 24px;
-  -ms-flex-negative: 0;
-      flex-shrink: 0;
+  flex-shrink: 0;
   margin-right: 12px;
   padding-top: 4px;
 }
@@ -731,8 +809,7 @@ body[modality="keyboard"] .ui-menu-option:not(.divider):focus {
   color: rgba(0,0,0,0.54);
 }
 .ui-autocomplete-content {
-  -ms-flex-positive: 1;
-      flex-grow: 1;
+  flex-grow: 1;
 }
 .ui-autocomplete-label-text {
   font-size: 14px;
@@ -814,6 +891,7 @@ body[modality="keyboard"] .ui-menu-option:not(.divider):focus {
   transition: left 0.1s ease-in-out;
   z-index: 60;
 }
+
 .ui-autocomplete-suggestion {
   font-family: Roboto, -apple-system, BlinkMacSystemFont, "Segoe UI", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
   cursor: pointer;
@@ -831,10 +909,8 @@ body[modality="keyboard"] .ui-menu-option:not(.divider):focus {
   background-color: rgba(0,0,0,0.1);
 }
 .ui-autocomplete-image {
-  display: -ms-flexbox;
   display: flex;
-  -ms-flex-align: center;
-      align-items: center;
+  align-items: center;
 }
 .ui-autocomplete-image .image {
   width: 32px;
@@ -844,6 +920,7 @@ body[modality="keyboard"] .ui-menu-option:not(.divider):focus {
   margin-right: 12px;
   border-radius: 50%;
 }
+
 .ui-button {
   font-size: 14px;
   text-transform: uppercase;
@@ -882,14 +959,10 @@ body[modality="keyboard"] .ui-menu-option:not(.divider):focus {
   outline: none;
   border: none;
   position: relative;
-  display: -ms-inline-flexbox;
   display: inline-flex;
-  -ms-flex-align: center;
-      align-items: center;
-  -ms-flex-pack: center;
-      justify-content: center;
-  -ms-touch-action: manipulation;
-      touch-action: manipulation;
+  align-items: center;
+  justify-content: center;
+  touch-action: manipulation;
   cursor: default;
   border-radius: 2px;
   padding: 8px 16px;
@@ -916,8 +989,7 @@ body[modality="keyboard"] .ui-button:focus {
   position: absolute;
   top: 50%;
   left: 50%;
-  -ms-transform: translate(-50%, -50%);
-      transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
 }
 .ui-button-raised {
   box-shadow: 0 0 2px rgba(0,0,0,0.12), 0 2px 2px rgba(0,0,0,0.2);
@@ -1070,18 +1142,14 @@ body[modality="keyboard"] .ui-button-flat.color-default:focus {
   margin-left: -4px;
 }
 .ui-button-icon.position-right {
-  -ms-flex-order: 1;
-      order: 1;
+  order: 1;
   margin-left: 4px;
   margin-right: -4px;
 }
 .ui-button-content {
-  display: -ms-flexbox;
   display: flex;
-  -ms-flex-align: center;
-      align-items: center;
-  -ms-flex-pack: center;
-      justify-content: center;
+  align-items: center;
+  justify-content: center;
 }
 .ui-button-content.invisible {
   visibility: hidden;
@@ -1092,18 +1160,15 @@ body[modality="keyboard"] .ui-button-flat.color-default:focus {
   margin-left: 1px;
 }
 .ui-button-group {
-  display: -ms-flexbox;
   display: flex;
-  -ms-flex-wrap: wrap;
-      flex-wrap: wrap;
+  flex-wrap: wrap;
 }
+
 .ui-checkbox {
   font-family: Roboto, -apple-system, BlinkMacSystemFont, "Segoe UI", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
   font-weight: normal;
-  display: -ms-flexbox;
   display: flex;
-  -ms-flex-align: center;
-      align-items: center;
+  align-items: center;
   margin: 0;
   margin-bottom: 12px;
   cursor: default;
@@ -1133,8 +1198,7 @@ body[modality="keyboard"] .ui-button-flat.color-default:focus {
 .ui-checkbox.label-left .ui-checkbox-label-text {
   margin-left: 0;
   margin-right: auto;
-  -ms-flex-order: -1;
-      order: -1;
+  order: -1;
 }
 .ui-checkbox.disabled .ui-checkbox-label-text {
   color: rgba(0,0,0,0.38);
@@ -1181,8 +1245,7 @@ body[modality="keyboard"] .ui-button-flat.color-default:focus {
   content: "";
   width: 6px;
   height: 13px;
-  -ms-transform: rotate(45deg);
-      transform: rotate(45deg);
+  transform: rotate(45deg);
   opacity: 0;
   transition: opacity 0.3s ease;
   transition-delay: 0.1s;
@@ -1194,8 +1257,7 @@ body[modality="keyboard"] .ui-button-flat.color-default:focus {
 }
 body[modality="keyboard"] .ui-checkbox-input:focus + .ui-checkbox-checkmark .ui-checkbox-focus-ring {
   opacity: 1;
-  -ms-transform: scale(1);
-      transform: scale(1);
+  transform: scale(1);
 }
 .ui-checkbox-focus-ring {
   position: absolute;
@@ -1208,10 +1270,10 @@ body[modality="keyboard"] .ui-checkbox-input:focus + .ui-checkbox-checkmark .ui-
   transition-property: opacity, transform;
   transition-duration: 0.2s;
   transition-timing-function: ease;
-  -ms-transform: scale(0);
-      transform: scale(0);
+  transform: scale(0);
   opacity: 0;
 }
+
 .ui-collapsible-header-content {
   white-space: nowrap;
   overflow: hidden;
@@ -1230,15 +1292,12 @@ body[modality="keyboard"] .ui-checkbox-input:focus + .ui-checkbox-checkmark .ui-
   line-height: 1;
   text-align: left;
   font-family: Roboto, -apple-system, BlinkMacSystemFont, "Segoe UI", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
-  display: -ms-flexbox;
   display: flex;
   height: 0;
   min-height: 48px;
   padding: 8px 16px;
-  -ms-flex-align: center;
-      align-items: center;
-  -ms-touch-action: manipulation;
-      touch-action: manipulation;
+  align-items: center;
+  touch-action: manipulation;
   cursor: pointer;
   font-size: 16px;
   background-color: #eee;
@@ -1286,10 +1345,12 @@ body[modality="keyboard"] .ui-collapsible-header:focus {
 .ui-collapsible-toggle-leave {
   height: 0 !important;
 }
+
 .ui-confirm-message {
   font-family: Roboto, -apple-system, BlinkMacSystemFont, "Segoe UI", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
   font-size: 15px;
 }
+
 .ui-modal {
   font-family: Roboto, -apple-system, BlinkMacSystemFont, "Segoe UI", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
   font-size: 14px;
@@ -1330,20 +1391,15 @@ body.ui-modal-open {
   overflow-y: auto;
 }
 .ui-modal-header {
-  display: -ms-flexbox;
   display: flex;
-  -ms-flex-align: center;
-      align-items: center;
+  align-items: center;
   padding: 24px 24px 8px;
 }
 .ui-modal-header .ui-modal-header-text {
-  -ms-flex-positive: 1;
-      flex-grow: 1;
+  flex-grow: 1;
   font-size: 22px;
-  display: -ms-flexbox;
   display: flex;
-  -ms-flex-align: center;
-      align-items: center;
+  align-items: center;
   margin: 0;
   font-weight: normal;
 }
@@ -1373,15 +1429,12 @@ body[modality="keyboard"] .ui-modal-header .ui-modal-close-button:focus .ui-icon
 }
 .ui-modal-footer,
 .ui-modal-footer [slot] {
-  display: -ms-flexbox;
   display: flex;
-  -ms-flex-pack: end;
-      justify-content: flex-end;
+  justify-content: flex-end;
 }
 .ui-modal-footer .ui-modal-footer-left,
 .ui-modal-footer [slot].ui-modal-footer-left {
-  -ms-flex-pack: start;
-      justify-content: flex-start;
+  justify-content: flex-start;
 }
 .ui-modal-footer .ui-button {
   margin-left: 8px;
@@ -1399,20 +1452,17 @@ body[modality="keyboard"] .ui-modal-header .ui-modal-close-button:focus .ui-icon
 }
 .ui-modal-scale-enter .ui-modal-container,
 .ui-modal-scale-leave .ui-modal-container {
-  -ms-transform: scale(1.1);
-      transform: scale(1.1);
+  transform: scale(1.1);
 }
+
 .ui-fab {
   position: relative;
   outline: none;
   border: none;
   z-index: 30;
-  display: -ms-flexbox;
   display: flex;
-  -ms-flex-align: center;
-      align-items: center;
-  -ms-flex-pack: center;
-      justify-content: center;
+  align-items: center;
+  justify-content: center;
   border-radius: 50%;
   box-shadow: 0 2px 5px 0 rgba(0,0,0,0.2), 0 2px 10px 0 rgba(0,0,0,0.16);
   transition: box-shadow 0.3s ease;
@@ -1477,6 +1527,7 @@ body[modality="keyboard"] .ui-fab.color-accent:focus {
   width: 100%;
   height: initial;
 }
+
 .ui-preloader {
   position: relative;
   width: 100%;
@@ -1515,54 +1566,199 @@ body[modality="keyboard"] .ui-fab.color-accent:focus {
 .ui-preloader-progressbar::after {
   left: 50%;
 }
-@keyframes ui-preloader-background {
-  0%, 24.9% {
+@-moz-keyframes ui-preloader-background {
+0%, 24.9% {
     background-color: #159756;
-  }
-  25%, 49.9% {
-    background-color: #da4733;
-  }
-  50%, 74.9% {
-    background-color: #3b78e7;
-  }
-  75%, 100% {
-    background-color: #fdba2c;
-  }
 }
-@keyframes ui-preloader-front {
-  0% {
+25%, 49.9% {
+    background-color: #da4733;
+}
+50%, 74.9% {
+    background-color: #3b78e7;
+}
+75%, 100% {
+    background-color: #fdba2c;
+}
+}
+@-webkit-keyframes ui-preloader-background {
+0%, 24.9% {
+    background-color: #159756;
+}
+25%, 49.9% {
+    background-color: #da4733;
+}
+50%, 74.9% {
+    background-color: #3b78e7;
+}
+75%, 100% {
+    background-color: #fdba2c;
+}
+}
+@-o-keyframes ui-preloader-background {
+0%, 24.9% {
+    background-color: #159756;
+}
+25%, 49.9% {
+    background-color: #da4733;
+}
+50%, 74.9% {
+    background-color: #3b78e7;
+}
+75%, 100% {
+    background-color: #fdba2c;
+}
+}
+@keyframes ui-preloader-background {
+0%, 24.9% {
+    background-color: #159756;
+}
+25%, 49.9% {
+    background-color: #da4733;
+}
+50%, 74.9% {
+    background-color: #3b78e7;
+}
+75%, 100% {
+    background-color: #fdba2c;
+}
+}
+@-moz-keyframes ui-preloader-front {
+0% {
     width: 0;
     background-color: #da4733;
-  }
-  24.9% {
+}
+24.9% {
     width: 50%;
     background-color: #da4733;
-  }
-  25% {
+}
+25% {
     width: 0;
     background-color: #3b78e7;
-  }
-  49.9% {
+}
+49.9% {
     width: 50%;
     background-color: #3b78e7;
-  }
-  50% {
+}
+50% {
     width: 0;
     background-color: #fdba2c;
-  }
-  74.9% {
+}
+74.9% {
     width: 50%;
     background-color: #fdba2c;
-  }
-  75% {
+}
+75% {
     width: 0%;
     background-color: #159756;
-  }
-  100% {
+}
+100% {
     width: 50%;
     background-color: #159756;
-  }
 }
+}
+@-webkit-keyframes ui-preloader-front {
+0% {
+    width: 0;
+    background-color: #da4733;
+}
+24.9% {
+    width: 50%;
+    background-color: #da4733;
+}
+25% {
+    width: 0;
+    background-color: #3b78e7;
+}
+49.9% {
+    width: 50%;
+    background-color: #3b78e7;
+}
+50% {
+    width: 0;
+    background-color: #fdba2c;
+}
+74.9% {
+    width: 50%;
+    background-color: #fdba2c;
+}
+75% {
+    width: 0%;
+    background-color: #159756;
+}
+100% {
+    width: 50%;
+    background-color: #159756;
+}
+}
+@-o-keyframes ui-preloader-front {
+0% {
+    width: 0;
+    background-color: #da4733;
+}
+24.9% {
+    width: 50%;
+    background-color: #da4733;
+}
+25% {
+    width: 0;
+    background-color: #3b78e7;
+}
+49.9% {
+    width: 50%;
+    background-color: #3b78e7;
+}
+50% {
+    width: 0;
+    background-color: #fdba2c;
+}
+74.9% {
+    width: 50%;
+    background-color: #fdba2c;
+}
+75% {
+    width: 0%;
+    background-color: #159756;
+}
+100% {
+    width: 50%;
+    background-color: #159756;
+}
+}
+@keyframes ui-preloader-front {
+0% {
+    width: 0;
+    background-color: #da4733;
+}
+24.9% {
+    width: 50%;
+    background-color: #da4733;
+}
+25% {
+    width: 0;
+    background-color: #3b78e7;
+}
+49.9% {
+    width: 50%;
+    background-color: #3b78e7;
+}
+50% {
+    width: 0;
+    background-color: #fdba2c;
+}
+74.9% {
+    width: 50%;
+    background-color: #fdba2c;
+}
+75% {
+    width: 0%;
+    background-color: #159756;
+}
+100% {
+    width: 50%;
+    background-color: #159756;
+}
+}
+
 .ui-progress-linear {
   position: relative;
   overflow: hidden;
@@ -1634,40 +1830,123 @@ body[modality="keyboard"] .ui-fab.color-accent:focus {
   opacity: 0;
   height: 0;
 }
-@keyframes ui-progress-linear-indeterminate {
-  0% {
+@-moz-keyframes ui-progress-linear-indeterminate {
+0% {
     left: -35%;
     right: 100%;
-  }
-  60% {
-    left: 100%;
-    right: -90%;
-  }
-  100% {
-    left: 100%;
-    right: -90%;
-  }
 }
-@keyframes ui-progress-linear-indeterminate-short {
-  0% {
+60% {
+    left: 100%;
+    right: -90%;
+}
+100% {
+    left: 100%;
+    right: -90%;
+}
+}
+@-webkit-keyframes ui-progress-linear-indeterminate {
+0% {
+    left: -35%;
+    right: 100%;
+}
+60% {
+    left: 100%;
+    right: -90%;
+}
+100% {
+    left: 100%;
+    right: -90%;
+}
+}
+@-o-keyframes ui-progress-linear-indeterminate {
+0% {
+    left: -35%;
+    right: 100%;
+}
+60% {
+    left: 100%;
+    right: -90%;
+}
+100% {
+    left: 100%;
+    right: -90%;
+}
+}
+@keyframes ui-progress-linear-indeterminate {
+0% {
+    left: -35%;
+    right: 100%;
+}
+60% {
+    left: 100%;
+    right: -90%;
+}
+100% {
+    left: 100%;
+    right: -90%;
+}
+}
+@-moz-keyframes ui-progress-linear-indeterminate-short {
+0% {
     left: -200%;
     right: 100%;
-  }
-  60% {
-    left: 107%;
-    right: -8%;
-  }
-  100% {
-    left: 107%;
-    right: -8%;
-  }
 }
+60% {
+    left: 107%;
+    right: -8%;
+}
+100% {
+    left: 107%;
+    right: -8%;
+}
+}
+@-webkit-keyframes ui-progress-linear-indeterminate-short {
+0% {
+    left: -200%;
+    right: 100%;
+}
+60% {
+    left: 107%;
+    right: -8%;
+}
+100% {
+    left: 107%;
+    right: -8%;
+}
+}
+@-o-keyframes ui-progress-linear-indeterminate-short {
+0% {
+    left: -200%;
+    right: 100%;
+}
+60% {
+    left: 107%;
+    right: -8%;
+}
+100% {
+    left: 107%;
+    right: -8%;
+}
+}
+@keyframes ui-progress-linear-indeterminate-short {
+0% {
+    left: -200%;
+    right: 100%;
+}
+60% {
+    left: 107%;
+    right: -8%;
+}
+100% {
+    left: 107%;
+    right: -8%;
+}
+}
+
 .ui-radio {
   font-family: Roboto, -apple-system, BlinkMacSystemFont, "Segoe UI", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
-  display: -ms-flexbox;
   display: flex;
-  -ms-flex-align: center;
-      align-items: center;
+  align-items: center;
   height: 20px;
   font-size: 15px;
   margin: 0;
@@ -1676,8 +1955,7 @@ body[modality="keyboard"] .ui-fab.color-accent:focus {
   border: 2px solid rgba(0,0,0,0.54);
 }
 .ui-radio.label-left .ui-radio-label-text {
-  -ms-flex-order: -1;
-      order: -1;
+  order: -1;
   margin-right: auto;
   margin-left: 0;
 }
@@ -1693,9 +1971,7 @@ body[modality="keyboard"] .ui-fab.color-accent:focus {
   height: 20px;
 }
 .ui-radio-input {
-  -webkit-appearance: none;
-     -moz-appearance: none;
-          appearance: none;
+  appearance: none;
   outline: none;
   margin: 0;
   padding: 0;
@@ -1711,8 +1987,7 @@ body[modality="keyboard"] .ui-fab.color-accent:focus {
 }
 .ui-radio-input:checked ~ .ui-radio-inner-dot {
   background-color: #2196f3;
-  -ms-transform: scale(0.5);
-      transform: scale(0.5);
+  transform: scale(0.5);
   opacity: 1;
   z-index: 0;
 }
@@ -1737,8 +2012,7 @@ body[modality="keyboard"] .ui-fab.color-accent:focus {
   background-color: rgba(0,0,0,0.38);
   opacity: 0;
   z-index: -1;
-  -ms-transform: scale(1.2);
-      transform: scale(1.2);
+  transform: scale(1.2);
   transition-property: transform, opacity, background-color;
   transition-duration: 0.3s;
 }
@@ -1746,11 +2020,10 @@ body[modality="keyboard"] .ui-fab.color-accent:focus {
   margin-left: 16px;
   font-size: 15px;
 }
+
 .ui-radio-group-help-text {
   -webkit-user-select: none;
-  -moz-user-select: none;
-   -ms-user-select: none;
-       user-select: none;
+  user-select: none;
   cursor: default;
 }
 .ui-radio-group {
@@ -1765,8 +2038,7 @@ body[modality="keyboard"] .ui-fab.color-accent:focus {
 .ui-radio-group.vertical .ui-radio-group-options-wrapper {
   height: auto;
   margin-top: 8px;
-  -ms-flex-direction: column;
-      flex-direction: column;
+  flex-direction: column;
 }
 .ui-radio-group.vertical .ui-radio-group-options-wrapper .ui-radio {
   width: 100%;
@@ -1788,11 +2060,9 @@ body[modality="keyboard"] .ui-fab.color-accent:focus {
   transition: color 0.1s ease;
 }
 .ui-radio-group-options-wrapper {
-  display: -ms-flexbox;
   display: flex;
   height: 32px;
-  -ms-flex-align: center;
-      align-items: center;
+  align-items: center;
 }
 .ui-radio-group-feedback {
   height: 20px;
@@ -1805,11 +2075,11 @@ body[modality="keyboard"] .ui-fab.color-accent:focus {
   color: rgba(0,0,0,0.38);
   line-height: 1.2;
 }
+
 .ui-rating {
   font-family: Roboto, -apple-system, BlinkMacSystemFont, "Segoe UI", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
   outline: none;
-  -ms-flex-direction: column;
-      flex-direction: column;
+  flex-direction: column;
 }
 .ui-rating:hover:not(.disabled) .ui-rating-label {
   color: rgba(0,0,0,0.65);
@@ -1851,7 +2121,6 @@ body[modality="keyboard"] .ui-rating:focus .ui-rating-icon-icon.filled {
   transition: color 0.1s ease;
 }
 .ui-rating-icons-wrapper {
-  display: -ms-inline-flexbox;
   display: inline-flex;
 }
 .ui-rating-feedback {
@@ -1876,30 +2145,29 @@ body[modality="keyboard"] .ui-rating:focus .ui-rating-icon-icon.filled {
   margin-top: -20px;
   opacity: 0;
 }
+
 .ui-rating-icon {
   cursor: default;
 }
 .ui-rating-icon .ui-icon {
   color: rgba(0,0,0,0.38);
 }
+
 .ui-rating-preview {
-  display: -ms-inline-flexbox;
   display: inline-flex;
-  -ms-flex-preferred-size: 0;
-      flex-basis: 0;
+  flex-basis: 0;
   width: auto;
 }
 .ui-rating-preview .ui-rating-icon-icon.selected {
   color: #2196f3;
 }
+
 .ui-select {
   font-family: Roboto, -apple-system, BlinkMacSystemFont, "Segoe UI", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
-  display: -ms-flexbox;
   display: flex;
   position: relative;
   margin-bottom: 12px;
-  -ms-flex-align: start;
-      align-items: flex-start;
+  align-items: flex-start;
   outline: none;
 }
 .ui-select:hover:not(.disabled) .ui-select-label-text {
@@ -1926,8 +2194,7 @@ body[modality="keyboard"] .ui-rating:focus .ui-rating-icon-icon.filled {
   top: 20px;
 }
 .ui-select.icon-right .ui-select-icon-wrapper {
-  -ms-flex-order: 1;
-      order: 1;
+  order: 1;
   margin-left: 8px;
   margin-right: 0;
 }
@@ -1956,8 +2223,7 @@ body[modality="keyboard"] .ui-rating:focus .ui-rating-icon-icon.filled {
 }
 .ui-select-icon-wrapper {
   height: 24px;
-  -ms-flex-negative: 0;
-      flex-shrink: 0;
+  flex-shrink: 0;
   margin-right: 12px;
   padding-top: 4px;
 }
@@ -1965,8 +2231,7 @@ body[modality="keyboard"] .ui-rating:focus .ui-rating-icon-icon.filled {
   color: rgba(0,0,0,0.54);
 }
 .ui-select-content {
-  -ms-flex-positive: 1;
-      flex-grow: 1;
+  flex-grow: 1;
 }
 .ui-select-label {
   outline: none;
@@ -1988,10 +2253,8 @@ body[modality="keyboard"] .ui-rating:focus .ui-rating-icon-icon.filled {
   outline: none;
   border: none;
   padding: 0;
-  display: -ms-flexbox;
   display: flex;
-  -ms-flex-align: center;
-      align-items: center;
+  align-items: center;
   width: 100%;
   height: 0;
   min-height: 32px;
@@ -2006,8 +2269,7 @@ body[modality="keyboard"] .ui-rating:focus .ui-rating-icon-icon.filled {
   font-family: Roboto, -apple-system, BlinkMacSystemFont, "Segoe UI", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
 }
 .ui-select-value {
-  -ms-flex-positive: 1;
-      flex-grow: 1;
+  flex-grow: 1;
   line-height: 1.4;
 }
 .ui-select-value.placeholder {
@@ -2099,16 +2361,15 @@ body[modality="keyboard"] .ui-rating:focus .ui-rating-icon-icon.filled {
   opacity: 0;
   margin-top: -20px;
 }
+
 .ui-select-item-text {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 .ui-select-option {
-  display: -ms-flexbox;
   display: flex;
-  -ms-flex-align: center;
-      align-items: center;
+  align-items: center;
   font-family: Roboto, -apple-system, BlinkMacSystemFont, "Segoe UI", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
   cursor: pointer;
   overflow: hidden;
@@ -2128,9 +2389,7 @@ body[modality="keyboard"] .ui-rating:focus .ui-rating-icon-icon.filled {
   color: #fff;
 }
 .ui-select-option-content {
-  -ms-flex-positive: 1;
-      flex-grow: 1;
-  display: -ms-flexbox;
+  flex-grow: 1;
   display: flex;
   max-height: 42px;
   padding: 6px 12px;
@@ -2142,15 +2401,12 @@ body[modality="keyboard"] .ui-rating:focus .ui-rating-icon-icon.filled {
   margin-right: 8px;
 }
 .ui-select-image {
-  display: -ms-flexbox;
   display: flex;
-  -ms-flex-align: center;
-      align-items: center;
+  align-items: center;
 }
 .ui-select-item-text {
   width: 0;
-  -ms-flex-positive: 1;
-      flex-grow: 1;
+  flex-grow: 1;
 }
 .ui-select-item-image {
   width: 32px;
@@ -2160,29 +2416,26 @@ body[modality="keyboard"] .ui-rating:focus .ui-rating-icon-icon.filled {
   margin-right: 12px;
   border-radius: 50%;
 }
+
 .ui-slider {
-  display: -ms-flexbox;
   display: flex;
   position: relative;
   outline: none;
   width: 100%;
 }
 .ui-slider:hover:not(.disabled) .ui-slider-thumb {
-  -ms-transform: scale(1.1);
-      transform: scale(1.1);
+  transform: scale(1.1);
 }
 .ui-slider:hover:not(.disabled) .ui-slider-label {
   color: rgba(0,0,0,0.65);
 }
 .ui-slider:focus:not(.disabled) .ui-slider-thumb,
 .ui-slider.dragging:not(.disabled) .ui-slider-thumb {
-  -ms-transform: scale(1.1);
-      transform: scale(1.1);
+  transform: scale(1.1);
 }
 .ui-slider:focus:not(.disabled) .ui-slider-focus-ring,
 .ui-slider.dragging:not(.disabled) .ui-slider-focus-ring {
-  -ms-transform: scale(1);
-      transform: scale(1);
+  transform: scale(1);
 }
 .ui-slider.active:not(.disabled) .ui-slider-label,
 .ui-slider.active:not(.disabled) .ui-slider-icon {
@@ -2205,18 +2458,15 @@ body[modality="keyboard"] .ui-rating:focus .ui-rating-icon-icon.filled {
   cursor: pointer;
 }
 .ui-slider-wrapper {
-  display: -ms-flexbox;
   display: flex;
-  -ms-flex-align: center;
-      align-items: center;
+  align-items: center;
   position: relative;
   width: 100%;
   height: 38px;
 }
 .ui-slider-icon-wrapper {
   height: 24px;
-  -ms-flex-negative: 0;
-      flex-shrink: 0;
+  flex-shrink: 0;
   margin-right: 12px;
   padding-top: 7px;
 }
@@ -2224,13 +2474,10 @@ body[modality="keyboard"] .ui-rating:focus .ui-rating-icon-icon.filled {
   color: rgba(0,0,0,0.54);
 }
 .ui-slider-content {
-  display: -ms-flexbox;
   display: flex;
-  -ms-flex-direction: column;
-      flex-direction: column;
+  flex-direction: column;
   position: relative;
-  -ms-flex-positive: 1;
-      flex-grow: 1;
+  flex-grow: 1;
 }
 .ui-slider-label {
   font-size: 14px;
@@ -2257,12 +2504,9 @@ body[modality="keyboard"] .ui-rating:focus .ui-rating-icon-icon.filled {
   background-color: #2196f3;
 }
 .ui-slider-thumb-container {
-  display: -ms-flexbox;
   display: flex;
-  -ms-flex-align: center;
-      align-items: center;
-  -ms-flex-pack: center;
-      justify-content: center;
+  align-items: center;
+  justify-content: center;
   position: absolute;
   top: 0;
   left: 0;
@@ -2271,19 +2515,15 @@ body[modality="keyboard"] .ui-rating:focus .ui-rating-icon-icon.filled {
   height: 38px;
 }
 .ui-slider-thumb {
-  display: -ms-flexbox;
   display: flex;
-  -ms-flex-align: center;
-      align-items: center;
-  -ms-flex-pack: center;
-      justify-content: center;
+  align-items: center;
+  justify-content: center;
   width: 16px;
   height: 16px;
   border-radius: 50%;
   background-color: #2196f3;
   transition: transform 0.2s linear;
-  -ms-transform: scale(1);
-      transform: scale(1);
+  transform: scale(1);
 }
 .ui-slider-focus-ring {
   position: absolute;
@@ -2294,15 +2534,13 @@ body[modality="keyboard"] .ui-rating:focus .ui-rating-icon-icon.filled {
   border-radius: 50%;
   background-color: rgba(33,150,243,0.38);
   transition: transform 0.2s ease;
-  -ms-transform: scale(0);
-      transform: scale(0);
+  transform: scale(0);
 }
+
 .ui-snackbar {
   font-family: Roboto, -apple-system, BlinkMacSystemFont, "Segoe UI", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
-  display: -ms-inline-flexbox;
   display: inline-flex;
-  -ms-flex-align: center;
-      align-items: center;
+  align-items: center;
   min-width: 288px;
   max-width: 568px;
   min-height: 48px;
@@ -2340,8 +2578,7 @@ body[modality="keyboard"] .ui-rating:focus .ui-rating-icon-icon.filled {
 }
 .ui-snackbar-toggle-enter,
 .ui-snackbar-toggle-leave {
-  -ms-transform: translateY(84px);
-      transform: translateY(84px);
+  transform: translateY(84px);
 }
 .ui-snackbar-toggle-enter .ui-snackbar-text,
 .ui-snackbar-toggle-leave .ui-snackbar-text,
@@ -2349,6 +2586,7 @@ body[modality="keyboard"] .ui-rating:focus .ui-rating-icon-icon.filled {
 .ui-snackbar-toggle-leave .ui-snackbar-action {
   opacity: 0;
 }
+
 .ui-snackbar-container {
   position: absolute;
   overflow: hidden;
@@ -2362,22 +2600,19 @@ body[modality="keyboard"] .ui-rating:focus .ui-rating-icon-icon.filled {
 .ui-snackbar-container.position-center {
   left: 8px;
   right: 8px;
-  display: -ms-flexbox;
   display: flex;
-  -ms-flex-pack: center;
-      justify-content: center;
+  justify-content: center;
 }
 .ui-snackbar-container .ui-snackbar {
   margin: 4px 4px 12px 4px;
 }
+
 .ui-switch {
   font-family: Roboto, -apple-system, BlinkMacSystemFont, "Segoe UI", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
   position: relative;
   height: 32px;
-  display: -ms-flexbox;
   display: flex;
-  -ms-flex-align: center;
-      align-items: center;
+  align-items: center;
 }
 .ui-switch.checked .ui-switch-track {
   background-color: rgba(33,150,243,0.5);
@@ -2393,8 +2628,7 @@ body[modality="keyboard"] .ui-rating:focus .ui-rating-icon-icon.filled {
 .ui-switch.label-left .ui-switch-label-text {
   margin-left: 0;
   margin-right: auto;
-  -ms-flex-order: -1;
-      order: -1;
+  order: -1;
 }
 .ui-switch.disabled .ui-switch-label-text {
   color: rgba(0,0,0,0.38);
@@ -2443,8 +2677,7 @@ body[modality="keyboard"] .ui-rating:focus .ui-rating-icon-icon.filled {
   width: 42px;
   height: 42px;
   background-color: rgba(0,0,0,0.1);
-  -ms-transform: scale(0);
-      transform: scale(0);
+  transform: scale(0);
   opacity: 0;
   transition: all 0.2s ease;
 }
@@ -2453,24 +2686,24 @@ body[modality="keyboard"] .ui-rating:focus .ui-rating-icon-icon.filled {
   opacity: 0;
 }
 body[modality="keyboard"] .ui-switch-input:focus ~ .ui-switch-focus-ring {
-  -ms-transform: scale(1);
-      transform: scale(1);
+  transform: scale(1);
   opacity: 1;
 }
 .ui-switch-label-text {
   margin-left: 16px;
   font-size: 15px;
 }
+
 .ui-tab {
   outline: none;
 }
+
 .ui-tabs {
   width: 100%;
   margin-bottom: 24px;
 }
 .ui-tabs.fullwidth .ui-tab-header-item {
-  -ms-flex-positive: 1;
-      flex-grow: 1;
+  flex-grow: 1;
 }
 .ui-tabs.raised {
   border: none;
@@ -2510,7 +2743,6 @@ body[modality="keyboard"] .ui-tabs-header.background-color-clear .ui-tab-header-
 }
 .ui-tabs-header-items {
   position: relative;
-  display: -ms-flexbox;
   display: flex;
   list-style: none;
   margin: 0;
@@ -2570,6 +2802,7 @@ body[modality="keyboard"] .ui-tabs-header.background-color-clear .ui-tab-header-
   padding: 16px;
   margin: 0;
 }
+
 .ui-tab-header-item-text {
   white-space: nowrap;
   overflow: hidden;
@@ -2578,23 +2811,18 @@ body[modality="keyboard"] .ui-tabs-header.background-color-clear .ui-tab-header-
 .ui-tab-header-item {
   font-family: Roboto, -apple-system, BlinkMacSystemFont, "Segoe UI", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
   position: relative;
-  display: -ms-flexbox;
   display: flex;
   height: 48px;
   padding: 0 12px;
   text-transform: uppercase;
-  -ms-flex-align: center;
-      align-items: center;
-  -ms-flex-pack: center;
-      justify-content: center;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
   min-width: 80px;
 }
 .ui-tab-header-item.type-icon-and-text {
-  display: -ms-flexbox;
   display: flex;
-  -ms-flex-direction: column;
-      flex-direction: column;
+  flex-direction: column;
   height: 72px;
 }
 .ui-tab-header-item.type-icon-and-text .ui-tab-header-item-icon {
@@ -2612,12 +2840,11 @@ body[modality="keyboard"] .ui-tabs-header.background-color-clear .ui-tab-header-
 .ui-tab-header-item-icon .ui-icon {
   cursor: inherit;
 }
+
 .ui-textbox {
   font-family: Roboto, -apple-system, BlinkMacSystemFont, "Segoe UI", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
-  display: -ms-flexbox;
   display: flex;
-  -ms-flex-align: start;
-      align-items: flex-start;
+  align-items: flex-start;
   margin-bottom: 12px;
 }
 .ui-textbox:hover:not(.disabled):not(.invalid) .ui-textbox-label-text {
@@ -2643,8 +2870,7 @@ body[modality="keyboard"] .ui-tabs-header.background-color-clear .ui-tab-header-
   padding-top: 20px;
 }
 .ui-textbox.icon-right .ui-textbox-icon-wrapper {
-  -ms-flex-order: 1;
-      order: 1;
+  order: 1;
   margin-left: 8px;
   margin-right: 0;
 }
@@ -2682,8 +2908,7 @@ body[modality="keyboard"] .ui-tabs-header.background-color-clear .ui-tab-header-
 }
 .ui-textbox-icon-wrapper {
   height: 24px;
-  -ms-flex-negative: 0;
-      flex-shrink: 0;
+  flex-shrink: 0;
   margin-right: 12px;
   padding-top: 4px;
 }
@@ -2691,8 +2916,7 @@ body[modality="keyboard"] .ui-tabs-header.background-color-clear .ui-tab-header-
   color: rgba(0,0,0,0.54);
 }
 .ui-textbox-content {
-  -ms-flex-positive: 1;
-      flex-grow: 1;
+  flex-grow: 1;
 }
 .ui-textbox-label-text {
   font-size: 14px;
@@ -2761,13 +2985,12 @@ body[modality="keyboard"] .ui-tabs-header.background-color-clear .ui-tab-header-
   margin-top: -20px;
   opacity: 0;
 }
+
 .ui-toolbar {
   font-family: Roboto, -apple-system, BlinkMacSystemFont, "Segoe UI", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
-  display: -ms-flexbox;
   display: flex;
   height: 56px;
-  -ms-flex-align: center;
-      align-items: center;
+  align-items: center;
   font-size: 18px;
   position: relative;
 }
@@ -2815,12 +3038,9 @@ body[modality="keyboard"] .ui-tabs-header.background-color-clear .ui-tab-header-
   background-color: #2196f3;
 }
 .ui-toolbar-left {
-  display: -ms-flexbox;
   display: flex;
-  -ms-flex-align: center;
-      align-items: center;
-  -ms-flex-negative: 0;
-      flex-shrink: 0;
+  align-items: center;
+  flex-shrink: 0;
 }
 .ui-toolbar-nav-icon {
   margin-right: 8px;
@@ -2832,14 +3052,11 @@ body[modality="keyboard"] .ui-tabs-header.background-color-clear .ui-tab-header-
   min-width: 160px;
 }
 .ui-toolbar-brand-text {
-  -ms-flex-positive: 1;
-      flex-grow: 1;
+  flex-grow: 1;
 }
 .ui-toolbar-center {
-  display: -ms-flexbox;
   display: flex;
-  -ms-flex-positive: 1;
-      flex-grow: 1;
+  flex-grow: 1;
 }
 .ui-toolbar-divider {
   border-left-width: 1px;
@@ -2848,12 +3065,10 @@ body[modality="keyboard"] .ui-tabs-header.background-color-clear .ui-tab-header-
   margin-right: 24px;
 }
 .ui-toolbar-right {
-  -ms-flex-negative: 0;
-      flex-shrink: 0;
+  flex-shrink: 0;
   margin-left: auto;
 }
 .ui-toolbar-right [slot="actions"] {
-  display: -ms-flexbox;
   display: flex;
 }
 
