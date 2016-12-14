@@ -25,6 +25,8 @@ import UiMenuOption from './UiMenuOption.vue';
 
 import ShowsDropdown from './mixins/ShowsDropdown';
 
+var inFocusFunction = false;
+
 export default {
     name: 'ui-menu',
 
@@ -106,11 +108,14 @@ export default {
         },
 
         restrictFocus(e) {
+            if (inFocusFunction) return;
+            inFocusFunction = true;
             if (! this.$refs.dropdown.contains(e.target)) {
                 e.stopPropagation();
 
                 this.$refs.dropdown.querySelector('.ui-menu-option').focus();
             }
+            inFocusFunction = false;
         },
 
         redirectFocus(e) {

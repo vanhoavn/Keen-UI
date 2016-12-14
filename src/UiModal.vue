@@ -44,6 +44,7 @@ import UiIconButton from './UiIconButton.vue';
 import UiButton from './UiButton.vue';
 
 import _ from 'lodash';
+var inFocusFunction = false;
 
 export default {
     name: 'ui-modal',
@@ -156,10 +157,13 @@ export default {
         },
 
         restrictFocus(e) {
+            if (inFocusFunction) return;
+            inFocusFunction = true;
             if (!this.$refs['modal-container'].contains(e.target)) {
                 e.stopPropagation();
                 this.$refs['modal-container'].focus();
             }
+            inFocusFunction = false;
         },
 
         tearDown() {

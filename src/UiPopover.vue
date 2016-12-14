@@ -8,6 +8,7 @@
 
 <script>
 import ShowsDropdown from './mixins/ShowsDropdown';
+var inFocusFunction = false;
 
 export default {
     name: 'ui-popover',
@@ -48,11 +49,14 @@ export default {
         },
         
         restrictFocus(e) {
+            if (inFocusFunction) return;
+            inFocusFunction = true;
             if (! this.$refs.dropdown.contains(e.target)) {
                 e.stopPropagation();
 
                 this.$refs.dropdown.focus();
             }
+            inFocusFunction = false;
         }
     },
 

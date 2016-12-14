@@ -816,6 +816,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
+	var inFocusFunction = false;
+	
 	exports.default = {
 	    name: 'ui-menu',
 	
@@ -902,11 +904,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	            }
 	        },
 	        restrictFocus: function restrictFocus(e) {
+	            if (inFocusFunction) return;
+	            inFocusFunction = true;
 	            if (!this.$refs.dropdown.contains(e.target)) {
 	                e.stopPropagation();
 	
 	                this.$refs.dropdown.querySelector('.ui-menu-option').focus();
 	            }
+	            inFocusFunction = false;
 	        },
 	        redirectFocus: function redirectFocus(e) {
 	            e.stopPropagation();
@@ -4817,6 +4822,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
+	var inFocusFunction = false;
+	
 	exports.default = {
 	    name: 'ui-popover',
 	
@@ -4860,11 +4867,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	        },
 	
 	        restrictFocus: function restrictFocus(e) {
+	            if (inFocusFunction) return;
+	            inFocusFunction = true;
 	            if (!this.$refs.dropdown.contains(e.target)) {
 	                e.stopPropagation();
 	
 	                this.$refs.dropdown.focus();
 	            }
+	            inFocusFunction = false;
 	        }
 	    },
 	
@@ -9573,6 +9583,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
+	var inFocusFunction = false;
+	
 	exports.default = {
 	    name: 'ui-modal',
 	
@@ -9676,10 +9688,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	            this.$refs['modal-container'].focus();
 	        },
 	        restrictFocus: function restrictFocus(e) {
+	            if (inFocusFunction) return;
+	            inFocusFunction = true;
 	            if (!this.$refs['modal-container'].contains(e.target)) {
 	                e.stopPropagation();
 	                this.$refs['modal-container'].focus();
 	            }
+	            inFocusFunction = false;
 	        },
 	        tearDown: function tearDown() {
 	            _classlist2.default.remove(document.body, 'ui-modal-open');
