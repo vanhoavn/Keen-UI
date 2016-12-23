@@ -12,7 +12,9 @@
 import classlist from './helpers/classlist';
 
 var startRipple = function startRipple(eventType, event) {
-    var holder = event.currentTarget;
+    var holder = event.target || event.currentTarget;
+
+    if (!holder) return;
 
     if (! classlist.has(holder, 'ui-ripple-ink')) {
         holder = holder.querySelector('.ui-ripple-ink');
