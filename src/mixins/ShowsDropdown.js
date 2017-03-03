@@ -20,6 +20,14 @@ export default {
         openOn: {
             type: String,
             default: 'click' // 'click', 'hover', 'focus', 'always'
+        },
+        dropConstrainToWindow: {
+            type: Boolean,
+            default: false
+        },
+        dropConstrainToScrollParent: {
+            type: Boolean,
+            default: false
         }
     },
 
@@ -99,12 +107,14 @@ export default {
             if(!el || !this.$refs || !this.$refs.dropdown) return;
 
             this.currentTrigger = el;
+            this.currentTrigger.classList.add('no-fast-click');
             
             this.drop = new Drop({
                 target: el,
                 content: this.$refs.dropdown,
                 position: this.dropdownPosition,
-                constrainToWindow: true,
+                constrainToWindow: this.dropConstrainToWindow,
+                constrainToScrollParent: this.dropConstrainToScrollParent,
                 openOn: this.openOn
             });
 
