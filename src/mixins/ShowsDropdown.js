@@ -28,7 +28,10 @@ export default {
         dropConstrainToScrollParent: {
             type: Boolean,
             default: false
-        }
+        },
+        tetherOptions: {
+            default: undefined
+        },
     },
 
     data() {
@@ -115,7 +118,8 @@ export default {
                 position: this.dropdownPosition,
                 constrainToWindow: this.dropConstrainToWindow,
                 constrainToScrollParent: this.dropConstrainToScrollParent,
-                openOn: this.openOn
+                openOn: this.openOn,
+                tetherOptions: this.tetherOptions,
             });
 
             // TO FIX: Hacky workaround for Tether not positioning

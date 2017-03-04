@@ -53,7 +53,7 @@ module.exports = {
     vue: {
         loaders: {
             css: ExtractTextPlugin.extract('css'), // extract css and stylus files to a single file
-            stylus: ExtractTextPlugin.extract('css!stylus')
+            stylus: ExtractTextPlugin.extract('css!stylus?sourceMap=false')
         },
 
         autoprefixer: {

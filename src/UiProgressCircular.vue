@@ -24,7 +24,7 @@
             <circle
                 class="ui-progress-circular-indeterminate-path" :class="[color]" cx="50" cy="50"
                 r="20" fill="none" stroke-miterlimit="10" :stroke-width="stroke"
-            >
+            ></circle>
         </svg>
     </div>
 </template>
