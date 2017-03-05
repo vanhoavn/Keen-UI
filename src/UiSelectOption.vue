@@ -4,13 +4,15 @@
         @click="function(e){$emit('click',e);}"
         @mouseover="function(e){$emit('mouseover',e);}"
     >
-        <div class="ui-select-option-content" :class="[partial]">
-            <component :is="partial" :option="option" :keys="keys"></component>
-        </div>
+        <slot>
+            <div class="ui-select-option-content" :class="[partial]">
+                <component :is="partial" :option="option" :keys="keys"></component>
+            </div>
 
-        <ui-icon
-            class="ui-select-option-checkbox" :icon="icon" v-if="showCheckbox"
-        ></ui-icon>
+            <ui-icon
+                class="ui-select-option-checkbox" :icon="icon" v-if="showCheckbox"
+            ></ui-icon>
+        </slot>
     </li>
 </template>
 

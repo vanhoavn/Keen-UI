@@ -30,7 +30,10 @@ export default {
             default: false
         },
         tetherOptions: {
-            default: undefined
+            default: () => undefined
+        },
+        beforeClose: {
+            type: Function,
         },
     },
 
@@ -120,6 +123,7 @@ export default {
                 constrainToScrollParent: this.dropConstrainToScrollParent,
                 openOn: this.openOn,
                 tetherOptions: this.tetherOptions,
+                beforeClose: this.beforeClose,
             });
 
             // TO FIX: Hacky workaround for Tether not positioning

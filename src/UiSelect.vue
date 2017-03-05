@@ -18,11 +18,11 @@
                 <div class="ui-select-label-text" v-text="label" v-if="!hideLabel"></div>
 
                 <div class="ui-select-display">
-                    <div
-                        class="ui-select-value" :class="{ placeholder: !hasDisplayText }"
-                        v-text="hasDisplayText ? displayText : placeholder"
-                    ></div>
-
+                    <div :class="['ui-select-value', hasDisplayText?'':'placeholder']">
+                        <slot name="values" :value="value">
+                            {{hasDisplayText ? displayText : placeholder}}
+                        </slot>
+                    </div>
                     <ui-icon icon="arrow_drop_down" class="ui-select-dropdown-icon"></ui-icon>
                 </div>
 
@@ -48,14 +48,23 @@
                         <ui-select-option
                             :option="option" :partial="partial" :show-checkbox="multiple"
                             :keys="keys"
-                            @click.stop.prevent="select(option, index)"
-                            @mouseover.stop="highlight(index, true)"
+                            @click.native.stop="select(option, index)"
+                            @mouseover.native.stop="highlight(index, true)"
 
                             :highlighted="highlightedIndex === index"
                             :selected="isSelected(option)"
 
                             v-for="(option, index) in filteredOptions" ref="options"
-                        ></ui-select-option>
+                        >
+                            <slot
+                                    name="option"
+
+                                    :highlighted="highlightedIndex === index"
+                                    :index="index"
+                                    :option="option"
+                                    :selected="isSelected(option)"
+                                ></slot>
+                        </ui-select-option>
 
                         <li class="ui-select-no-results" v-if="nothingFound">No results found</li>
                     </ul>
@@ -99,6 +108,10 @@ export default {
         value: {
             type: [Object, Array, String, Number],
             default: null
+        },
+        valueAdapter: {
+            type: [Function],
+            default: () => ( (x) => x )
         },
         default: {
             type: [Object, Array, String, Number],
@@ -341,10 +354,10 @@ export default {
                 if (this.isSelected(option)) {
                     this.deselect(option);
                 } else {
-                    this.currentValue.push(option);
+                    this.currentValue.push(this.valueAdapter(option));
                 }
             } else {
-                this.currentValue = option;
+                this.currentValue = this.valueAdapter(option);
                 this.selectedIndex = index;
             }
 
@@ -360,7 +373,7 @@ export default {
         },
 
         deselect(option) {
-            let idx = this.currentValue.indexOf(idx);
+            let idx = this.currentValue.indexOf(this.valueAdapter(option));
             if (idx>=0) {
                 this.currentValue.splice(idx,1);
             }
@@ -368,10 +381,10 @@ export default {
 
         isSelected(option) {
             if (this.multiple) {
-                return this.currentValue.indexOf(option) > -1;
+                return this.currentValue.indexOf(this.valueAdapter(option)) > -1;
             }
 
-            return this.currentValue === option;
+            return this.currentValue === this.valueAdapter(option);
         },
 
         selectHighlighted(index, e) {
@@ -433,7 +446,7 @@ export default {
         opened() {
             this.$nextTick(() => {
                 if (this.showSearch) {
-                    this.$refs.searchInput.focus();
+                    this.$refs['search-input'].focus();
                 } else {
                     this.$refs.dropdown.focus();
                 }

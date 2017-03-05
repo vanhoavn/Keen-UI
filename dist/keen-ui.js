@@ -2132,7 +2132,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	            default: false
 	        },
 	        tetherOptions: {
-	            default: undefined
+	            default: function _default() {
+	                return undefined;
+	            }
+	        },
+	        beforeClose: {
+	            type: Function
 	        }
 	    },
 	
@@ -2221,7 +2226,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	                constrainToWindow: this.dropConstrainToWindow,
 	                constrainToScrollParent: this.dropConstrainToScrollParent,
 	                openOn: this.openOn,
-	                tetherOptions: this.tetherOptions
+	                tetherOptions: this.tetherOptions,
+	                beforeClose: this.beforeClose
 	            });
 	
 	            if (this.dropdownPosition !== 'bottom left') {
@@ -8598,6 +8604,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            type: Boolean,
 	            default: false
 	        },
+	        href: String,
 	        text: String,
 	        icon: String,
 	        iconRight: {
@@ -8669,7 +8676,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-	  return _c('button', {
+	  return _c(_vm.href ? 'a' : 'button', {
 	    directives: [{
 	      name: "disabled",
 	      rawName: "v-disabled",
@@ -8677,9 +8684,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	      expression: "disabled || loading"
 	    }],
 	    ref: "button",
+	    tag: "button",
 	    staticClass: "ui-button",
 	    class: _vm.styleClasses,
 	    attrs: {
+	      "href": _vm.href,
 	      "type": _vm.buttonType
 	    },
 	    on: {
@@ -28335,6 +28344,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	            type: [Object, Array, String, Number],
 	            default: null
 	        },
+	        valueAdapter: {
+	            type: [Function],
+	            default: function _default() {
+	                return function (x) {
+	                    return x;
+	                };
+	            }
+	        },
 	        default: {
 	            type: [Object, Array, String, Number],
 	            default: null
@@ -28573,10 +28590,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	            if (this.isSelected(option)) {
 	                this.deselect(option);
 	            } else {
-	                this.currentValue.push(option);
+	                this.currentValue.push(this.valueAdapter(option));
 	            }
 	        } else {
-	            this.currentValue = option;
+	            this.currentValue = this.valueAdapter(option);
 	            this.selectedIndex = index;
 	        }
 	
@@ -28591,17 +28608,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	        }
 	    },
 	    deselect: function deselect(option) {
-	        var idx = this.currentValue.indexOf(idx);
+	        var idx = this.currentValue.indexOf(this.valueAdapter(option));
 	        if (idx >= 0) {
 	            this.currentValue.splice(idx, 1);
 	        }
 	    },
 	    isSelected: function isSelected(option) {
 	        if (this.multiple) {
-	            return this.currentValue.indexOf(option) > -1;
+	            return this.currentValue.indexOf(this.valueAdapter(option)) > -1;
 	        }
 	
-	        return this.currentValue === option;
+	        return this.currentValue === this.valueAdapter(option);
 	    },
 	    selectHighlighted: function selectHighlighted(index, e) {
 	        if (this.$refs.options.length) {
@@ -28658,7 +28675,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	        this.$nextTick(function () {
 	            if (_this4.showSearch) {
-	                _this4.$refs.searchInput.focus();
+	                _this4.$refs['search-input'].focus();
 	            } else {
 	                _this4.$refs.dropdown.focus();
 	            }
@@ -29078,7 +29095,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        _vm.$emit('mouseover', e);
 	      }
 	    }
-	  }, [_c('div', {
+	  }, [_vm._t("default", [_c('div', {
 	    staticClass: "ui-select-option-content",
 	    class: [_vm.partial]
 	  }, [_c(_vm.partial, {
@@ -29092,7 +29109,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    attrs: {
 	      "icon": _vm.icon
 	    }
-	  }) : _vm._e()], 1)
+	  }) : _vm._e()])], 2)
 	},staticRenderFns: []}
 	module.exports.render._withStripped = true
 	if (false) {
@@ -29155,14 +29172,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }) : _vm._e(), _vm._v(" "), _c('div', {
 	    staticClass: "ui-select-display"
 	  }, [_c('div', {
-	    staticClass: "ui-select-value",
-	    class: {
-	      placeholder: !_vm.hasDisplayText
-	    },
-	    domProps: {
-	      "textContent": _vm._s(_vm.hasDisplayText ? _vm.displayText : _vm.placeholder)
-	    }
-	  }), _vm._v(" "), _c('ui-icon', {
+	    class: ['ui-select-value', _vm.hasDisplayText ? '' : 'placeholder']
+	  }, [_vm._t("values", [_vm._v("\n                        " + _vm._s(_vm.hasDisplayText ? _vm.displayText : _vm.placeholder) + "\n                    ")], {
+	    value: _vm.value
+	  })], 2), _vm._v(" "), _c('ui-icon', {
 	    staticClass: "ui-select-dropdown-icon",
 	    attrs: {
 	      "icon": "arrow_drop_down"
@@ -29258,10 +29271,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	        "highlighted": _vm.highlightedIndex === index,
 	        "selected": _vm.isSelected(option)
 	      },
-	      on: {
+	      nativeOn: {
 	        "click": function($event) {
 	          $event.stopPropagation();
-	          $event.preventDefault();
 	          _vm.select(option, index)
 	        },
 	        "mouseover": function($event) {
@@ -29269,7 +29281,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	          _vm.highlight(index, true)
 	        }
 	      }
-	    })
+	    }, [_vm._t("option", null, {
+	      highlighted: _vm.highlightedIndex === index,
+	      index: index,
+	      option: option,
+	      selected: _vm.isSelected(option)
+	    })], 2)
 	  }), _vm._v(" "), (_vm.nothingFound) ? _c('li', {
 	    staticClass: "ui-select-no-results"
 	  }, [_vm._v("No results found")]) : _vm._e()], 2)])]), _vm._v(" "), (_vm.showFeedback) ? _c('div', {

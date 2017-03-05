@@ -1,5 +1,5 @@
 <template>
-    <button
+    <button :is="href ? 'a' : 'button'" :href="href"
         @click="$emit('click', $event)"
         class="ui-button" :class="styleClasses" :type="buttonType" v-disabled="disabled || loading"
         ref="button"
@@ -76,6 +76,7 @@ export default {
             type: Boolean,
             default: false
         },
+        href: String,
         text: String,
         icon: String,
         iconRight: {
