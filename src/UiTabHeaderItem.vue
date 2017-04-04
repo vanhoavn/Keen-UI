@@ -16,7 +16,6 @@
             class="ui-tab-header-item-text" v-text="text"
             v-if="type === 'text' || type === 'icon-and-text'"
         ></div>
-
         <ui-ripple-ink :trigger="() => $el" v-if="!hideRippleInk && !disabled"></ui-ripple-ink>
     </li>
 </template>
@@ -41,6 +40,10 @@ export default {
         active: {
             type: Boolean,
             default: false
+        },
+        visible: {
+            type: Boolean,
+            default: true
         },
         disabled: {
             type: Boolean,

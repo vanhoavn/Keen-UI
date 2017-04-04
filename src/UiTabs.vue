@@ -5,7 +5,7 @@
                 class="ui-tabs-header-items" :class="[textColorComputed, textColorActiveComputed]" role="tablist"
                 ref="tabs-container"
             >
-                <ui-tab-header-item
+                <div :is="TabHeaderItem"
                     :type="type" :id="tab.id" :icon="tab.icon" :text="tab.header"
                     :active="activeTab === tab.id" :disabled="tab.disabled"
                     :hide-ripple-ink="hideRippleInk"
@@ -13,8 +13,8 @@
                     @click="select($event, tab)" @keydown.left="selectPrev(index)"
                     @keydown.right="selectNext($index)"
 
-                    v-for="(tab, index) in $children" v-ref:tab-elements
-                ></ui-tab-header-item>
+                    v-for="(tab, index) in children" ref="tab-elements"
+                ></div>
             </ul>
 
             <div
@@ -46,6 +46,9 @@ export default {
             default: 'text', // 'text', 'icon', or 'icon-and-text'
         },
         activeTab: String,
+        TabHeaderItem: {
+            default: UiTabHeaderItem,
+        },
         backgroundColor: {
             type: String,
             default: 'default', // 'default', 'primary', 'accent', or 'clear'
@@ -121,11 +124,15 @@ export default {
             if (this.activeTabElement) {
                 let left = this.activeTabElement.offsetLeft;
                 let width = this.activeTabElement.offsetWidth;
-                let tabContainerWidth = this.$refs.tabsContainer.offsetWidth;
+                let tabContainerWidth = this.$refs['tabs-container'].offsetWidth;
 
                 return (tabContainerWidth - (left + width)) + 'px';
             }
-        }
+        },
+
+        children() {
+            return this.$children.filter( (x) => x.visible );
+        },
     },
 
     ready() {
@@ -139,8 +146,8 @@ export default {
 
         // Set the active tab element (to show indicator)
         this.$nextTick(() => {
-            if (this.$refs.tabsContainer) {
-                this.activeTabElement = this.$refs.tabsContainer.querySelector('.active');
+            if (this.$refs['tabs-container']) {
+                this.activeTabElement = this.$refs['tabs-container'].querySelector('.active');
             }
         });
     },
@@ -202,7 +209,7 @@ export default {
 
         selectNext(currentTabIndex) {
             // Abort if the current tab is the last tab
-            if (currentTabIndex === this.$refs.tabElements.length - 1) {
+            if (currentTabIndex === this.$refs['tab-elements'].length - 1) {
                 return;
             }
 
@@ -216,22 +223,22 @@ export default {
             let tab;
 
             if (next) {
-                for (let i = currentTabIndex + 1; i < this.$refs.tabElements.length; i++) {
-                    if (!this.$refs.tabElements[i].disabled) {
-                        tab = this.$refs.tabElements[i];
+                for (let i = currentTabIndex + 1; i < this.$refs['tab-elements'].length; i++) {
+                    if (!this.$refs['tab-elements'][i].disabled) {
+                        tab = this.$refs['tab-elements'][i];
                         break;
                     }
                 }
             } else {
                 for (let i = currentTabIndex - 1; i >= 0; i--) {
-                    if (!this.$refs.tabElements[i].disabled) {
-                        tab = this.$refs.tabElements[i];
+                    if (!this.$refs['tab-elements'][i].disabled) {
+                        tab = this.$refs['tab-elements'][i];
                         break;
                     }
                 }
             }
 
-            tab = tab || this.$refs.tabElements[currentTabIndex];
+            tab = tab || this.$refs['tab-elements'][currentTabIndex];
 
             return tab;
         },
@@ -239,11 +246,11 @@ export default {
         findTabById(id) {
             let tab = null;
 
-            let numOfTabs = this.$refs.tabElements.length;
+            let numOfTabs = this.$refs['tab-elements'].length;
 
             for (let i = 0; i <= numOfTabs; i++) {
-                if (id === this.$refs.tabElements[i].id) {
-                    tab = this.$refs.tabElements[i];
+                if (id === this.$refs['tab-elements'][i].id) {
+                    tab = this.$refs['tab-elements'][i];
                     break;
                 }
             }

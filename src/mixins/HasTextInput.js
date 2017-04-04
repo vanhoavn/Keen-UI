@@ -20,6 +20,10 @@ export default {
             default: false
         },
         label: String,
+        floatingLabel: {
+            type: Boolean,
+            default: false
+        },
         hideLabel: {
             type: Boolean,
             default: false

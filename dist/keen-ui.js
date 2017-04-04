@@ -5638,7 +5638,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    staticClass: "ui-alert-close-button",
 	    attrs: {
 	      "type": "clear",
-	      "icon": "&#xE5CD",
+	      "icon": '\uE5CD',
 	      "aria-label": "Close"
 	    },
 	    on: {
@@ -6570,6 +6570,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	            default: false
 	        },
 	        label: String,
+	        floatingLabel: {
+	            type: Boolean,
+	            default: false
+	        },
 	        hideLabel: {
 	            type: Boolean,
 	            default: false
@@ -32733,6 +32737,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	            type: String,
 	            default: 'text' },
 	        activeTab: String,
+	        TabHeaderItem: {
+	            default: _UiTabHeaderItem2.default
+	        },
 	        backgroundColor: {
 	            type: String,
 	            default: 'default' },
@@ -32803,10 +32810,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	            if (this.activeTabElement) {
 	                var left = this.activeTabElement.offsetLeft;
 	                var width = this.activeTabElement.offsetWidth;
-	                var tabContainerWidth = this.$refs.tabsContainer.offsetWidth;
+	                var tabContainerWidth = this.$refs['tabs-container'].offsetWidth;
 	
 	                return tabContainerWidth - (left + width) + 'px';
 	            }
+	        },
+	        children: function children() {
+	            return this.$children.filter(function (x) {
+	                return x.visible;
+	            });
 	        }
 	    },
 	
@@ -32820,8 +32832,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	        this.activeTab = this.activeTab || this.$children[0].id;
 	
 	        this.$nextTick(function () {
-	            if (_this.$refs.tabsContainer) {
-	                _this.activeTabElement = _this.$refs.tabsContainer.querySelector('.active');
+	            if (_this.$refs['tabs-container']) {
+	                _this.activeTabElement = _this.$refs['tabs-container'].querySelector('.active');
 	            }
 	        });
 	    },
@@ -32883,7 +32895,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            this.activeTabElement.focus();
 	        },
 	        selectNext: function selectNext(currentTabIndex) {
-	            if (currentTabIndex === this.$refs.tabElements.length - 1) {
+	            if (currentTabIndex === this.$refs['tab-elements'].length - 1) {
 	                return;
 	            }
 	
@@ -32896,33 +32908,33 @@ return /******/ (function(modules) { // webpackBootstrap
 	            var tab = void 0;
 	
 	            if (next) {
-	                for (var i = currentTabIndex + 1; i < this.$refs.tabElements.length; i++) {
-	                    if (!this.$refs.tabElements[i].disabled) {
-	                        tab = this.$refs.tabElements[i];
+	                for (var i = currentTabIndex + 1; i < this.$refs['tab-elements'].length; i++) {
+	                    if (!this.$refs['tab-elements'][i].disabled) {
+	                        tab = this.$refs['tab-elements'][i];
 	                        break;
 	                    }
 	                }
 	            } else {
 	                for (var _i3 = currentTabIndex - 1; _i3 >= 0; _i3--) {
-	                    if (!this.$refs.tabElements[_i3].disabled) {
-	                        tab = this.$refs.tabElements[_i3];
+	                    if (!this.$refs['tab-elements'][_i3].disabled) {
+	                        tab = this.$refs['tab-elements'][_i3];
 	                        break;
 	                    }
 	                }
 	            }
 	
-	            tab = tab || this.$refs.tabElements[currentTabIndex];
+	            tab = tab || this.$refs['tab-elements'][currentTabIndex];
 	
 	            return tab;
 	        },
 	        findTabById: function findTabById(id) {
 	            var tab = null;
 	
-	            var numOfTabs = this.$refs.tabElements.length;
+	            var numOfTabs = this.$refs['tab-elements'].length;
 	
 	            for (var i = 0; i <= numOfTabs; i++) {
-	                if (id === this.$refs.tabElements[i].id) {
-	                    tab = this.$refs.tabElements[i];
+	                if (id === this.$refs['tab-elements'][i].id) {
+	                    tab = this.$refs['tab-elements'][i];
 	                    break;
 	                }
 	            }
@@ -33024,6 +33036,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	            type: Boolean,
 	            default: false
 	        },
+	        visible: {
+	            type: Boolean,
+	            default: true
+	        },
 	        disabled: {
 	            type: Boolean,
 	            default: false
@@ -33108,13 +33124,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	    attrs: {
 	      "role": "tablist"
 	    }
-	  }, _vm._l((_vm.$children), function(tab, index) {
-	    return _c('ui-tab-header-item', {
-	      directives: [{
-	        name: "ref",
-	        rawName: "v-ref:tab-elements",
-	        arg: "tab-elements"
-	      }],
+	  }, _vm._l((_vm.children), function(tab, index) {
+	    return _c(_vm.TabHeaderItem, {
+	      ref: "tab-elements",
+	      refInFor: true,
+	      tag: "div",
 	      attrs: {
 	        "type": _vm.type,
 	        "id": tab.id,

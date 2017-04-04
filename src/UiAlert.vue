@@ -13,7 +13,7 @@
             </div>
 
             <ui-icon-button
-                class="ui-alert-close-button" type="clear" icon="&#xE5CD" aria-label="Close"
+                class="ui-alert-close-button" type="clear" :icon="'\uE5CD'" aria-label="Close"
                 @click="close" v-if="dismissible"
             ></ui-icon-button>
         </div>
